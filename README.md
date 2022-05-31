@@ -97,6 +97,14 @@ projen && projen build
 npx cdk -a lib/integ.full.js deploy
 ```
 
+The deploy takes about 15 mins mostly due to compilation of the IoT FleetWise agent in the
+EC2 instance that simulate the vehicle. After all is finished you can approve the campaign
+and data will start to show up in the Timestream table:
+
+```sh
+aws iotfleetwise update-campaign --campaign-name FwTimeBasedCampaign --action APPROVE
+```
+
 ## TODO
 
 Warning: this construct should be considered at alpha stage and is not feature complete.
