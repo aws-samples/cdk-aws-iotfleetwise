@@ -19,7 +19,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
       name: "Install Python",
       uses: "actions/setup-python@v3",
       with: {
-        "python-version": '3.9'
+        "python-version": '3.7'
       }
     },
     {
