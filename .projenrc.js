@@ -14,6 +14,15 @@ const project = new awscdk.AwsCdkConstructLibrary({
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk-aws-iotfleetwise',
   },
+  releaseWorkflowSetupSteps: [
+    {
+      name: "Install Python",
+      uses: "actions/setup-python@v3",
+      with: {
+        "python-version": "3.x"
+      }
+    }
+  ]
 });
 project.addGitIgnore('__pycache__');
 project.addGitIgnore('.DS_Store');
