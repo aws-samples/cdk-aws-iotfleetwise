@@ -20,7 +20,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
       uses: "actions/setup-python@v3",
       with: {
         "python-version": "3.x"
-      }
+      },
+      run: "npx projen release"
     }
   ]
 });

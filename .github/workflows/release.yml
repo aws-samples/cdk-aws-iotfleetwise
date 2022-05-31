@@ -30,6 +30,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
+        run: npx projen release
       - name: release
         run: npx projen release
       - name: Check for new commits
