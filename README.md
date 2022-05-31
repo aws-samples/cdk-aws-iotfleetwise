@@ -2,7 +2,7 @@
 [![PyPI version](https://badge.fury.io/py/cdk-iotfleetwise.svg)](https://badge.fury.io/py/cdk-iotfleetwise)
 [![release](https://github.com/aws-samples/cdk-iotfleetwise/actions/workflows/release.yml/badge.svg)](https://github.com/aws-samples/cdk-iotfleetwise/actions/workflows/release.yml)
 
-# cdk-iotfleetwise
+# cdk-aws-iotfleetwise
 
 L2 CDK construct to provision AWS IoT Fleetwise
 
@@ -98,12 +98,13 @@ npx cdk -a lib/integ.full.js deploy
 ```
 
 The deploy takes about 15 mins mostly due to compilation of the IoT FleetWise agent in the
-EC2 instance that simulate the vehicle. After all is finished you can approve the campaign
-and data will start to show up in the Timestream table:
+EC2 instance that simulate the vehicle. Once deploy is finshed, approve the campaign with the command:
 
 ```sh
 aws iotfleetwise update-campaign --campaign-name FwTimeBasedCampaign --action APPROVE
 ```
+
+and data will start to show up in the Timestream table.
 
 ## TODO
 
