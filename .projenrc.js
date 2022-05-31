@@ -24,8 +24,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
       }
     },
     {
-      name: "check python version",
-      run: "python -VV"
+      name: "Install package dependencies",
+      run: "sudo apt-get install -y wget unzip"
     }
   ]
 });

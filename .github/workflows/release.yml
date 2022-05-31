@@ -30,8 +30,8 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.7"
-      - name: check python version
-        run: python -VV
+      - name: Install package dependencies
+        run: sudo apt-get install -y wget unzip
       - name: release
         run: npx projen release
       - name: Check for new commits
