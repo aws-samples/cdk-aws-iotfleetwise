@@ -14,7 +14,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk-aws-iotfleetwise',
   },
-  workflowRunsOn: 'ubuntu:18.04',
+  workflowRunsOn: 'ubuntu-18.04',
   releaseWorkflowSetupSteps: [
     {
       name: "Install Python",
