@@ -1,0 +1,17 @@
+{
+  "campaignName": "test",
+  "collectionScheme": {
+      "timeBasedCollectionScheme": {
+          "periodMs": 10000
+      }
+  },
+  "compression": "SNAPPY",
+  "signalCatalogArn": "arn:aws:iotfleetwise:eu-central-1:642733357784:signal-catalog/default",
+  "signalsToCollect": [
+      {
+          "signalName": "FWTraining.EngineTorque"
+      }
+  ],
+  "spoolingMode": "TO_DISK",
+  "targetArn": "arn:aws:iotfleetwise:eu-central-1:642733357784:vehicle/vin100"
+}
