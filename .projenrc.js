@@ -17,7 +17,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   workflowRunsOn: 'ubuntu-18.04',
   releaseWorkflowSetupSteps: [
     {
-      name: "Install Python",
+      name: "Install python",
       uses: "actions/setup-python@v3",
       with: {
         "python-version": '3.7'
@@ -25,7 +25,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     },
     {
       name: "Install package dependencies",
-      run: "sudo apt-get install -y wget unzip"
+      run: "sudo apt update && sudo apt install -y wget unzip"
     }
   ]
 });

@@ -26,12 +26,12 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Install Python
+      - name: Install python
         uses: actions/setup-python@v3
         with:
           python-version: "3.7"
       - name: Install package dependencies
-        run: sudo apt-get install -y wget unzip
+        run: sudo apt update && sudo apt install -y wget unzip
       - name: release
         run: npx projen release
       - name: Check for new commits
