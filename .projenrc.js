@@ -17,17 +17,17 @@ const project = new awscdk.AwsCdkConstructLibrary({
   workflowRunsOn: 'ubuntu-18.04',
   releaseWorkflowSetupSteps: [
     {
-      name: "Install python",
-      uses: "actions/setup-python@v3",
+      name: 'Install python',
+      uses: 'actions/setup-python@v3',
       with: {
-        "python-version": '3.7'
-      }
+        'python-version': '3.7',
+      },
     },
     {
-      name: "Install package dependencies",
-      run: "sudo apt update && sudo apt install -y wget unzip"
-    }
-  ]
+      name: 'Install package dependencies',
+      run: 'sudo apt update && sudo apt install -y wget unzip',
+    },
+  ],
 });
 project.addGitIgnore('__pycache__');
 project.addGitIgnore('.DS_Store');
