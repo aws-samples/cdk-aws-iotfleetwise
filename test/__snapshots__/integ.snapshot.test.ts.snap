@@ -303,7 +303,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "be038dc5795dbd4ee071b74414b8a70c0e7b2078399b7c524cea387f0843ec11.zip",
+          "S3Key": "e35df10526bf4ca03cd56151cfd36c978ca87ae04c3c7797d16f3c7a55a251ed.zip",
         },
         "Description": "Boto3 Library with Iot Fleetwise Support",
       },

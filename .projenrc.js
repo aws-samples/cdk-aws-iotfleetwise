@@ -33,16 +33,17 @@ project.addGitIgnore('__pycache__');
 project.addGitIgnore('.DS_Store');
 project.addGitIgnore('cdk.out/');
 project.addGitIgnore('cdk.context.json');
+project.addGitIgnore('/tmp');
 
 // Creating python boto3 lambda layer with iot fleetwise support
 const url = 'https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/samples/AwsSdkPythonCli-Iotfleetwise.zip';
 const packages = 'botocore-1.23.13-py3-none-any.whl boto3-1.20.13-py3-none-any.whl ';
 project.projectBuild.preCompileTask.say('Creating python boto3 lambda layer with iot fleetwise support');
-project.projectBuild.preCompileTask.exec('if [ -d lib/layer ]; then rm -Rf lib/layer; fi');
-project.projectBuild.preCompileTask.exec('mkdir -p lib/layer');
-project.projectBuild.preCompileTask.exec('python -m venv venv', { cwd: 'lib/layer' });
-project.projectBuild.preCompileTask.exec(`if [ ! -e cli.zip ]; then wget ${url} -O cli.zip && unzip -o cli.zip ${packages}; fi`, { cwd: 'lib' });
-project.projectBuild.preCompileTask.exec(`layer/venv/bin/pip install ${packages} -t ./layer/python`, { cwd: 'lib' });
+project.projectBuild.preCompileTask.exec('if [ -d tmp/layer ]; then rm -Rf tmp/layer; fi');
+project.projectBuild.preCompileTask.exec('mkdir -p tmp/layer');
+project.projectBuild.preCompileTask.exec('python -m venv venv', { cwd: 'tmp/layer' });
+project.projectBuild.preCompileTask.exec(`if [ ! -e cli.zip ]; then wget ${url} -O cli.zip && unzip -o cli.zip ${packages}; fi`, { cwd: 'tmp' });
+project.projectBuild.preCompileTask.exec(`layer/venv/bin/pip install ${packages} -t ./layer/python`, { cwd: 'tmp' });
 
 // Generating documentation for Typescript and python
 const task = project.tasks.tryFind('docgen');
@@ -56,7 +57,7 @@ const steps = release_task.steps;
 steps.pop();
 project.tasks.removeTask('release');
 project.tasks.addTask('release', {
-  steps: steps
+  steps: steps,
 });
 
 project.synth();
