@@ -51,4 +51,12 @@ task.exec('rm -f doc/api-*.md');
 task.exec('jsii-docgen -o doc/api-typescript.md -l typescript');
 task.exec('jsii-docgen -o doc/api-python.md -l python');
 
+const release_task = project.tasks.tryFind('release');
+const steps = release_task.steps;
+steps.pop();
+project.tasks.removeTask('release');
+project.tasks.addTask('release', {
+  steps: steps
+});
+
 project.synth();
