@@ -41,6 +41,7 @@ const url = 'https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/sam
 const packages = 'botocore-1.23.13-py3-none-any.whl boto3-1.20.13-py3-none-any.whl ';
 project.projectBuild.preCompileTask.say('Creating python boto3 lambda layer with iot fleetwise support');
 project.projectBuild.preCompileTask.exec('if [ -d tmp/layer ]; then rm -Rf tmp/layer; fi');
+project.projectBuild.preCompileTask.exec('mkdir -p lib');
 project.projectBuild.preCompileTask.exec('mkdir -p tmp/layer');
 project.projectBuild.preCompileTask.exec('python -m venv venv', { cwd: 'tmp/layer' });
 project.projectBuild.preCompileTask.exec(`if [ ! -e cli.zip ]; then wget ${url} -O cli.zip && unzip -o cli.zip ${packages}; fi`, { cwd: 'tmp' });

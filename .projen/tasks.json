@@ -199,6 +199,9 @@
           "exec": "if [ -d tmp/layer ]; then rm -Rf tmp/layer; fi"
         },
         {
+          "exec": "mkdir -p lib"
+        },
+        {
           "exec": "mkdir -p tmp/layer"
         },
         {

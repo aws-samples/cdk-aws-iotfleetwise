@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "3.7"
       - name: Install package dependencies
-        run: sudo apt update && sudo apt install -y wget unzip
+        run: sudo apt update && sudo apt install -y wget unzip zip
       - name: release
         run: npx projen release
       - name: Check for new commits
