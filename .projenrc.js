@@ -12,7 +12,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   repositoryUrl: 'https://github.com/aws-samples/cdk-aws-iotfleetwise.git',
   publishToPypi: {
     distName: 'cdk-aws-iotfleetwise',
-    module: 'cdk-aws-iotfleetwise',
+    module: 'cdk_aws_iotfleetwise',
   },
   workflowRunsOn: 'ubuntu-18.04',
   releaseWorkflowSetupSteps: [
@@ -31,9 +31,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
 });
 project.addGitIgnore('__pycache__');
 project.addGitIgnore('.DS_Store');
-project.addGitIgnore('cdk.out/');
+project.addGitIgnore('/cdk.out/');
 project.addGitIgnore('cdk.context.json');
-project.addGitIgnore('/tmp');
+project.addGitIgnore('/tmp/');
+project.addPackageIgnore('/tmp/');
 
 // Creating python boto3 lambda layer with iot fleetwise support
 const url = 'https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/samples/AwsSdkPythonCli-Iotfleetwise.zip';

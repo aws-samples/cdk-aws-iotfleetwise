@@ -52,6 +52,6 @@ tsconfig.json
 !/API.md
 __pycache__
 .DS_Store
-cdk.out/
+/cdk.out/
 cdk.context.json
-/tmp
+/tmp/

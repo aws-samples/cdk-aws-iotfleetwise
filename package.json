@@ -117,7 +117,7 @@
     "targets": {
       "python": {
         "distName": "cdk-aws-iotfleetwise",
-        "module": "cdk-aws-iotfleetwise"
+        "module": "cdk_aws_iotfleetwise"
       }
     },
     "tsc": {
