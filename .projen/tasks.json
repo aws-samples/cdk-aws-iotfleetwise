@@ -212,6 +212,10 @@
         {
           "exec": "layer/venv/bin/pip install botocore-1.23.13-py3-none-any.whl boto3-1.20.13-py3-none-any.whl  -t ./layer/python",
           "cwd": "tmp"
+        },
+        {
+          "exec": "zip -qr ../../lib/layer.zip *",
+          "cwd": "tmp/layer"
         }
       ]
     },

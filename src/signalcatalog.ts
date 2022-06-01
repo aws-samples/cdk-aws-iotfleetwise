@@ -113,7 +113,7 @@ export class SignalCatalog extends Construct {
     this.lambdaLayer = new lambda.LayerVersion(this, 'Boto3', {
       description: 'Boto3 Library with Iot Fleetwise Support',
       compatibleRuntimes: [lambda.Runtime.PYTHON_3_9],
-      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../tmp/layer')),
+      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../lib/layer.zip')),
     });
 
     const code = lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers'));

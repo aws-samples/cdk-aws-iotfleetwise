@@ -25,7 +25,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     },
     {
       name: 'Install package dependencies',
-      run: 'sudo apt update && sudo apt install -y wget unzip',
+      run: 'sudo apt update && sudo apt install -y wget unzip zip',
     },
   ],
 });
@@ -45,6 +45,7 @@ project.projectBuild.preCompileTask.exec('mkdir -p tmp/layer');
 project.projectBuild.preCompileTask.exec('python -m venv venv', { cwd: 'tmp/layer' });
 project.projectBuild.preCompileTask.exec(`if [ ! -e cli.zip ]; then wget ${url} -O cli.zip && unzip -o cli.zip ${packages}; fi`, { cwd: 'tmp' });
 project.projectBuild.preCompileTask.exec(`layer/venv/bin/pip install ${packages} -t ./layer/python`, { cwd: 'tmp' });
+project.projectBuild.preCompileTask.exec('zip -qr ../../lib/layer.zip *', { cwd: 'tmp/layer' });
 
 // Generating documentation for Typescript and python
 const task = project.tasks.tryFind('docgen');

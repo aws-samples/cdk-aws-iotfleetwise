@@ -7,9 +7,9 @@
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Campaign.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.Campaign(
+cdk_aws_iotfleetwise.Campaign(
   scope: Construct,
   id: str,
   props: ICampaign
@@ -69,9 +69,9 @@ Returns a string representation of this construct.
 ##### ~~`is_construct`~~ <a name="is_construct" id="cdk-aws-iotfleetwise.Campaign.isConstruct"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.Campaign.is_construct(
+cdk_aws_iotfleetwise.Campaign.is_construct(
   x: typing.Any
 )
 ```
@@ -149,9 +149,9 @@ The AWS IoT Fleetwise preview can only support a single Signal Catalog per accou
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.SignalCatalog(
+cdk_aws_iotfleetwise.SignalCatalog(
   scope: Construct,
   id: str,
   props: IServiceCatalogProps
@@ -211,9 +211,9 @@ Returns a string representation of this construct.
 ##### ~~`is_construct`~~ <a name="is_construct" id="cdk-aws-iotfleetwise.SignalCatalog.isConstruct"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.SignalCatalog.is_construct(
+cdk_aws_iotfleetwise.SignalCatalog.is_construct(
   x: typing.Any
 )
 ```
@@ -313,9 +313,9 @@ The vehicle of a specific type from which IoT FleetWise collect signals.
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Vehicle.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.Vehicle(
+cdk_aws_iotfleetwise.Vehicle(
   scope: Construct,
   id: str,
   props: IVehicle
@@ -375,9 +375,9 @@ Returns a string representation of this construct.
 ##### ~~`is_construct`~~ <a name="is_construct" id="cdk-aws-iotfleetwise.Vehicle.isConstruct"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.Vehicle.is_construct(
+cdk_aws_iotfleetwise.Vehicle.is_construct(
   x: typing.Any
 )
 ```
@@ -495,9 +495,9 @@ private_key: str
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleModel.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.VehicleModel(
+cdk_aws_iotfleetwise.VehicleModel(
   scope: Construct,
   id: str,
   props: IVehicleModel
@@ -557,9 +557,9 @@ Returns a string representation of this construct.
 ##### ~~`is_construct`~~ <a name="is_construct" id="cdk-aws-iotfleetwise.VehicleModel.isConstruct"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.VehicleModel.is_construct(
+cdk_aws_iotfleetwise.VehicleModel.is_construct(
   x: typing.Any
 )
 ```
@@ -636,9 +636,9 @@ description: str
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CampaignSignal.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.CampaignSignal(
+cdk_aws_iotfleetwise.CampaignSignal(
   name: str,
   max_sample_count: typing.Union[int, float] = None,
   minimum_sampling_interval: Duration = None
@@ -693,9 +693,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.CanVehicleInterface(
+cdk_aws_iotfleetwise.CanVehicleInterface(
   interface_id: str,
   name: str
 )
@@ -742,9 +742,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.CanVehicleSignal(
+cdk_aws_iotfleetwise.CanVehicleSignal(
   name: str,
   fully_qualified_name: str,
   interface_id: str,
@@ -855,9 +855,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CollectionScheme.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.CollectionScheme()
+cdk_aws_iotfleetwise.CollectionScheme()
 ```
 
 | **Name** | **Type** | **Description** |
@@ -887,9 +887,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.SignalCatalogBranch(
+cdk_aws_iotfleetwise.SignalCatalogBranch(
   name: str,
   fully_qualified_name: str,
   description: str = None
@@ -944,9 +944,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogNode.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.SignalCatalogNode()
+cdk_aws_iotfleetwise.SignalCatalogNode()
 ```
 
 | **Name** | **Type** | **Description** |
@@ -976,9 +976,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.SignalCatalogSensor(
+cdk_aws_iotfleetwise.SignalCatalogSensor(
   name: str,
   fully_qualified_name: str,
   data_type: str,
@@ -1065,9 +1065,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.TimeBasedCollectionScheme(
+cdk_aws_iotfleetwise.TimeBasedCollectionScheme(
   period: Duration
 )
 ```
@@ -1106,9 +1106,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleInterface.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.VehicleInterface()
+cdk_aws_iotfleetwise.VehicleInterface()
 ```
 
 | **Name** | **Type** | **Description** |
@@ -1138,9 +1138,9 @@ def to_object() -> any
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleSignal.Initializer"></a>
 
 ```python
-import cdk-aws-iotfleetwise
+import cdk_aws_iotfleetwise
 
-cdk-aws-iotfleetwise.VehicleSignal()
+cdk_aws_iotfleetwise.VehicleSignal()
 ```
 
 | **Name** | **Type** | **Description** |
