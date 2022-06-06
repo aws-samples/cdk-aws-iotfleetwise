@@ -14,6 +14,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk_aws_iotfleetwise',
   },
+  releaseToNpm: true,
+  releaseEveryCommit: true,
   workflowRunsOn: 'ubuntu-18.04',
   releaseWorkflowSetupSteps: [
     {
