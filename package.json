@@ -1,5 +1,5 @@
 {
-  "name": "cdk-aws-iotfleetwise",
+  "name": "pahud-iot-demo",
   "description": "L2 CDK construct to provision AWS IoT Fleetwise",
   "repository": {
     "type": "git",
@@ -32,8 +32,8 @@
     "projen": "npx projen"
   },
   "author": {
-    "name": "Francesco Salamida",
-    "email": "salamida@amazon.com",
+    "name": "Pahud Hsieh",
+    "email": "pahudnet@gmail.com",
     "organization": false
   },
   "devDependencies": {
@@ -69,7 +69,7 @@
   ],
   "main": "lib/index.js",
   "license": "MIT-0",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "jest": {
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
@@ -116,8 +116,8 @@
     "outdir": "dist",
     "targets": {
       "python": {
-        "distName": "cdk-aws-iotfleetwise",
-        "module": "cdk_aws_iotfleetwise"
+        "distName": "pahud-iot-demo",
+        "module": "pahud_iot_demo"
       }
     },
     "tsc": {

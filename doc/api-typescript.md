@@ -2,39 +2,39 @@
 
 ## Constructs <a name="Constructs" id="Constructs"></a>
 
-### Campaign <a name="Campaign" id="cdk-aws-iotfleetwise.Campaign"></a>
+### Campaign <a name="Campaign" id="pahud-iot-demo.Campaign"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Campaign.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.Campaign.Initializer"></a>
 
 ```typescript
-import { Campaign } from 'cdk-aws-iotfleetwise'
+import { Campaign } from 'pahud-iot-demo'
 
 new Campaign(scope: Construct, id: string, props: ICampaign)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.Initializer.parameter.props">props</a></code> | <code><a href="#pahud-iot-demo.ICampaign">ICampaign</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="pahud-iot-demo.Campaign.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
 
 ---
 
-##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="id" id="pahud-iot-demo.Campaign.Initializer.parameter.id"></a>
 
 - *Type:* string
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="pahud-iot-demo.Campaign.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
+- *Type:* <a href="#pahud-iot-demo.ICampaign">ICampaign</a>
 
 ---
 
@@ -42,11 +42,11 @@ new Campaign(scope: Construct, id: string, props: ICampaign)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#pahud-iot-demo.Campaign.toString">toString</a></code> | Returns a string representation of this construct. |
 
 ---
 
-##### `toString` <a name="toString" id="cdk-aws-iotfleetwise.Campaign.toString"></a>
+##### `toString` <a name="toString" id="pahud-iot-demo.Campaign.toString"></a>
 
 ```typescript
 public toString(): string
@@ -58,21 +58,21 @@ Returns a string representation of this construct.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#pahud-iot-demo.Campaign.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-aws-iotfleetwise.Campaign.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="pahud-iot-demo.Campaign.isConstruct"></a>
 
 ```typescript
-import { Campaign } from 'cdk-aws-iotfleetwise'
+import { Campaign } from 'pahud-iot-demo'
 
 Campaign.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
 
-###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.Campaign.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="pahud-iot-demo.Campaign.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -84,14 +84,14 @@ Any object.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.property.arn">arn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#pahud-iot-demo.Campaign.property.arn">arn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Campaign.property.target">target</a></code> | <code><a href="#pahud-iot-demo.Vehicle">Vehicle</a></code> | *No description.* |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.Campaign.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="pahud-iot-demo.Campaign.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -103,7 +103,7 @@ The tree node.
 
 ---
 
-##### `arn`<sup>Required</sup> <a name="arn" id="cdk-aws-iotfleetwise.Campaign.property.arn"></a>
+##### `arn`<sup>Required</sup> <a name="arn" id="pahud-iot-demo.Campaign.property.arn"></a>
 
 ```typescript
 public readonly arn: string;
@@ -113,7 +113,7 @@ public readonly arn: string;
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.Campaign.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.Campaign.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -123,54 +123,54 @@ public readonly name: string;
 
 ---
 
-##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.Campaign.property.target"></a>
+##### `target`<sup>Required</sup> <a name="target" id="pahud-iot-demo.Campaign.property.target"></a>
 
 ```typescript
 public readonly target: Vehicle;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+- *Type:* <a href="#pahud-iot-demo.Vehicle">Vehicle</a>
 
 ---
 
 
-### SignalCatalog <a name="SignalCatalog" id="cdk-aws-iotfleetwise.SignalCatalog"></a>
+### SignalCatalog <a name="SignalCatalog" id="pahud-iot-demo.SignalCatalog"></a>
 
 The Signal Catalog represents the list of all signals that you want to collect from all the vehicles.
 
 The AWS IoT Fleetwise preview can only support a single Signal Catalog per account.
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.SignalCatalog.Initializer"></a>
 
 ```typescript
-import { SignalCatalog } from 'cdk-aws-iotfleetwise'
+import { SignalCatalog } from 'pahud-iot-demo'
 
 new SignalCatalog(scope: Construct, id: string, props: IServiceCatalogProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.Initializer.parameter.props">props</a></code> | <code><a href="#pahud-iot-demo.IServiceCatalogProps">IServiceCatalogProps</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="pahud-iot-demo.SignalCatalog.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
 
 ---
 
-##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="id" id="pahud-iot-demo.SignalCatalog.Initializer.parameter.id"></a>
 
 - *Type:* string
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="pahud-iot-demo.SignalCatalog.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
+- *Type:* <a href="#pahud-iot-demo.IServiceCatalogProps">IServiceCatalogProps</a>
 
 ---
 
@@ -178,11 +178,11 @@ new SignalCatalog(scope: Construct, id: string, props: IServiceCatalogProps)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#pahud-iot-demo.SignalCatalog.toString">toString</a></code> | Returns a string representation of this construct. |
 
 ---
 
-##### `toString` <a name="toString" id="cdk-aws-iotfleetwise.SignalCatalog.toString"></a>
+##### `toString` <a name="toString" id="pahud-iot-demo.SignalCatalog.toString"></a>
 
 ```typescript
 public toString(): string
@@ -194,21 +194,21 @@ Returns a string representation of this construct.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#pahud-iot-demo.SignalCatalog.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-aws-iotfleetwise.SignalCatalog.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="pahud-iot-demo.SignalCatalog.isConstruct"></a>
 
 ```typescript
-import { SignalCatalog } from 'cdk-aws-iotfleetwise'
+import { SignalCatalog } from 'pahud-iot-demo'
 
 SignalCatalog.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
 
-###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.SignalCatalog.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="pahud-iot-demo.SignalCatalog.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -220,16 +220,16 @@ Any object.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.arn">arn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaLayer">lambdaLayer</a></code> | <code>aws-cdk-lib.aws_lambda.LayerVersion</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaRole">lambdaRole</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>string</code> | The name of the signal catalog. |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.arn">arn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.lambdaLayer">lambdaLayer</a></code> | <code>aws-cdk-lib.aws_lambda.LayerVersion</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.lambdaRole">lambdaRole</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.name">name</a></code> | <code>string</code> | The name of the signal catalog. |
+| <code><a href="#pahud-iot-demo.SignalCatalog.property.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.SignalCatalog.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="pahud-iot-demo.SignalCatalog.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -241,7 +241,7 @@ The tree node.
 
 ---
 
-##### `arn`<sup>Required</sup> <a name="arn" id="cdk-aws-iotfleetwise.SignalCatalog.property.arn"></a>
+##### `arn`<sup>Required</sup> <a name="arn" id="pahud-iot-demo.SignalCatalog.property.arn"></a>
 
 ```typescript
 public readonly arn: string;
@@ -251,7 +251,7 @@ public readonly arn: string;
 
 ---
 
-##### `lambdaLayer`<sup>Required</sup> <a name="lambdaLayer" id="cdk-aws-iotfleetwise.SignalCatalog.property.lambdaLayer"></a>
+##### `lambdaLayer`<sup>Required</sup> <a name="lambdaLayer" id="pahud-iot-demo.SignalCatalog.property.lambdaLayer"></a>
 
 ```typescript
 public readonly lambdaLayer: LayerVersion;
@@ -261,7 +261,7 @@ public readonly lambdaLayer: LayerVersion;
 
 ---
 
-##### `lambdaRole`<sup>Required</sup> <a name="lambdaRole" id="cdk-aws-iotfleetwise.SignalCatalog.property.lambdaRole"></a>
+##### `lambdaRole`<sup>Required</sup> <a name="lambdaRole" id="pahud-iot-demo.SignalCatalog.property.lambdaRole"></a>
 
 ```typescript
 public readonly lambdaRole: Role;
@@ -271,7 +271,7 @@ public readonly lambdaRole: Role;
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalog.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.SignalCatalog.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -283,7 +283,7 @@ The name of the signal catalog.
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.property.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.SignalCatalog.property.description"></a>
 
 ```typescript
 public readonly description: string;
@@ -294,41 +294,41 @@ public readonly description: string;
 ---
 
 
-### Vehicle <a name="Vehicle" id="cdk-aws-iotfleetwise.Vehicle"></a>
+### Vehicle <a name="Vehicle" id="pahud-iot-demo.Vehicle"></a>
 
 The vehicle of a specific type from which IoT FleetWise collect signals.
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Vehicle.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.Vehicle.Initializer"></a>
 
 ```typescript
-import { Vehicle } from 'cdk-aws-iotfleetwise'
+import { Vehicle } from 'pahud-iot-demo'
 
 new Vehicle(scope: Construct, id: string, props: IVehicle)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.Initializer.parameter.props">props</a></code> | <code><a href="#pahud-iot-demo.IVehicle">IVehicle</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="pahud-iot-demo.Vehicle.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
 
 ---
 
-##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="id" id="pahud-iot-demo.Vehicle.Initializer.parameter.id"></a>
 
 - *Type:* string
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="pahud-iot-demo.Vehicle.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
+- *Type:* <a href="#pahud-iot-demo.IVehicle">IVehicle</a>
 
 ---
 
@@ -336,11 +336,11 @@ new Vehicle(scope: Construct, id: string, props: IVehicle)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#pahud-iot-demo.Vehicle.toString">toString</a></code> | Returns a string representation of this construct. |
 
 ---
 
-##### `toString` <a name="toString" id="cdk-aws-iotfleetwise.Vehicle.toString"></a>
+##### `toString` <a name="toString" id="pahud-iot-demo.Vehicle.toString"></a>
 
 ```typescript
 public toString(): string
@@ -352,21 +352,21 @@ Returns a string representation of this construct.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#pahud-iot-demo.Vehicle.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-aws-iotfleetwise.Vehicle.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="pahud-iot-demo.Vehicle.isConstruct"></a>
 
 ```typescript
-import { Vehicle } from 'cdk-aws-iotfleetwise'
+import { Vehicle } from 'pahud-iot-demo'
 
 Vehicle.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
 
-###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.Vehicle.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="pahud-iot-demo.Vehicle.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -378,18 +378,18 @@ Any object.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.arn">arn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificateArn">certificateArn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificateId">certificateId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificatePem">certificatePem</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.endpointAddress">endpointAddress</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.privateKey">privateKey</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#pahud-iot-demo.Vehicle.property.arn">arn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#pahud-iot-demo.VehicleModel">VehicleModel</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.certificateArn">certificateArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.certificateId">certificateId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.certificatePem">certificatePem</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.endpointAddress">endpointAddress</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.Vehicle.property.privateKey">privateKey</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.Vehicle.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="pahud-iot-demo.Vehicle.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -401,7 +401,7 @@ The tree node.
 
 ---
 
-##### `arn`<sup>Required</sup> <a name="arn" id="cdk-aws-iotfleetwise.Vehicle.property.arn"></a>
+##### `arn`<sup>Required</sup> <a name="arn" id="pahud-iot-demo.Vehicle.property.arn"></a>
 
 ```typescript
 public readonly arn: string;
@@ -411,17 +411,17 @@ public readonly arn: string;
 
 ---
 
-##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.Vehicle.property.vehicleModel"></a>
+##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="pahud-iot-demo.Vehicle.property.vehicleModel"></a>
 
 ```typescript
 public readonly vehicleModel: VehicleModel;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+- *Type:* <a href="#pahud-iot-demo.VehicleModel">VehicleModel</a>
 
 ---
 
-##### `certificateArn`<sup>Optional</sup> <a name="certificateArn" id="cdk-aws-iotfleetwise.Vehicle.property.certificateArn"></a>
+##### `certificateArn`<sup>Optional</sup> <a name="certificateArn" id="pahud-iot-demo.Vehicle.property.certificateArn"></a>
 
 ```typescript
 public readonly certificateArn: string;
@@ -431,7 +431,7 @@ public readonly certificateArn: string;
 
 ---
 
-##### `certificateId`<sup>Optional</sup> <a name="certificateId" id="cdk-aws-iotfleetwise.Vehicle.property.certificateId"></a>
+##### `certificateId`<sup>Optional</sup> <a name="certificateId" id="pahud-iot-demo.Vehicle.property.certificateId"></a>
 
 ```typescript
 public readonly certificateId: string;
@@ -441,7 +441,7 @@ public readonly certificateId: string;
 
 ---
 
-##### `certificatePem`<sup>Optional</sup> <a name="certificatePem" id="cdk-aws-iotfleetwise.Vehicle.property.certificatePem"></a>
+##### `certificatePem`<sup>Optional</sup> <a name="certificatePem" id="pahud-iot-demo.Vehicle.property.certificatePem"></a>
 
 ```typescript
 public readonly certificatePem: string;
@@ -451,7 +451,7 @@ public readonly certificatePem: string;
 
 ---
 
-##### `endpointAddress`<sup>Optional</sup> <a name="endpointAddress" id="cdk-aws-iotfleetwise.Vehicle.property.endpointAddress"></a>
+##### `endpointAddress`<sup>Optional</sup> <a name="endpointAddress" id="pahud-iot-demo.Vehicle.property.endpointAddress"></a>
 
 ```typescript
 public readonly endpointAddress: string;
@@ -461,7 +461,7 @@ public readonly endpointAddress: string;
 
 ---
 
-##### `privateKey`<sup>Optional</sup> <a name="privateKey" id="cdk-aws-iotfleetwise.Vehicle.property.privateKey"></a>
+##### `privateKey`<sup>Optional</sup> <a name="privateKey" id="pahud-iot-demo.Vehicle.property.privateKey"></a>
 
 ```typescript
 public readonly privateKey: string;
@@ -472,39 +472,39 @@ public readonly privateKey: string;
 ---
 
 
-### VehicleModel <a name="VehicleModel" id="cdk-aws-iotfleetwise.VehicleModel"></a>
+### VehicleModel <a name="VehicleModel" id="pahud-iot-demo.VehicleModel"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleModel.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.VehicleModel.Initializer"></a>
 
 ```typescript
-import { VehicleModel } from 'cdk-aws-iotfleetwise'
+import { VehicleModel } from 'pahud-iot-demo'
 
 new VehicleModel(scope: Construct, id: string, props: IVehicleModel)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.Initializer.parameter.props">props</a></code> | <code><a href="#pahud-iot-demo.IVehicleModel">IVehicleModel</a></code> | *No description.* |
 
 ---
 
-##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.scope"></a>
+##### `scope`<sup>Required</sup> <a name="scope" id="pahud-iot-demo.VehicleModel.Initializer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
 
 ---
 
-##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.id"></a>
+##### `id`<sup>Required</sup> <a name="id" id="pahud-iot-demo.VehicleModel.Initializer.parameter.id"></a>
 
 - *Type:* string
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props"></a>
+##### `props`<sup>Required</sup> <a name="props" id="pahud-iot-demo.VehicleModel.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
+- *Type:* <a href="#pahud-iot-demo.IVehicleModel">IVehicleModel</a>
 
 ---
 
@@ -512,11 +512,11 @@ new VehicleModel(scope: Construct, id: string, props: IVehicleModel)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#pahud-iot-demo.VehicleModel.toString">toString</a></code> | Returns a string representation of this construct. |
 
 ---
 
-##### `toString` <a name="toString" id="cdk-aws-iotfleetwise.VehicleModel.toString"></a>
+##### `toString` <a name="toString" id="pahud-iot-demo.VehicleModel.toString"></a>
 
 ```typescript
 public toString(): string
@@ -528,21 +528,21 @@ Returns a string representation of this construct.
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#pahud-iot-demo.VehicleModel.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
 
 ---
 
-##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-aws-iotfleetwise.VehicleModel.isConstruct"></a>
+##### ~~`isConstruct`~~ <a name="isConstruct" id="pahud-iot-demo.VehicleModel.isConstruct"></a>
 
 ```typescript
-import { VehicleModel } from 'cdk-aws-iotfleetwise'
+import { VehicleModel } from 'pahud-iot-demo'
 
 VehicleModel.isConstruct(x: any)
 ```
 
 Checks if `x` is a construct.
 
-###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.VehicleModel.isConstruct.parameter.x"></a>
+###### `x`<sup>Required</sup> <a name="x" id="pahud-iot-demo.VehicleModel.isConstruct.parameter.x"></a>
 
 - *Type:* any
 
@@ -554,14 +554,14 @@ Any object.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+| <code><a href="#pahud-iot-demo.VehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#pahud-iot-demo.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.VehicleModel.property.node"></a>
+##### `node`<sup>Required</sup> <a name="node" id="pahud-iot-demo.VehicleModel.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -573,7 +573,7 @@ The tree node.
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.VehicleModel.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.VehicleModel.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -583,17 +583,17 @@ public readonly name: string;
 
 ---
 
-##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.VehicleModel.property.signalCatalog"></a>
+##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="pahud-iot-demo.VehicleModel.property.signalCatalog"></a>
 
 ```typescript
 public readonly signalCatalog: SignalCatalog;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+- *Type:* <a href="#pahud-iot-demo.SignalCatalog">SignalCatalog</a>
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModel.property.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.VehicleModel.property.description"></a>
 
 ```typescript
 public readonly description: string;
@@ -607,37 +607,37 @@ public readonly description: string;
 
 ## Classes <a name="Classes" id="Classes"></a>
 
-### CampaignSignal <a name="CampaignSignal" id="cdk-aws-iotfleetwise.CampaignSignal"></a>
+### CampaignSignal <a name="CampaignSignal" id="pahud-iot-demo.CampaignSignal"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CampaignSignal.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.CampaignSignal.Initializer"></a>
 
 ```typescript
-import { CampaignSignal } from 'cdk-aws-iotfleetwise'
+import { CampaignSignal } from 'pahud-iot-demo'
 
 new CampaignSignal(name: string, maxSampleCount?: number, minimumSamplingInterval?: Duration)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.maxSampleCount">maxSampleCount</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.minimumSamplingInterval">minimumSamplingInterval</a></code> | <code>aws-cdk-lib.Duration</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CampaignSignal.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CampaignSignal.Initializer.parameter.maxSampleCount">maxSampleCount</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CampaignSignal.Initializer.parameter.minimumSamplingInterval">minimumSamplingInterval</a></code> | <code>aws-cdk-lib.Duration</code> | *No description.* |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.CampaignSignal.Initializer.parameter.name"></a>
 
 - *Type:* string
 
 ---
 
-##### `maxSampleCount`<sup>Optional</sup> <a name="maxSampleCount" id="cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.maxSampleCount"></a>
+##### `maxSampleCount`<sup>Optional</sup> <a name="maxSampleCount" id="pahud-iot-demo.CampaignSignal.Initializer.parameter.maxSampleCount"></a>
 
 - *Type:* number
 
 ---
 
-##### `minimumSamplingInterval`<sup>Optional</sup> <a name="minimumSamplingInterval" id="cdk-aws-iotfleetwise.CampaignSignal.Initializer.parameter.minimumSamplingInterval"></a>
+##### `minimumSamplingInterval`<sup>Optional</sup> <a name="minimumSamplingInterval" id="pahud-iot-demo.CampaignSignal.Initializer.parameter.minimumSamplingInterval"></a>
 
 - *Type:* aws-cdk-lib.Duration
 
@@ -647,11 +647,11 @@ new CampaignSignal(name: string, maxSampleCount?: number, minimumSamplingInterva
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignSignal.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CampaignSignal.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.CampaignSignal.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.CampaignSignal.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -660,30 +660,30 @@ public toObject(): object
 
 
 
-### CanVehicleInterface <a name="CanVehicleInterface" id="cdk-aws-iotfleetwise.CanVehicleInterface"></a>
+### CanVehicleInterface <a name="CanVehicleInterface" id="pahud-iot-demo.CanVehicleInterface"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.CanVehicleInterface.Initializer"></a>
 
 ```typescript
-import { CanVehicleInterface } from 'cdk-aws-iotfleetwise'
+import { CanVehicleInterface } from 'pahud-iot-demo'
 
 new CanVehicleInterface(interfaceId: string, name: string)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleInterface.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleInterface.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.interfaceId"></a>
+##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="pahud-iot-demo.CanVehicleInterface.Initializer.parameter.interfaceId"></a>
 
 - *Type:* string
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.CanVehicleInterface.Initializer.parameter.name"></a>
 
 - *Type:* string
 
@@ -693,11 +693,11 @@ new CanVehicleInterface(interfaceId: string, name: string)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleInterface.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.CanVehicleInterface.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.CanVehicleInterface.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -706,86 +706,86 @@ public toObject(): object
 
 
 
-### CanVehicleSignal <a name="CanVehicleSignal" id="cdk-aws-iotfleetwise.CanVehicleSignal"></a>
+### CanVehicleSignal <a name="CanVehicleSignal" id="pahud-iot-demo.CanVehicleSignal"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.CanVehicleSignal.Initializer"></a>
 
 ```typescript
-import { CanVehicleSignal } from 'cdk-aws-iotfleetwise'
+import { CanVehicleSignal } from 'pahud-iot-demo'
 
 new CanVehicleSignal(name: string, fullyQualifiedName: string, interfaceId: string, messageId: number, factor: number, isBigEndian: boolean, isSigned: boolean, length: number, offset: number, startBit: number)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId">messageId</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor">factor</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isBigEndian">isBigEndian</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isSigned">isSigned</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length">length</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset">offset</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit">startBit</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.messageId">messageId</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.factor">factor</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.isBigEndian">isBigEndian</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.isSigned">isSigned</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.length">length</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.offset">offset</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.Initializer.parameter.startBit">startBit</a></code> | <code>number</code> | *No description.* |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.name"></a>
 
 - *Type:* string
 
 ---
 
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName"></a>
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.fullyQualifiedName"></a>
 
 - *Type:* string
 
 ---
 
-##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId"></a>
+##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.interfaceId"></a>
 
 - *Type:* string
 
 ---
 
-##### `messageId`<sup>Required</sup> <a name="messageId" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId"></a>
+##### `messageId`<sup>Required</sup> <a name="messageId" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.messageId"></a>
 
 - *Type:* number
 
 ---
 
-##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor"></a>
+##### `factor`<sup>Required</sup> <a name="factor" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.factor"></a>
 
 - *Type:* number
 
 ---
 
-##### `isBigEndian`<sup>Required</sup> <a name="isBigEndian" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isBigEndian"></a>
+##### `isBigEndian`<sup>Required</sup> <a name="isBigEndian" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.isBigEndian"></a>
 
 - *Type:* boolean
 
 ---
 
-##### `isSigned`<sup>Required</sup> <a name="isSigned" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isSigned"></a>
+##### `isSigned`<sup>Required</sup> <a name="isSigned" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.isSigned"></a>
 
 - *Type:* boolean
 
 ---
 
-##### `length`<sup>Required</sup> <a name="length" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length"></a>
+##### `length`<sup>Required</sup> <a name="length" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.length"></a>
 
 - *Type:* number
 
 ---
 
-##### `offset`<sup>Required</sup> <a name="offset" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset"></a>
+##### `offset`<sup>Required</sup> <a name="offset" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.offset"></a>
 
 - *Type:* number
 
 ---
 
-##### `startBit`<sup>Required</sup> <a name="startBit" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit"></a>
+##### `startBit`<sup>Required</sup> <a name="startBit" id="pahud-iot-demo.CanVehicleSignal.Initializer.parameter.startBit"></a>
 
 - *Type:* number
 
@@ -795,11 +795,11 @@ new CanVehicleSignal(name: string, fullyQualifiedName: string, interfaceId: stri
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CanVehicleSignal.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.CanVehicleSignal.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.CanVehicleSignal.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -808,12 +808,12 @@ public toObject(): object
 
 
 
-### CollectionScheme <a name="CollectionScheme" id="cdk-aws-iotfleetwise.CollectionScheme"></a>
+### CollectionScheme <a name="CollectionScheme" id="pahud-iot-demo.CollectionScheme"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.CollectionScheme.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.CollectionScheme.Initializer"></a>
 
 ```typescript
-import { CollectionScheme } from 'cdk-aws-iotfleetwise'
+import { CollectionScheme } from 'pahud-iot-demo'
 
 new CollectionScheme()
 ```
@@ -827,11 +827,11 @@ new CollectionScheme()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CollectionScheme.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.CollectionScheme.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.CollectionScheme.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.CollectionScheme.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -840,37 +840,37 @@ public toObject(): object
 
 
 
-### SignalCatalogBranch <a name="SignalCatalogBranch" id="cdk-aws-iotfleetwise.SignalCatalogBranch"></a>
+### SignalCatalogBranch <a name="SignalCatalogBranch" id="pahud-iot-demo.SignalCatalogBranch"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.SignalCatalogBranch.Initializer"></a>
 
 ```typescript
-import { SignalCatalogBranch } from 'cdk-aws-iotfleetwise'
+import { SignalCatalogBranch } from 'pahud-iot-demo'
 
 new SignalCatalogBranch(name: string, fullyQualifiedName: string, description?: string)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.name"></a>
 
 - *Type:* string
 
 ---
 
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.fullyQualifiedName"></a>
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.fullyQualifiedName"></a>
 
 - *Type:* string
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.SignalCatalogBranch.Initializer.parameter.description"></a>
 
 - *Type:* string
 
@@ -880,11 +880,11 @@ new SignalCatalogBranch(name: string, fullyQualifiedName: string, description?: 
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogBranch.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.SignalCatalogBranch.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.SignalCatalogBranch.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -893,12 +893,12 @@ public toObject(): object
 
 
 
-### SignalCatalogNode <a name="SignalCatalogNode" id="cdk-aws-iotfleetwise.SignalCatalogNode"></a>
+### SignalCatalogNode <a name="SignalCatalogNode" id="pahud-iot-demo.SignalCatalogNode"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogNode.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.SignalCatalogNode.Initializer"></a>
 
 ```typescript
-import { SignalCatalogNode } from 'cdk-aws-iotfleetwise'
+import { SignalCatalogNode } from 'pahud-iot-demo'
 
 new SignalCatalogNode()
 ```
@@ -912,11 +912,11 @@ new SignalCatalogNode()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogNode.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.SignalCatalogNode.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.SignalCatalogNode.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -925,65 +925,65 @@ public toObject(): object
 
 
 
-### SignalCatalogSensor <a name="SignalCatalogSensor" id="cdk-aws-iotfleetwise.SignalCatalogSensor"></a>
+### SignalCatalogSensor <a name="SignalCatalogSensor" id="pahud-iot-demo.SignalCatalogSensor"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.SignalCatalogSensor.Initializer"></a>
 
 ```typescript
-import { SignalCatalogSensor } from 'cdk-aws-iotfleetwise'
+import { SignalCatalogSensor } from 'pahud-iot-demo'
 
 new SignalCatalogSensor(name: string, fullyQualifiedName: string, dataType: string, unit?: string, min?: number, max?: number, description?: string)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.dataType">dataType</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit">unit</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min">min</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.max">max</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.dataType">dataType</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.unit">unit</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.min">min</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.max">max</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.name"></a>
 
 - *Type:* string
 
 ---
 
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName"></a>
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName"></a>
 
 - *Type:* string
 
 ---
 
-##### `dataType`<sup>Required</sup> <a name="dataType" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.dataType"></a>
+##### `dataType`<sup>Required</sup> <a name="dataType" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.dataType"></a>
 
 - *Type:* string
 
 ---
 
-##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit"></a>
+##### `unit`<sup>Optional</sup> <a name="unit" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.unit"></a>
 
 - *Type:* string
 
 ---
 
-##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min"></a>
+##### `min`<sup>Optional</sup> <a name="min" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.min"></a>
 
 - *Type:* number
 
 ---
 
-##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.max"></a>
+##### `max`<sup>Optional</sup> <a name="max" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.max"></a>
 
 - *Type:* number
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.SignalCatalogSensor.Initializer.parameter.description"></a>
 
 - *Type:* string
 
@@ -993,11 +993,11 @@ new SignalCatalogSensor(name: string, fullyQualifiedName: string, dataType: stri
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.SignalCatalogSensor.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.SignalCatalogSensor.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.SignalCatalogSensor.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -1006,23 +1006,23 @@ public toObject(): object
 
 
 
-### TimeBasedCollectionScheme <a name="TimeBasedCollectionScheme" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme"></a>
+### TimeBasedCollectionScheme <a name="TimeBasedCollectionScheme" id="pahud-iot-demo.TimeBasedCollectionScheme"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.TimeBasedCollectionScheme.Initializer"></a>
 
 ```typescript
-import { TimeBasedCollectionScheme } from 'cdk-aws-iotfleetwise'
+import { TimeBasedCollectionScheme } from 'pahud-iot-demo'
 
 new TimeBasedCollectionScheme(period: Duration)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.TimeBasedCollectionScheme.Initializer.parameter.period">period</a></code> | <code>aws-cdk-lib.Duration</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.TimeBasedCollectionScheme.Initializer.parameter.period">period</a></code> | <code>aws-cdk-lib.Duration</code> | *No description.* |
 
 ---
 
-##### `period`<sup>Required</sup> <a name="period" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.Initializer.parameter.period"></a>
+##### `period`<sup>Required</sup> <a name="period" id="pahud-iot-demo.TimeBasedCollectionScheme.Initializer.parameter.period"></a>
 
 - *Type:* aws-cdk-lib.Duration
 
@@ -1032,11 +1032,11 @@ new TimeBasedCollectionScheme(period: Duration)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.TimeBasedCollectionScheme.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.TimeBasedCollectionScheme.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -1045,12 +1045,12 @@ public toObject(): object
 
 
 
-### VehicleInterface <a name="VehicleInterface" id="cdk-aws-iotfleetwise.VehicleInterface"></a>
+### VehicleInterface <a name="VehicleInterface" id="pahud-iot-demo.VehicleInterface"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleInterface.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.VehicleInterface.Initializer"></a>
 
 ```typescript
-import { VehicleInterface } from 'cdk-aws-iotfleetwise'
+import { VehicleInterface } from 'pahud-iot-demo'
 
 new VehicleInterface()
 ```
@@ -1064,11 +1064,11 @@ new VehicleInterface()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleInterface.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleInterface.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.VehicleInterface.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.VehicleInterface.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -1077,12 +1077,12 @@ public toObject(): object
 
 
 
-### VehicleSignal <a name="VehicleSignal" id="cdk-aws-iotfleetwise.VehicleSignal"></a>
+### VehicleSignal <a name="VehicleSignal" id="pahud-iot-demo.VehicleSignal"></a>
 
-#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.VehicleSignal.Initializer"></a>
+#### Initializers <a name="Initializers" id="pahud-iot-demo.VehicleSignal.Initializer"></a>
 
 ```typescript
-import { VehicleSignal } from 'cdk-aws-iotfleetwise'
+import { VehicleSignal } from 'pahud-iot-demo'
 
 new VehicleSignal()
 ```
@@ -1096,11 +1096,11 @@ new VehicleSignal()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleSignal.toObject">toObject</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.VehicleSignal.toObject">toObject</a></code> | *No description.* |
 
 ---
 
-##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.VehicleSignal.toObject"></a>
+##### `toObject` <a name="toObject" id="pahud-iot-demo.VehicleSignal.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -1111,33 +1111,33 @@ public toObject(): object
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
-### ICampaign <a name="ICampaign" id="cdk-aws-iotfleetwise.ICampaign"></a>
+### ICampaign <a name="ICampaign" id="pahud-iot-demo.ICampaign"></a>
 
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
+- *Implemented By:* <a href="#pahud-iot-demo.ICampaign">ICampaign</a>
 
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.collectionScheme">collectionScheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.ICampaign.property.collectionScheme">collectionScheme</a></code> | <code><a href="#pahud-iot-demo.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.ICampaign.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.ICampaign.property.signals">signals</a></code> | <code><a href="#pahud-iot-demo.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.ICampaign.property.target">target</a></code> | <code><a href="#pahud-iot-demo.Vehicle">Vehicle</a></code> | *No description.* |
 
 ---
 
-##### `collectionScheme`<sup>Required</sup> <a name="collectionScheme" id="cdk-aws-iotfleetwise.ICampaign.property.collectionScheme"></a>
+##### `collectionScheme`<sup>Required</sup> <a name="collectionScheme" id="pahud-iot-demo.ICampaign.property.collectionScheme"></a>
 
 ```typescript
 public readonly collectionScheme: CollectionScheme;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+- *Type:* <a href="#pahud-iot-demo.CollectionScheme">CollectionScheme</a>
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.ICampaign.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.ICampaign.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -1147,45 +1147,45 @@ public readonly name: string;
 
 ---
 
-##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.ICampaign.property.signals"></a>
+##### `signals`<sup>Required</sup> <a name="signals" id="pahud-iot-demo.ICampaign.property.signals"></a>
 
 ```typescript
 public readonly signals: CampaignSignal[];
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]
+- *Type:* <a href="#pahud-iot-demo.CampaignSignal">CampaignSignal</a>[]
 
 ---
 
-##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.ICampaign.property.target"></a>
+##### `target`<sup>Required</sup> <a name="target" id="pahud-iot-demo.ICampaign.property.target"></a>
 
 ```typescript
 public readonly target: Vehicle;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+- *Type:* <a href="#pahud-iot-demo.Vehicle">Vehicle</a>
 
 ---
 
-### IServiceCatalogProps <a name="IServiceCatalogProps" id="cdk-aws-iotfleetwise.IServiceCatalogProps"></a>
+### IServiceCatalogProps <a name="IServiceCatalogProps" id="pahud-iot-demo.IServiceCatalogProps"></a>
 
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
+- *Implemented By:* <a href="#pahud-iot-demo.IServiceCatalogProps">IServiceCatalogProps</a>
 
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.nodes">nodes</a></code> | <code><a href="#pahud-iot-demo.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IServiceCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.database"></a>
+##### `database`<sup>Required</sup> <a name="database" id="pahud-iot-demo.IServiceCatalogProps.property.database"></a>
 
 ```typescript
 public readonly database: CfnDatabase;
@@ -1195,17 +1195,17 @@ public readonly database: CfnDatabase;
 
 ---
 
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes"></a>
+##### `nodes`<sup>Required</sup> <a name="nodes" id="pahud-iot-demo.IServiceCatalogProps.property.nodes"></a>
 
 ```typescript
 public readonly nodes: SignalCatalogNode[];
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
+- *Type:* <a href="#pahud-iot-demo.SignalCatalogNode">SignalCatalogNode</a>[]
 
 ---
 
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.role"></a>
+##### `role`<sup>Required</sup> <a name="role" id="pahud-iot-demo.IServiceCatalogProps.property.role"></a>
 
 ```typescript
 public readonly role: Role;
@@ -1215,7 +1215,7 @@ public readonly role: Role;
 
 ---
 
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.table"></a>
+##### `table`<sup>Required</sup> <a name="table" id="pahud-iot-demo.IServiceCatalogProps.property.table"></a>
 
 ```typescript
 public readonly table: CfnTable;
@@ -1225,7 +1225,7 @@ public readonly table: CfnTable;
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.IServiceCatalogProps.property.description"></a>
 
 ```typescript
 public readonly description: string;
@@ -1235,7 +1235,7 @@ public readonly description: string;
 
 ---
 
-##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.name"></a>
+##### `name`<sup>Optional</sup> <a name="name" id="pahud-iot-demo.IServiceCatalogProps.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -1245,9 +1245,9 @@ public readonly name: string;
 
 ---
 
-### IVehicle <a name="IVehicle" id="cdk-aws-iotfleetwise.IVehicle"></a>
+### IVehicle <a name="IVehicle" id="pahud-iot-demo.IVehicle"></a>
 
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
+- *Implemented By:* <a href="#pahud-iot-demo.IVehicle">IVehicle</a>
 
 Interface.
 
@@ -1256,13 +1256,13 @@ Interface.
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicle.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicle.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#pahud-iot-demo.VehicleModel">VehicleModel</a></code> | *No description.* |
 
 ---
 
-##### `createIotThing`<sup>Required</sup> <a name="createIotThing" id="cdk-aws-iotfleetwise.IVehicle.property.createIotThing"></a>
+##### `createIotThing`<sup>Required</sup> <a name="createIotThing" id="pahud-iot-demo.IVehicle.property.createIotThing"></a>
 
 ```typescript
 public readonly createIotThing: boolean;
@@ -1272,7 +1272,7 @@ public readonly createIotThing: boolean;
 
 ---
 
-##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleId"></a>
+##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="pahud-iot-demo.IVehicle.property.vehicleId"></a>
 
 ```typescript
 public readonly vehicleId: string;
@@ -1282,34 +1282,34 @@ public readonly vehicleId: string;
 
 ---
 
-##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleModel"></a>
+##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="pahud-iot-demo.IVehicle.property.vehicleModel"></a>
 
 ```typescript
 public readonly vehicleModel: VehicleModel;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+- *Type:* <a href="#pahud-iot-demo.VehicleModel">VehicleModel</a>
 
 ---
 
-### IVehicleModel <a name="IVehicleModel" id="cdk-aws-iotfleetwise.IVehicleModel"></a>
+### IVehicleModel <a name="IVehicleModel" id="pahud-iot-demo.IVehicleModel"></a>
 
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
+- *Implemented By:* <a href="#pahud-iot-demo.IVehicleModel">IVehicleModel</a>
 
 
 #### Properties <a name="Properties" id="Properties"></a>
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces">networkInterfaces</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicleModel.property.networkInterfaces">networkInterfaces</a></code> | <code><a href="#pahud-iot-demo.VehicleInterface">VehicleInterface</a>[]</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#pahud-iot-demo.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicleModel.property.signals">signals</a></code> | <code><a href="#pahud-iot-demo.VehicleSignal">VehicleSignal</a>[]</code> | *No description.* |
+| <code><a href="#pahud-iot-demo.IVehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.IVehicleModel.property.name"></a>
+##### `name`<sup>Required</sup> <a name="name" id="pahud-iot-demo.IVehicleModel.property.name"></a>
 
 ```typescript
 public readonly name: string;
@@ -1319,37 +1319,37 @@ public readonly name: string;
 
 ---
 
-##### `networkInterfaces`<sup>Required</sup> <a name="networkInterfaces" id="cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces"></a>
+##### `networkInterfaces`<sup>Required</sup> <a name="networkInterfaces" id="pahud-iot-demo.IVehicleModel.property.networkInterfaces"></a>
 
 ```typescript
 public readonly networkInterfaces: VehicleInterface[];
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]
+- *Type:* <a href="#pahud-iot-demo.VehicleInterface">VehicleInterface</a>[]
 
 ---
 
-##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog"></a>
+##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="pahud-iot-demo.IVehicleModel.property.signalCatalog"></a>
 
 ```typescript
 public readonly signalCatalog: SignalCatalog;
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+- *Type:* <a href="#pahud-iot-demo.SignalCatalog">SignalCatalog</a>
 
 ---
 
-##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.IVehicleModel.property.signals"></a>
+##### `signals`<sup>Required</sup> <a name="signals" id="pahud-iot-demo.IVehicleModel.property.signals"></a>
 
 ```typescript
 public readonly signals: VehicleSignal[];
 ```
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]
+- *Type:* <a href="#pahud-iot-demo.VehicleSignal">VehicleSignal</a>[]
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IVehicleModel.property.description"></a>
+##### `description`<sup>Optional</sup> <a name="description" id="pahud-iot-demo.IVehicleModel.property.description"></a>
 
 ```typescript
 public readonly description: string;

@@ -1,18 +1,18 @@
 const { awscdk } = require('projen');
 const project = new awscdk.AwsCdkConstructLibrary({
-  author: 'Francesco Salamida',
-  authorAddress: 'salamida@amazon.com',
+  author: 'Pahud Hsieh',
+  authorAddress: 'pahudnet@gmail.com',
   description: 'L2 CDK construct to provision AWS IoT Fleetwise',
   license: 'MIT-0',
   copyrightOwner: 'Amazon.com, Inc. or its affiliates. All Rights Reserved.',
   copyrightPeriod: '',
   cdkVersion: '2.26.0',
   defaultReleaseBranch: 'main',
-  name: 'cdk-aws-iotfleetwise',
+  name: 'pahud-iot-demo',
   repositoryUrl: 'https://github.com/aws-samples/cdk-aws-iotfleetwise.git',
   publishToPypi: {
-    distName: 'cdk-aws-iotfleetwise',
-    module: 'cdk_aws_iotfleetwise',
+    distName: 'pahud-iot-demo',
+    module: 'pahud_iot_demo',
   },
   releaseToNpm: true,
   releaseEveryCommit: true,
