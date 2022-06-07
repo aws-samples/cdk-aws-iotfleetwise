@@ -21,4 +21,11 @@ dist
 tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
+cdk.out
+cdk.context.json
+images
+yarn-error.log
+*.zip
+__pycache__
+.DS_Store
 /tmp/

@@ -31,12 +31,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
     },
   ],
 });
-project.addGitIgnore('__pycache__');
-project.addGitIgnore('.DS_Store');
-project.addGitIgnore('/cdk.out/');
-project.addGitIgnore('cdk.context.json');
-project.addGitIgnore('/tmp/');
-project.addPackageIgnore('/tmp/');
+
+const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', '*.zip', '__pycache__', '.DS_Store', '/tmp/'];
+project.npmignore.exclude(...common_exclude);
+project.gitignore.exclude(...common_exclude);
 
 // Creating python boto3 lambda layer with iot fleetwise support
 const url = 'https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/samples/AwsSdkPythonCli-Iotfleetwise.zip';
