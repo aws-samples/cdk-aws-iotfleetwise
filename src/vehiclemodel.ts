@@ -81,13 +81,44 @@ export class CanVehicleSignal extends VehicleSignal {
   }
 }
 
+export class NetworkFileDefinition {
+  protected definition: object;
+
+  constructor() {
+    this.definition = {};
+  }
+
+  toObject(): object {
+    return (this.definition);
+  }
+}
+
+export class CanDefinition extends NetworkFileDefinition {
+  constructor(
+    networkInterface: string,
+    signalsMap: Record<string, string>,
+    canDbcFiles: Array<string>
+    ) {
+    super();
+
+    this.definition = {
+      networkFileType: 'CAN_DBC',
+      canDbc: {
+        canDbcFiles,
+        networkInterface,
+        signalsMap
+      },
+    };
+  }
+}
+
 export interface IVehicleModel {
   signalCatalog: SignalCatalog;
   name: string;
   description?: string;
   networkInterfaces: VehicleInterface[];
-  signals: VehicleSignal[];
-
+  signals?: VehicleSignal[];
+  networkFileDefinitions?: NetworkFileDefinition[];
 }
 
 export class VehicleModel extends Construct {
@@ -110,7 +141,6 @@ export class VehicleModel extends Construct {
       role: this.signalCatalog.lambdaRole,
     });
 
-
     const provider = new cr.Provider(this, 'Provider', {
       onEventHandler: onEventHandler,
     });
@@ -123,8 +153,9 @@ export class VehicleModel extends Construct {
         model_manifest_arn: `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:model-manifest/${this.name}`,
         description: props.description,
         network_interfaces: JSON.stringify(props.networkInterfaces.map(i => i.toObject())),
-        signals: JSON.stringify(props.signals.map(s => s.toObject())),
-      },
+        signals: (props.signals) ? JSON.stringify(props.signals.map(s => s.toObject())) : '{}',
+        network_file_definitions: (props.networkFileDefinitions) ? JSON.stringify(props.networkFileDefinitions.map(s => s.toObject())) : '{}'
+      }
     });
 
     resource.node.addDependency(this.signalCatalog);
