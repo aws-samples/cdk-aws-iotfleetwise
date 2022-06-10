@@ -24,6 +24,7 @@ export interface IVehicle {
 export class Vehicle extends Construct {
   public readonly arn: string;
   public readonly vehicleModel: VehicleModel;
+  public readonly vehicleId: string;
   public readonly endpointAddress?: string;
   public readonly certificateId?: string;
   public readonly certificateArn?: string;
@@ -35,6 +36,7 @@ export class Vehicle extends Construct {
 
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.vehicleId}`;
     this.vehicleModel = props.vehicleModel;
+    this.vehicleId = props.vehicleId;
 
     const onEventHandler = new lambda.Function(this, 'Lambda', {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),

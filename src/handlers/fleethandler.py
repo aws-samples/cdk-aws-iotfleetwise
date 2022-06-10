@@ -1,0 +1,55 @@
+from pydoc import describe
+import boto3
+
+def on_event(event, context):
+    print(f'on_event {event} {context}')
+    request_type = event['RequestType']
+    if request_type == 'Create': 
+        return on_create(event)
+    if request_type == 'Update': 
+        return on_update(event)
+    if request_type == 'Delete': 
+        return on_delete(event)
+    raise Exception("Invalid request type: {request_type}")
+
+def on_create(event):
+    props = event["ResourceProperties"]
+    print(f"create new resource with props {props}")
+    client=boto3.client('iotfleetwise')
+    
+    response = client.create_fleet(
+      fleetId = props['fleet_id'],
+      description = props['description'],
+      signalCatalogArn = props['signal_catalog_arn'],
+    )
+    print(f"create_fleet response {response}")
+    
+    for id in props['vehicle_ids']:
+      print(f"associating vehicle id {id} to fleet {props['fleet_id']}")    
+      response = client.associate_vehicle(
+        fleetId = props['fleet_id'],
+        vehicleId = id,
+      )
+      print(f"associate_vehicle response {response}")      
+
+    return { 'PhysicalResourceId': props['fleet_id'] }
+
+def on_update(event):
+    physical_id = event["PhysicalResourceId"]
+    props = event["ResourceProperties"]
+    print(f"update resource {physical_id} with props {props}")
+    raise Exception("update not implemented yet")
+    #return { 'PhysicalResourceId': physical_id }
+
+def on_delete(event):
+    physical_id = event["PhysicalResourceId"]
+    props = event["ResourceProperties"]
+    print(f"delete resource {props['fleet_id']} {physical_id}")
+    client=boto3.client('iotfleetwise')
+
+    response = client.delete_fleet(
+      fleetId = props['fleet_id'],
+    )
+    print(f"delete_fleet response {response}")
+
+    return { 'PhysicalResourceId': physical_id }

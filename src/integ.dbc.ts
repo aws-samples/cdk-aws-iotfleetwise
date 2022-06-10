@@ -78,6 +78,14 @@ export class IntegTesting {
     });
     new cdk.CfnOutput(stack, 'certificateId', { value: vin100.certificateId! });
 
+    new ifw.Fleet(stack, 'fleet1', {
+      fleetId: 'fleet1',
+      signalCatalog: signalCatalog,
+      description: 'my fleet1',
+      vehicles: [ vin100 ]
+    });
+
+
     this.stack = [stack];
   }
 }
