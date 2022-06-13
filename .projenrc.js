@@ -13,7 +13,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   publishToPypi: {
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk_aws_iotfleetwise',
-  }
+  },
 });
 
 const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', '__pycache__', '.DS_Store', '/tmp/'];
