@@ -127,7 +127,6 @@ export class VehicleModel extends Construct {
 
   constructor(scope: Construct, id: string, props: VehicleModelProps) {
     super(scope, id);
-    console.log(props.name);
 
     (this.name as string) = props.name || '';
     (this.signalCatalog as SignalCatalog) = props.signalCatalog;
