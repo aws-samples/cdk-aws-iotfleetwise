@@ -6,7 +6,7 @@ import {
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { SignalCatalog } from './signalcatalog';
-import { Vehicle  } from './vehicle';
+import { Vehicle } from './vehicle';
 
 
 /**
@@ -27,7 +27,7 @@ export class Fleet extends Construct {
   public readonly fleetId: string;
   public readonly signalCatalog: SignalCatalog;
   public readonly vehicles: Vehicle[];
-  
+
   constructor(scope: Construct, id: string, props: IFleet) {
     super(scope, id);
 
@@ -55,7 +55,7 @@ export class Fleet extends Construct {
         fleet_id: this.fleetId,
         signal_catalog_arn: this.signalCatalog.arn,
         description: props.description,
-        vehicle_ids: this.vehicles.map(v => v.vehicleId)
+        vehicle_ids: this.vehicles.map(v => v.vehicleId),
       },
     });
 

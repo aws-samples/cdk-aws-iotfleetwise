@@ -97,8 +97,8 @@ export class CanDefinition extends NetworkFileDefinition {
   constructor(
     networkInterface: string,
     signalsMap: Record<string, string>,
-    canDbcFiles: Array<string>
-    ) {
+    canDbcFiles: Array<string>,
+  ) {
     super();
 
     this.definition = {
@@ -106,7 +106,7 @@ export class CanDefinition extends NetworkFileDefinition {
       canDbc: {
         canDbcFiles,
         networkInterface,
-        signalsMap
+        signalsMap,
       },
     };
   }
@@ -154,8 +154,8 @@ export class VehicleModel extends Construct {
         description: props.description,
         network_interfaces: JSON.stringify(props.networkInterfaces.map(i => i.toObject())),
         signals: (props.signals) ? JSON.stringify(props.signals.map(s => s.toObject())) : '{}',
-        network_file_definitions: (props.networkFileDefinitions) ? JSON.stringify(props.networkFileDefinitions.map(s => s.toObject())) : '{}'
-      }
+        network_file_definitions: (props.networkFileDefinitions) ? JSON.stringify(props.networkFileDefinitions.map(s => s.toObject())) : '{}',
+      },
     });
 
     resource.node.addDependency(this.signalCatalog);

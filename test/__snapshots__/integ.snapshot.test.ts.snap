@@ -77,6 +77,7 @@ Object {
           ],
         },
         "name": "modelA",
+        "network_file_definitions": "{}",
         "network_interfaces": "[{\\"type\\":\\"CAN_INTERFACE\\",\\"interfaceId\\":\\"1\\",\\"canInterface\\":{\\"canInterfaceName\\":\\"vcan0\\",\\"protocolName\\":\\"CAN\\",\\"protocolVersion\\":\\"2.0b\\"}}]",
         "signal_catalog_arn": Object {
           "Fn::Join": Array [
@@ -108,7 +109,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "d38d419efc6bca79d32a8ad133aa100d0060262375480ecdf6b2c13bc98c9c4c.zip",
+          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -275,7 +276,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "d38d419efc6bca79d32a8ad133aa100d0060262375480ecdf6b2c13bc98c9c4c.zip",
+          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -303,7 +304,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "6f7cada57f6a45b38c2ef81edfd39dd911d50750f04a2a551d01e8bc59ff35fe.zip",
+          "S3Key": "58e666607b1a1f413f63b013633558c0a9186542993036d3bf2f34e93e9a7fbf.zip",
         },
         "Description": "Boto3 Library with Iot Fleetwise Support",
       },
@@ -488,7 +489,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "d38d419efc6bca79d32a8ad133aa100d0060262375480ecdf6b2c13bc98c9c4c.zip",
+          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -516,7 +517,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "d38d419efc6bca79d32a8ad133aa100d0060262375480ecdf6b2c13bc98c9c4c.zip",
+          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -1196,7 +1197,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "d38d419efc6bca79d32a8ad133aa100d0060262375480ecdf6b2c13bc98c9c4c.zip",
+          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [

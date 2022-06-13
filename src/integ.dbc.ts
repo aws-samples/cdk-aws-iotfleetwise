@@ -1,11 +1,11 @@
+import * as fs from 'fs';
+import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
 import {
   aws_timestream as ts,
   aws_iam as iam,
 } from 'aws-cdk-lib';
 import * as ifw from '.';
-import * as fs from 'fs';
-import * as path from 'path';
 
 export class IntegTesting {
   readonly stack: cdk.Stack[];
@@ -37,38 +37,38 @@ export class IntegTesting {
       ],
     });
 
-    const canDbc = fs.readFileSync(path.join(__dirname, '/../chevy.dbc'),'utf8');
-    
+    const canDbc = fs.readFileSync(path.join(__dirname, '/../chevy.dbc'), 'utf8');
+
     const nodes: Array<ifw.SignalCatalogNode> = [new ifw.SignalCatalogBranch('Vehicle', 'Vehicle')];
-    canDbc.split("\n").filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
+    canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
       const signal_name = line.split(/\s+/)[2];
-      nodes.push(new ifw.SignalCatalogSensor(signal_name, `Vehicle.${signal_name}`, 'DOUBLE'))
-    })
+      nodes.push(new ifw.SignalCatalogSensor(signal_name, `Vehicle.${signal_name}`, 'DOUBLE'));
+    });
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
       table,
       role,
       description: 'my signal catalog',
-      nodes
+      nodes,
     });
 
     const signalsMap: Record<string, string> = {};
-    canDbc.split("\n").filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
+    canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
       const signal_name = line.split(/\s+/)[2];
       signalsMap[signal_name] =`Vehicle.${signal_name}`;
-    })
+    });
 
     const model_a = new ifw.VehicleModel(stack, 'ModelA', {
       signalCatalog,
       name: 'modelA',
       description: 'Model A vehicle',
       networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
-      networkFileDefinitions: [ new ifw.CanDefinition(
+      networkFileDefinitions: [new ifw.CanDefinition(
         '1',
         signalsMap,
-        [ canDbc ]
-      )]
+        [canDbc],
+      )],
     });
 
     const vin100 = new ifw.Vehicle(stack, 'vin100', {
@@ -82,7 +82,7 @@ export class IntegTesting {
       fleetId: 'fleet1',
       signalCatalog: signalCatalog,
       description: 'my fleet1',
-      vehicles: [ vin100 ]
+      vehicles: [vin100],
     });
 
 
