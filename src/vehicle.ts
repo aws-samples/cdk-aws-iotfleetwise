@@ -8,14 +8,13 @@ import {
 import { Construct } from 'constructs';
 import { VehicleModel } from './vehiclemodel';
 
-
 /**
  * Interface
  */
-export interface IVehicle {
-  vehicleModel: VehicleModel;
-  vehicleId: string;
-  createIotThing: boolean;
+export interface VehicleProps {
+  readonly vehicleModel: VehicleModel;
+  readonly vehicleId: string;
+  readonly createIotThing: boolean;
 }
 
 /**
@@ -23,20 +22,20 @@ export interface IVehicle {
  */
 export class Vehicle extends Construct {
   public readonly arn: string;
-  public readonly vehicleModel: VehicleModel;
-  public readonly vehicleId: string;
+  public readonly vehicleModel: VehicleModel = ({} as VehicleModel);
+  public readonly vehicleId: string = '';
   public readonly endpointAddress?: string;
   public readonly certificateId?: string;
   public readonly certificateArn?: string;
   public readonly certificatePem?: string;
   public readonly privateKey?: string;
 
-  constructor(scope: Construct, id: string, props: IVehicle) {
+  constructor(scope: Construct, id: string, props: VehicleProps) {
     super(scope, id);
 
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.vehicleId}`;
-    this.vehicleModel = props.vehicleModel;
-    this.vehicleId = props.vehicleId;
+    (this.vehicleModel as VehicleModel) = props.vehicleModel;
+    (this.vehicleId as string) = props.vehicleId;
 
     const onEventHandler = new lambda.Function(this, 'Lambda', {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),

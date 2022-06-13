@@ -12,7 +12,10 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.Campaign(
   scope: Construct,
   id: str,
-  props: ICampaign
+  collection_scheme: CollectionScheme,
+  name: str,
+  signals: typing.List[CampaignSignal],
+  target: Vehicle
 )
 ```
 
@@ -20,7 +23,10 @@ cdk_aws_iotfleetwise.Campaign(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
 
 ---
 
@@ -36,9 +42,27 @@ cdk_aws_iotfleetwise.Campaign(
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props"></a>
+##### `collection_scheme`<sup>Required</sup> <a name="collection_scheme" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.name"></a>
+
+- *Type:* str
+
+---
+
+##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.signals"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]
+
+---
+
+##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
 
 ---
 
@@ -152,7 +176,10 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.Fleet(
   scope: Construct,
   id: str,
-  props: IFleet
+  fleet_id: str,
+  signal_catalog: SignalCatalog,
+  description: str = None,
+  vehicles: typing.List[Vehicle] = None
 )
 ```
 
@@ -160,7 +187,10 @@ cdk_aws_iotfleetwise.Fleet(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.fleetId">fleet_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.vehicles">vehicles</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]</code> | *No description.* |
 
 ---
 
@@ -176,9 +206,27 @@ cdk_aws_iotfleetwise.Fleet(
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.props"></a>
+##### `fleet_id`<sup>Required</sup> <a name="fleet_id" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.fleetId"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a>
+- *Type:* str
+
+---
+
+##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.signalCatalog"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.description"></a>
+
+- *Type:* str
+
+---
+
+##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.vehicles"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]
 
 ---
 
@@ -280,7 +328,7 @@ signal_catalog: SignalCatalog
 
 ---
 
-##### `vehicles`<sup>Required</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.Fleet.property.vehicles"></a>
+##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.Fleet.property.vehicles"></a>
 
 ```python
 vehicles: typing.List[Vehicle]
@@ -305,7 +353,12 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.SignalCatalog(
   scope: Construct,
   id: str,
-  props: IServiceCatalogProps
+  database: CfnDatabase,
+  nodes: typing.List[SignalCatalogNode],
+  role: Role,
+  table: CfnTable,
+  description: str = None,
+  name: str = None
 )
 ```
 
@@ -313,7 +366,12 @@ cdk_aws_iotfleetwise.SignalCatalog(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.role">role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
 
 ---
 
@@ -329,9 +387,39 @@ cdk_aws_iotfleetwise.SignalCatalog(
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props"></a>
+##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
+- *Type:* aws_cdk.aws_timestream.CfnDatabase
+
+---
+
+##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+
+---
+
+##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.role"></a>
+
+- *Type:* aws_cdk.aws_iam.Role
+
+---
+
+##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table"></a>
+
+- *Type:* aws_cdk.aws_timestream.CfnTable
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description"></a>
+
+- *Type:* str
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name"></a>
+
+- *Type:* str
 
 ---
 
@@ -469,7 +557,9 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.Vehicle(
   scope: Construct,
   id: str,
-  props: IVehicle
+  create_iot_thing: bool,
+  vehicle_id: str,
+  vehicle_model: VehicleModel
 )
 ```
 
@@ -477,7 +567,9 @@ cdk_aws_iotfleetwise.Vehicle(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.createIotThing">create_iot_thing</a></code> | <code>bool</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleId">vehicle_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleModel">vehicle_model</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
 
 ---
 
@@ -493,9 +585,21 @@ cdk_aws_iotfleetwise.Vehicle(
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props"></a>
+##### `create_iot_thing`<sup>Required</sup> <a name="create_iot_thing" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.createIotThing"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
+- *Type:* bool
+
+---
+
+##### `vehicle_id`<sup>Required</sup> <a name="vehicle_id" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleId"></a>
+
+- *Type:* str
+
+---
+
+##### `vehicle_model`<sup>Required</sup> <a name="vehicle_model" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleModel"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
 
 ---
 
@@ -662,7 +766,12 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.VehicleModel(
   scope: Construct,
   id: str,
-  props: IVehicleModel
+  name: str,
+  network_interfaces: typing.List[VehicleInterface],
+  signal_catalog: SignalCatalog,
+  description: str = None,
+  network_file_definitions: typing.List[NetworkFileDefinition] = None,
+  signals: typing.List[VehicleSignal] = None
 )
 ```
 
@@ -670,7 +779,12 @@ cdk_aws_iotfleetwise.VehicleModel(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.networkInterfaces">network_interfaces</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.networkFileDefinitions">network_file_definitions</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]</code> | *No description.* |
 
 ---
 
@@ -686,9 +800,39 @@ cdk_aws_iotfleetwise.VehicleModel(
 
 ---
 
-##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props"></a>
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.name"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
+- *Type:* str
+
+---
+
+##### `network_interfaces`<sup>Required</sup> <a name="network_interfaces" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.networkInterfaces"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]
+
+---
+
+##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.signalCatalog"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.description"></a>
+
+- *Type:* str
+
+---
+
+##### `network_file_definitions`<sup>Optional</sup> <a name="network_file_definitions" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.networkFileDefinitions"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]
+
+---
+
+##### `signals`<sup>Optional</sup> <a name="signals" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.signals"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]
 
 ---
 
@@ -743,7 +887,6 @@ Any object.
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.description">description</a></code> | <code>str</code> | *No description.* |
 
 ---
 
@@ -779,7 +922,124 @@ signal_catalog: SignalCatalog
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModel.property.description"></a>
+
+## Structs <a name="Structs" id="Structs"></a>
+
+### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CampaignProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.CampaignProps(
+  collection_scheme: CollectionScheme,
+  name: str,
+  signals: typing.List[CampaignSignal],
+  target: Vehicle
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+
+---
+
+##### `collection_scheme`<sup>Required</sup> <a name="collection_scheme" id="cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme"></a>
+
+```python
+collection_scheme: CollectionScheme
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CampaignProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* str
+
+---
+
+##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.CampaignProps.property.signals"></a>
+
+```python
+signals: typing.List[CampaignSignal]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]
+
+---
+
+##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.CampaignProps.property.target"></a>
+
+```python
+target: Vehicle
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+
+---
+
+### FleetProps <a name="FleetProps" id="cdk-aws-iotfleetwise.FleetProps"></a>
+
+Interface.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.FleetProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.FleetProps(
+  fleet_id: str,
+  signal_catalog: SignalCatalog,
+  description: str = None,
+  vehicles: typing.List[Vehicle] = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.fleetId">fleet_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.vehicles">vehicles</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]</code> | *No description.* |
+
+---
+
+##### `fleet_id`<sup>Required</sup> <a name="fleet_id" id="cdk-aws-iotfleetwise.FleetProps.property.fleetId"></a>
+
+```python
+fleet_id: str
+```
+
+- *Type:* str
+
+---
+
+##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.FleetProps.property.signalCatalog"></a>
+
+```python
+signal_catalog: SignalCatalog
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.FleetProps.property.description"></a>
 
 ```python
 description: str
@@ -789,7 +1049,251 @@ description: str
 
 ---
 
+##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.FleetProps.property.vehicles"></a>
 
+```python
+vehicles: typing.List[Vehicle]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]
+
+---
+
+### SignalCatalogProps <a name="SignalCatalogProps" id="cdk-aws-iotfleetwise.SignalCatalogProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogProps(
+  database: CfnDatabase,
+  nodes: typing.List[SignalCatalogNode],
+  role: Role,
+  table: CfnTable,
+  description: str = None,
+  name: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.role">role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.database"></a>
+
+```python
+database: CfnDatabase
+```
+
+- *Type:* aws_cdk.aws_timestream.CfnDatabase
+
+---
+
+##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
+
+```python
+nodes: typing.List[SignalCatalogNode]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+
+---
+
+##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.role"></a>
+
+```python
+role: Role
+```
+
+- *Type:* aws_cdk.aws_iam.Role
+
+---
+
+##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.table"></a>
+
+```python
+table: CfnTable
+```
+
+- *Type:* aws_cdk.aws_timestream.CfnTable
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* str
+
+---
+
+### VehicleModelProps <a name="VehicleModelProps" id="cdk-aws-iotfleetwise.VehicleModelProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.VehicleModelProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.VehicleModelProps(
+  name: str,
+  network_interfaces: typing.List[VehicleInterface],
+  signal_catalog: SignalCatalog,
+  description: str = None,
+  network_file_definitions: typing.List[NetworkFileDefinition] = None,
+  signals: typing.List[VehicleSignal] = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.networkInterfaces">network_interfaces</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.networkFileDefinitions">network_file_definitions</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]</code> | *No description.* |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.VehicleModelProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* str
+
+---
+
+##### `network_interfaces`<sup>Required</sup> <a name="network_interfaces" id="cdk-aws-iotfleetwise.VehicleModelProps.property.networkInterfaces"></a>
+
+```python
+network_interfaces: typing.List[VehicleInterface]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]
+
+---
+
+##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.VehicleModelProps.property.signalCatalog"></a>
+
+```python
+signal_catalog: SignalCatalog
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModelProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
+##### `network_file_definitions`<sup>Optional</sup> <a name="network_file_definitions" id="cdk-aws-iotfleetwise.VehicleModelProps.property.networkFileDefinitions"></a>
+
+```python
+network_file_definitions: typing.List[NetworkFileDefinition]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]
+
+---
+
+##### `signals`<sup>Optional</sup> <a name="signals" id="cdk-aws-iotfleetwise.VehicleModelProps.property.signals"></a>
+
+```python
+signals: typing.List[VehicleSignal]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]
+
+---
+
+### VehicleProps <a name="VehicleProps" id="cdk-aws-iotfleetwise.VehicleProps"></a>
+
+Interface.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.VehicleProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.VehicleProps(
+  create_iot_thing: bool,
+  vehicle_id: str,
+  vehicle_model: VehicleModel
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.createIotThing">create_iot_thing</a></code> | <code>bool</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleId">vehicle_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel">vehicle_model</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
+
+---
+
+##### `create_iot_thing`<sup>Required</sup> <a name="create_iot_thing" id="cdk-aws-iotfleetwise.VehicleProps.property.createIotThing"></a>
+
+```python
+create_iot_thing: bool
+```
+
+- *Type:* bool
+
+---
+
+##### `vehicle_id`<sup>Required</sup> <a name="vehicle_id" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleId"></a>
+
+```python
+vehicle_id: str
+```
+
+- *Type:* str
+
+---
+
+##### `vehicle_model`<sup>Required</sup> <a name="vehicle_model" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel"></a>
+
+```python
+vehicle_model: VehicleModel
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+
+---
 
 ## Classes <a name="Classes" id="Classes"></a>
 
@@ -1416,322 +1920,4 @@ def to_object() -> any
 
 
 
-## Protocols <a name="Protocols" id="Protocols"></a>
-
-### ICampaign <a name="ICampaign" id="cdk-aws-iotfleetwise.ICampaign"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.name">name</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
-
----
-
-##### `collection_scheme`<sup>Required</sup> <a name="collection_scheme" id="cdk-aws-iotfleetwise.ICampaign.property.collectionScheme"></a>
-
-```python
-collection_scheme: CollectionScheme
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.ICampaign.property.name"></a>
-
-```python
-name: str
-```
-
-- *Type:* str
-
----
-
-##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.ICampaign.property.signals"></a>
-
-```python
-signals: typing.List[CampaignSignal]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]
-
----
-
-##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.ICampaign.property.target"></a>
-
-```python
-target: Vehicle
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
-
----
-
-### IFleet <a name="IFleet" id="cdk-aws-iotfleetwise.IFleet"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a>
-
-Interface.
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.fleetId">fleet_id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.description">description</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.vehicles">vehicles</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]</code> | *No description.* |
-
----
-
-##### `fleet_id`<sup>Required</sup> <a name="fleet_id" id="cdk-aws-iotfleetwise.IFleet.property.fleetId"></a>
-
-```python
-fleet_id: str
-```
-
-- *Type:* str
-
----
-
-##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.IFleet.property.signalCatalog"></a>
-
-```python
-signal_catalog: SignalCatalog
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IFleet.property.description"></a>
-
-```python
-description: str
-```
-
-- *Type:* str
-
----
-
-##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.IFleet.property.vehicles"></a>
-
-```python
-vehicles: typing.List[Vehicle]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]
-
----
-
-### IServiceCatalogProps <a name="IServiceCatalogProps" id="cdk-aws-iotfleetwise.IServiceCatalogProps"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.role">role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.description">description</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.name">name</a></code> | <code>str</code> | *No description.* |
-
----
-
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.database"></a>
-
-```python
-database: CfnDatabase
-```
-
-- *Type:* aws_cdk.aws_timestream.CfnDatabase
-
----
-
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes"></a>
-
-```python
-nodes: typing.List[SignalCatalogNode]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
-
----
-
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.role"></a>
-
-```python
-role: Role
-```
-
-- *Type:* aws_cdk.aws_iam.Role
-
----
-
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.table"></a>
-
-```python
-table: CfnTable
-```
-
-- *Type:* aws_cdk.aws_timestream.CfnTable
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.description"></a>
-
-```python
-description: str
-```
-
-- *Type:* str
-
----
-
-##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.name"></a>
-
-```python
-name: str
-```
-
-- *Type:* str
-
----
-
-### IVehicle <a name="IVehicle" id="cdk-aws-iotfleetwise.IVehicle"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
-
-Interface.
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.createIotThing">create_iot_thing</a></code> | <code>bool</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleId">vehicle_id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleModel">vehicle_model</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
-
----
-
-##### `create_iot_thing`<sup>Required</sup> <a name="create_iot_thing" id="cdk-aws-iotfleetwise.IVehicle.property.createIotThing"></a>
-
-```python
-create_iot_thing: bool
-```
-
-- *Type:* bool
-
----
-
-##### `vehicle_id`<sup>Required</sup> <a name="vehicle_id" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleId"></a>
-
-```python
-vehicle_id: str
-```
-
-- *Type:* str
-
----
-
-##### `vehicle_model`<sup>Required</sup> <a name="vehicle_model" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleModel"></a>
-
-```python
-vehicle_model: VehicleModel
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
-
----
-
-### IVehicleModel <a name="IVehicleModel" id="cdk-aws-iotfleetwise.IVehicleModel"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.name">name</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces">network_interfaces</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog">signal_catalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.description">description</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.networkFileDefinitions">network_file_definitions</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.IVehicleModel.property.name"></a>
-
-```python
-name: str
-```
-
-- *Type:* str
-
----
-
-##### `network_interfaces`<sup>Required</sup> <a name="network_interfaces" id="cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces"></a>
-
-```python
-network_interfaces: typing.List[VehicleInterface]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>]
-
----
-
-##### `signal_catalog`<sup>Required</sup> <a name="signal_catalog" id="cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog"></a>
-
-```python
-signal_catalog: SignalCatalog
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IVehicleModel.property.description"></a>
-
-```python
-description: str
-```
-
-- *Type:* str
-
----
-
-##### `network_file_definitions`<sup>Optional</sup> <a name="network_file_definitions" id="cdk-aws-iotfleetwise.IVehicleModel.property.networkFileDefinitions"></a>
-
-```python
-network_file_definitions: typing.List[NetworkFileDefinition]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>]
-
----
-
-##### `signals`<sup>Optional</sup> <a name="signals" id="cdk-aws-iotfleetwise.IVehicleModel.property.signals"></a>
-
-```python
-signals: typing.List[VehicleSignal]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>]
-
----
 

@@ -112,25 +112,24 @@ export class CanDefinition extends NetworkFileDefinition {
   }
 }
 
-export interface IVehicleModel {
-  signalCatalog: SignalCatalog;
-  name: string;
-  description?: string;
-  networkInterfaces: VehicleInterface[];
-  signals?: VehicleSignal[];
-  networkFileDefinitions?: NetworkFileDefinition[];
+export interface VehicleModelProps {
+  readonly signalCatalog: SignalCatalog;
+  readonly name: string;
+  readonly description?: string;
+  readonly networkInterfaces: VehicleInterface[];
+  readonly signals?: VehicleSignal[];
+  readonly networkFileDefinitions?: NetworkFileDefinition[];
 }
 
 export class VehicleModel extends Construct {
-  readonly name: string;
-  readonly description: (string|undefined);
-  readonly signalCatalog: SignalCatalog;
+  readonly name: string = '';
+  readonly signalCatalog: SignalCatalog = ({} as SignalCatalog);
 
-  constructor(scope: Construct, id: string, props: IVehicleModel) {
+  constructor(scope: Construct, id: string, props: VehicleModelProps) {
     super(scope, id);
 
-    this.name = props.name;
-    this.signalCatalog = props.signalCatalog;
+    (this.name as string) = props.name || '';
+    (this.signalCatalog as SignalCatalog) = props.signalCatalog;
 
     const onEventHandler = new lambda.Function(this, 'Lambda', {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
