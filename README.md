@@ -112,7 +112,6 @@ Warning: this construct should be considered at alpha stage and is not feature c
 - Reduce Lambda log retention to 1d
 - Apply the least priviledge principle to roles
 - Implement updates for all the custom resources
-- Fleet
 - Conditional campaigns
 
 ## Security
