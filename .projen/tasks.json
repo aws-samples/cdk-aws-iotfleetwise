@@ -190,40 +190,14 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation",
-      "steps": [
-        {
-          "say": "Creating python boto3 lambda layer with iot fleetwise support"
-        },
-        {
-          "exec": "if [ -d tmp/layer ]; then rm -Rf tmp/layer; fi"
-        },
-        {
-          "exec": "mkdir -p lib"
-        },
-        {
-          "exec": "mkdir -p tmp/layer"
-        },
-        {
-          "exec": "python -m venv venv",
-          "cwd": "tmp/layer"
-        },
-        {
-          "exec": "if [ ! -e cli.zip ]; then wget https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/samples/AwsSdkPythonCli-Iotfleetwise.zip -O cli.zip && unzip -o cli.zip botocore-1.23.13-py3-none-any.whl boto3-1.20.13-py3-none-any.whl ; fi",
-          "cwd": "tmp"
-        },
-        {
-          "exec": "layer/venv/bin/pip install botocore-1.23.13-py3-none-any.whl boto3-1.20.13-py3-none-any.whl  -t ./layer/python",
-          "cwd": "tmp"
-        },
-        {
-          "exec": "zip -qr ../../lib/layer.zip *",
-          "cwd": "tmp/layer"
-        }
-      ]
+      "description": "Prepare the project for compilation"
     },
     "release": {
       "name": "release",
+      "description": "Prepare a release from \"main\" branch",
+      "env": {
+        "RELEASE": "true"
+      },
       "steps": [
         {
           "exec": "rm -fr dist"
@@ -236,6 +210,9 @@
         },
         {
           "spawn": "unbump"
+        },
+        {
+          "exec": "git diff --ignore-space-at-eol --exit-code"
         }
       ]
     },

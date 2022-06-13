@@ -8,7 +8,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     outputs:
@@ -26,12 +26,6 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Install python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.7"
-      - name: Install package dependencies
-        run: sudo apt update && sudo apt install -y wget unzip zip
       - name: release
         run: npx projen release
       - name: Check for new commits
@@ -48,7 +42,7 @@ jobs:
   release_github:
     name: Publish to GitHub Releases
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
@@ -74,7 +68,7 @@ jobs:
   release_npm:
     name: Publish to npm
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
@@ -104,7 +98,7 @@ jobs:
   release_pypi:
     name: Publish to PyPI
     needs: release
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
