@@ -9,14 +9,14 @@
 ```typescript
 import { Campaign } from 'cdk-aws-iotfleetwise'
 
-new Campaign(scope: Construct, id: string, props: ICampaign)
+new Campaign(scope: Construct, id: string, props: CampaignProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignProps">CampaignProps</a></code> | *No description.* |
 
 ---
 
@@ -34,7 +34,7 @@ new Campaign(scope: Construct, id: string, props: ICampaign)
 
 ##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.CampaignProps">CampaignProps</a>
 
 ---
 
@@ -143,14 +143,14 @@ The fleet of vehicles.
 ```typescript
 import { Fleet } from 'cdk-aws-iotfleetwise'
 
-new Fleet(scope: Construct, id: string, props: IFleet)
+new Fleet(scope: Construct, id: string, props: FleetProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Fleet.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.FleetProps">FleetProps</a></code> | *No description.* |
 
 ---
 
@@ -168,7 +168,7 @@ new Fleet(scope: Construct, id: string, props: IFleet)
 
 ##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Fleet.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.FleetProps">FleetProps</a>
 
 ---
 
@@ -268,7 +268,7 @@ public readonly signalCatalog: SignalCatalog;
 
 ---
 
-##### `vehicles`<sup>Required</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.Fleet.property.vehicles"></a>
+##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.Fleet.property.vehicles"></a>
 
 ```typescript
 public readonly vehicles: Vehicle[];
@@ -290,14 +290,14 @@ The AWS IoT Fleetwise preview can only support a single Signal Catalog per accou
 ```typescript
 import { SignalCatalog } from 'cdk-aws-iotfleetwise'
 
-new SignalCatalog(scope: Construct, id: string, props: IServiceCatalogProps)
+new SignalCatalog(scope: Construct, id: string, props: SignalCatalogProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps">SignalCatalogProps</a></code> | *No description.* |
 
 ---
 
@@ -315,7 +315,7 @@ new SignalCatalog(scope: Construct, id: string, props: IServiceCatalogProps)
 
 ##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogProps">SignalCatalogProps</a>
 
 ---
 
@@ -448,14 +448,14 @@ The vehicle of a specific type from which IoT FleetWise collect signals.
 ```typescript
 import { Vehicle } from 'cdk-aws-iotfleetwise'
 
-new Vehicle(scope: Construct, id: string, props: IVehicle)
+new Vehicle(scope: Construct, id: string, props: VehicleProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleProps">VehicleProps</a></code> | *No description.* |
 
 ---
 
@@ -473,7 +473,7 @@ new Vehicle(scope: Construct, id: string, props: IVehicle)
 
 ##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleProps">VehicleProps</a>
 
 ---
 
@@ -635,14 +635,14 @@ public readonly privateKey: string;
 ```typescript
 import { VehicleModel } from 'cdk-aws-iotfleetwise'
 
-new VehicleModel(scope: Construct, id: string, props: IVehicleModel)
+new VehicleModel(scope: Construct, id: string, props: VehicleModelProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps">VehicleModelProps</a></code> | *No description.* |
 
 ---
 
@@ -660,7 +660,7 @@ new VehicleModel(scope: Construct, id: string, props: IVehicleModel)
 
 ##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.VehicleModel.Initializer.parameter.props"></a>
 
-- *Type:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModelProps">VehicleModelProps</a>
 
 ---
 
@@ -713,7 +713,6 @@ Any object.
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
 
 ---
 
@@ -749,7 +748,114 @@ public readonly signalCatalog: SignalCatalog;
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModel.property.description"></a>
+
+## Structs <a name="Structs" id="Structs"></a>
+
+### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CampaignProps.Initializer"></a>
+
+```typescript
+import { CampaignProps } from 'cdk-aws-iotfleetwise'
+
+const campaignProps: CampaignProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collectionScheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+
+---
+
+##### `collectionScheme`<sup>Required</sup> <a name="collectionScheme" id="cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme"></a>
+
+```typescript
+public readonly collectionScheme: CollectionScheme;
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CampaignProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.CampaignProps.property.signals"></a>
+
+```typescript
+public readonly signals: CampaignSignal[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]
+
+---
+
+##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.CampaignProps.property.target"></a>
+
+```typescript
+public readonly target: Vehicle;
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+
+---
+
+### FleetProps <a name="FleetProps" id="cdk-aws-iotfleetwise.FleetProps"></a>
+
+Interface.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.FleetProps.Initializer"></a>
+
+```typescript
+import { FleetProps } from 'cdk-aws-iotfleetwise'
+
+const fleetProps: FleetProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.fleetId">fleetId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.FleetProps.property.vehicles">vehicles</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>[]</code> | *No description.* |
+
+---
+
+##### `fleetId`<sup>Required</sup> <a name="fleetId" id="cdk-aws-iotfleetwise.FleetProps.property.fleetId"></a>
+
+```typescript
+public readonly fleetId: string;
+```
+
+- *Type:* string
+
+---
+
+##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.FleetProps.property.signalCatalog"></a>
+
+```typescript
+public readonly signalCatalog: SignalCatalog;
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.FleetProps.property.description"></a>
 
 ```typescript
 public readonly description: string;
@@ -759,7 +865,233 @@ public readonly description: string;
 
 ---
 
+##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.FleetProps.property.vehicles"></a>
 
+```typescript
+public readonly vehicles: Vehicle[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>[]
+
+---
+
+### SignalCatalogProps <a name="SignalCatalogProps" id="cdk-aws-iotfleetwise.SignalCatalogProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogProps.Initializer"></a>
+
+```typescript
+import { SignalCatalogProps } from 'cdk-aws-iotfleetwise'
+
+const signalCatalogProps: SignalCatalogProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.database"></a>
+
+```typescript
+public readonly database: CfnDatabase;
+```
+
+- *Type:* aws-cdk-lib.aws_timestream.CfnDatabase
+
+---
+
+##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
+
+```typescript
+public readonly nodes: SignalCatalogNode[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
+
+---
+
+##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.role"></a>
+
+```typescript
+public readonly role: Role;
+```
+
+- *Type:* aws-cdk-lib.aws_iam.Role
+
+---
+
+##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.table"></a>
+
+```typescript
+public readonly table: CfnTable;
+```
+
+- *Type:* aws-cdk-lib.aws_timestream.CfnTable
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+### VehicleModelProps <a name="VehicleModelProps" id="cdk-aws-iotfleetwise.VehicleModelProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.VehicleModelProps.Initializer"></a>
+
+```typescript
+import { VehicleModelProps } from 'cdk-aws-iotfleetwise'
+
+const vehicleModelProps: VehicleModelProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.networkInterfaces">networkInterfaces</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.networkFileDefinitions">networkFileDefinitions</a></code> | <code><a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleModelProps.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]</code> | *No description.* |
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.VehicleModelProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `networkInterfaces`<sup>Required</sup> <a name="networkInterfaces" id="cdk-aws-iotfleetwise.VehicleModelProps.property.networkInterfaces"></a>
+
+```typescript
+public readonly networkInterfaces: VehicleInterface[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]
+
+---
+
+##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.VehicleModelProps.property.signalCatalog"></a>
+
+```typescript
+public readonly signalCatalog: SignalCatalog;
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.VehicleModelProps.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+---
+
+##### `networkFileDefinitions`<sup>Optional</sup> <a name="networkFileDefinitions" id="cdk-aws-iotfleetwise.VehicleModelProps.property.networkFileDefinitions"></a>
+
+```typescript
+public readonly networkFileDefinitions: NetworkFileDefinition[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>[]
+
+---
+
+##### `signals`<sup>Optional</sup> <a name="signals" id="cdk-aws-iotfleetwise.VehicleModelProps.property.signals"></a>
+
+```typescript
+public readonly signals: VehicleSignal[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]
+
+---
+
+### VehicleProps <a name="VehicleProps" id="cdk-aws-iotfleetwise.VehicleProps"></a>
+
+Interface.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.VehicleProps.Initializer"></a>
+
+```typescript
+import { VehicleProps } from 'cdk-aws-iotfleetwise'
+
+const vehicleProps: VehicleProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
+
+---
+
+##### `createIotThing`<sup>Required</sup> <a name="createIotThing" id="cdk-aws-iotfleetwise.VehicleProps.property.createIotThing"></a>
+
+```typescript
+public readonly createIotThing: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleId"></a>
+
+```typescript
+public readonly vehicleId: string;
+```
+
+- *Type:* string
+
+---
+
+##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel"></a>
+
+```typescript
+public readonly vehicleModel: VehicleModel;
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+
+---
 
 ## Classes <a name="Classes" id="Classes"></a>
 
@@ -1350,322 +1682,4 @@ public toObject(): object
 
 
 
-## Protocols <a name="Protocols" id="Protocols"></a>
-
-### ICampaign <a name="ICampaign" id="cdk-aws-iotfleetwise.ICampaign"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.ICampaign">ICampaign</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.collectionScheme">collectionScheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.ICampaign.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
-
----
-
-##### `collectionScheme`<sup>Required</sup> <a name="collectionScheme" id="cdk-aws-iotfleetwise.ICampaign.property.collectionScheme"></a>
-
-```typescript
-public readonly collectionScheme: CollectionScheme;
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.ICampaign.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
----
-
-##### `signals`<sup>Required</sup> <a name="signals" id="cdk-aws-iotfleetwise.ICampaign.property.signals"></a>
-
-```typescript
-public readonly signals: CampaignSignal[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]
-
----
-
-##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.ICampaign.property.target"></a>
-
-```typescript
-public readonly target: Vehicle;
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
-
----
-
-### IFleet <a name="IFleet" id="cdk-aws-iotfleetwise.IFleet"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IFleet">IFleet</a>
-
-Interface.
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.fleetId">fleetId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IFleet.property.vehicles">vehicles</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>[]</code> | *No description.* |
-
----
-
-##### `fleetId`<sup>Required</sup> <a name="fleetId" id="cdk-aws-iotfleetwise.IFleet.property.fleetId"></a>
-
-```typescript
-public readonly fleetId: string;
-```
-
-- *Type:* string
-
----
-
-##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.IFleet.property.signalCatalog"></a>
-
-```typescript
-public readonly signalCatalog: SignalCatalog;
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IFleet.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
-
----
-
-##### `vehicles`<sup>Optional</sup> <a name="vehicles" id="cdk-aws-iotfleetwise.IFleet.property.vehicles"></a>
-
-```typescript
-public readonly vehicles: Vehicle[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>[]
-
----
-
-### IServiceCatalogProps <a name="IServiceCatalogProps" id="cdk-aws-iotfleetwise.IServiceCatalogProps"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IServiceCatalogProps">IServiceCatalogProps</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IServiceCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.database"></a>
-
-```typescript
-public readonly database: CfnDatabase;
-```
-
-- *Type:* aws-cdk-lib.aws_timestream.CfnDatabase
-
----
-
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.nodes"></a>
-
-```typescript
-public readonly nodes: SignalCatalogNode[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
-
----
-
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.role"></a>
-
-```typescript
-public readonly role: Role;
-```
-
-- *Type:* aws-cdk-lib.aws_iam.Role
-
----
-
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.table"></a>
-
-```typescript
-public readonly table: CfnTable;
-```
-
-- *Type:* aws-cdk-lib.aws_timestream.CfnTable
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
-
----
-
-##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.IServiceCatalogProps.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
----
-
-### IVehicle <a name="IVehicle" id="cdk-aws-iotfleetwise.IVehicle"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicle">IVehicle</a>
-
-Interface.
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
-
----
-
-##### `createIotThing`<sup>Required</sup> <a name="createIotThing" id="cdk-aws-iotfleetwise.IVehicle.property.createIotThing"></a>
-
-```typescript
-public readonly createIotThing: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleId"></a>
-
-```typescript
-public readonly vehicleId: string;
-```
-
-- *Type:* string
-
----
-
-##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.IVehicle.property.vehicleModel"></a>
-
-```typescript
-public readonly vehicleModel: VehicleModel;
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
-
----
-
-### IVehicleModel <a name="IVehicleModel" id="cdk-aws-iotfleetwise.IVehicleModel"></a>
-
-- *Implemented By:* <a href="#cdk-aws-iotfleetwise.IVehicleModel">IVehicleModel</a>
-
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.name">name</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces">networkInterfaces</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog">signalCatalog</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.networkFileDefinitions">networkFileDefinitions</a></code> | <code><a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.IVehicleModel.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.IVehicleModel.property.name"></a>
-
-```typescript
-public readonly name: string;
-```
-
-- *Type:* string
-
----
-
-##### `networkInterfaces`<sup>Required</sup> <a name="networkInterfaces" id="cdk-aws-iotfleetwise.IVehicleModel.property.networkInterfaces"></a>
-
-```typescript
-public readonly networkInterfaces: VehicleInterface[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleInterface">VehicleInterface</a>[]
-
----
-
-##### `signalCatalog`<sup>Required</sup> <a name="signalCatalog" id="cdk-aws-iotfleetwise.IVehicleModel.property.signalCatalog"></a>
-
-```typescript
-public readonly signalCatalog: SignalCatalog;
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.IVehicleModel.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
-
----
-
-##### `networkFileDefinitions`<sup>Optional</sup> <a name="networkFileDefinitions" id="cdk-aws-iotfleetwise.IVehicleModel.property.networkFileDefinitions"></a>
-
-```typescript
-public readonly networkFileDefinitions: NetworkFileDefinition[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.NetworkFileDefinition">NetworkFileDefinition</a>[]
-
----
-
-##### `signals`<sup>Optional</sup> <a name="signals" id="cdk-aws-iotfleetwise.IVehicleModel.property.signals"></a>
-
-```typescript
-public readonly signals: VehicleSignal[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.VehicleSignal">VehicleSignal</a>[]
-
----
 

@@ -53,24 +53,24 @@ export class CampaignSignal {
   }
 }
 
-export interface ICampaign {
-  name: string;
-  target: Vehicle;
-  collectionScheme: CollectionScheme;
-  signals: CampaignSignal[];
+export interface CampaignProps {
+  readonly name: string;
+  readonly target: Vehicle;
+  readonly collectionScheme: CollectionScheme;
+  readonly signals: CampaignSignal[];
 }
 
 export class Campaign extends Construct {
-  readonly name: string;
-  readonly arn: string;
-  readonly target: Vehicle;
+  readonly name: string = '';
+  readonly arn: string = '';
+  readonly target: Vehicle = ({} as Vehicle);
 
-  constructor(scope: Construct, id: string, props: ICampaign) {
+  constructor(scope: Construct, id: string, props: CampaignProps) {
     super(scope, id);
 
-    this.name = props.name;
+    (this.name as string) = props.name;
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.target}`;
-    this.target = props.target;
+    (this.target as Vehicle) = props.target;
 
     const onEventHandler = new lambda.Function(this, 'Lambda', {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),

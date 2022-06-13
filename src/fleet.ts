@@ -12,11 +12,11 @@ import { Vehicle } from './vehicle';
 /**
  * Interface
  */
-export interface IFleet {
-  signalCatalog: SignalCatalog;
-  fleetId: string;
-  description?: string;
-  vehicles?: Vehicle[];
+export interface FleetProps {
+  readonly signalCatalog: SignalCatalog;
+  readonly fleetId: string;
+  readonly description?: string;
+  readonly vehicles?: Array<Vehicle>;
 }
 
 /**
@@ -24,17 +24,17 @@ export interface IFleet {
  */
 export class Fleet extends Construct {
   public readonly arn: string;
-  public readonly fleetId: string;
-  public readonly signalCatalog: SignalCatalog;
-  public readonly vehicles: Vehicle[];
+  public readonly fleetId: string = '';
+  public readonly signalCatalog: SignalCatalog = ({} as SignalCatalog);
+  public readonly vehicles?: Array<Vehicle> = undefined;
 
-  constructor(scope: Construct, id: string, props: IFleet) {
+  constructor(scope: Construct, id: string, props: FleetProps) {
     super(scope, id);
 
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:fleet/${props.fleetId}`;
-    this.signalCatalog = props.signalCatalog;
-    this.fleetId = props.fleetId;
-    this.vehicles = props.vehicles || [];
+    (this.signalCatalog as SignalCatalog) = props.signalCatalog;
+    (this.fleetId as string)= props.fleetId;
+    (this.vehicles as Vehicle[]) = props.vehicles || [];
 
     const onEventHandler = new lambda.Function(this, 'Lambda', {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
@@ -55,7 +55,7 @@ export class Fleet extends Construct {
         fleet_id: this.fleetId,
         signal_catalog_arn: this.signalCatalog.arn,
         description: props.description,
-        vehicle_ids: this.vehicles.map(v => v.vehicleId),
+        vehicle_ids: this.vehicles!.map(v => v.vehicleId),
       },
     });
 

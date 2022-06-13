@@ -67,13 +67,13 @@ export class SignalCatalogSensor extends SignalCatalogNode {
   }
 }
 
-export interface IServiceCatalogProps {
-  name?: string;
-  description?: string;
-  role: iam.Role;
-  database: ts.CfnDatabase;
-  table: ts.CfnTable;
-  nodes: SignalCatalogNode[];
+export interface SignalCatalogProps {
+  readonly name?: string;
+  readonly description?: string;
+  readonly role: iam.Role;
+  readonly database: ts.CfnDatabase;
+  readonly table: ts.CfnTable;
+  readonly nodes: SignalCatalogNode[];
 }
 
 /**
@@ -94,7 +94,7 @@ export class SignalCatalog extends Construct {
   readonly lambdaRole: iam.Role;
   readonly lambdaLayer: lambda.LayerVersion;
 
-  constructor(scope: Construct, id: string, props: IServiceCatalogProps) {
+  constructor(scope: Construct, id: string, props: SignalCatalogProps) {
     super(scope, id);
 
 
