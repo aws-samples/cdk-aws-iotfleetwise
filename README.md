@@ -27,65 +27,57 @@ pip install cdk-aws-iotfleetwise
 # Sample
 
 ```ts
+import { SignalCatalog, 
+         VehicleModel, 
+         Vehicle, 
+         Campaign, 
+         CanVehicleInterface, 
+         CanVehicleSignal,
+         SignalCatalogBranch,
+         TimeBasedCollectionScheme
+         } from 'cdk-aws-iotfleetwise';
 
-    const database = new ts.CfnDatabase(this, 'Database', {
-      databaseName: 'FleetWise',
-    });
+const signalCatalog = new SignalCatalog(stack, 'SignalCatalog', {
+  database,
+  table,
+  role,
+  nodes: [
+    new SignalCatalogBranch('Vehicle', 'Vehicle'),
+    new SignalCatalogSensor('EngineTorque', 'Vehicle.EngineTorque', 'DOUBLE'),
+  ],
+});
 
-    const table = new ts.CfnTable(this, 'Table', {
-      databaseName: 'FleetWise',
-      tableName: 'FleetWise',
-    });
+const model_a = new VehicleModel(stack, 'ModelA', {
+  signalCatalog,
+  name: 'modelA',
+  description: 'Model A vehicle',
+  networkInterfaces: [new CanVehicleInterface('1', 'vcan0')],
+  signals: [
+    new CanVehicleSignal('EngineTorque', 'Vehicle.EngineTorque', '1',
+      401, // messageId
+      1.0, // factor
+      true, // isBigEndian
+      false, // isSigned
+      8, // lenght
+      0.0, // offset
+      9), // startBit
+  ],
+});
 
-    const role = new aim.Role(this, 'Role', {
-      assumedBy: new aim.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      managedPolicies: [
-        aim.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
-      ],
+const vin100 = new Vehicle(stack, 'vin100', {
+  vehicleId: 'vin100',
+  vehicleModel: model_a,
+  createIotThing: true
+});
 
-    });
-
-    const signalCatalog = new ifw.SignalCatalog(this, 'SignalCatalog', {
-      database,
-      table,
-      role,
-      nodes: [
-        new ifw.SignalCatalogBranch('Vehicle', 'Vehicle'),
-        new ifw.SignalCatalogSensor('EngineTorque', 'Vehicle.EngineTorque', 'DOUBLE'),
-      ],
-    });
-
-    const model_a = new ifw.VehicleModel(this, 'ModelA', {
-      signalCatalog,
-      name: 'modelA',
-      description: 'Model A vehicle',
-      networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
-      signals: [
-        new ifw.CanVehicleSignal('EngineTorque', 'Vehicle.EngineTorque', '1',
-          401, // messageId
-          1.0, // factor
-          true, // isBigEndian
-          false, // isSigned
-          8, // lenght
-          0.0, // offset
-          9), // startBit
-      ],
-    });
-
-    const vin100 = new ifw.Vehicle(this, 'vin100', {
-      vehicleId: 'vin100',
-      vehicleModel: model_a,
-      createIotThing: true
-    });
-
-    new ifw.Campaign(this, 'Campaign', {
-      name: 'TimeBasedCampaign',
-      target: vin100,
-      collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
-      signals: [
-        new ifw.CampaignSignal('Vehicle.EngineTorque'),
-      ],
-    });
+new Campaign(stack, 'Campaign', {
+  name: 'TimeBasedCampaign',
+  target: vin100,
+  collectionScheme: new TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
+  signals: [
+    new CampaignSignal('Vehicle.EngineTorque'),
+  ],
+});
 ```
 
 ## Getting started
