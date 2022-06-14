@@ -37,7 +37,7 @@ export class IntegTesting {
       ],
     });
 
-    const canDbc = fs.readFileSync(path.join(__dirname, '/../chevy.dbc'), 'utf8');
+    const canDbc = fs.readFileSync(path.join(__dirname, '/../hscan.dbc'), 'utf8');
 
     const nodes: Array<ifw.SignalCatalogNode> = [new ifw.SignalCatalogBranch('Vehicle', 'Vehicle')];
     canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
