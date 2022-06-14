@@ -60,6 +60,6 @@ export class Fleet extends Construct {
     });
 
     resource.node.addDependency(this.signalCatalog);
-
+    this.vehicles!.map(v => resource.node.addDependency(v));
   }
 }
