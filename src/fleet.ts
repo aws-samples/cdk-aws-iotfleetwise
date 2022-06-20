@@ -43,7 +43,7 @@ export class Fleet extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.signalCatalog.lambdaLayer],
       role: this.signalCatalog.lambdaRole,
-      logRetention: this.signalCatalog.logRetention
+      logRetention: this.signalCatalog.logRetention,
     });
 
     const provider = new cr.Provider(this, 'Provider', {

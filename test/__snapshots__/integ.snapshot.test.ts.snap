@@ -26,17 +26,98 @@ Object {
       },
       "Type": "AWS::Timestream::Database",
     },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
+      "DependsOn": Array [
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "e5032a7ed03a7762b99560439c17f58d046a35d40ebf64ba70c63157df388563.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "logs:PutRetentionPolicy",
+                "logs:DeleteRetentionPolicy",
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRoleDefaultPolicyADDA7DEB",
+        "Roles": Array [
+          Object {
+            "Ref": "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aServiceRole9741ECFB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "ModelA133A72B5": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "SignalCatalogBoto3783CEE3E",
+        "SignalCatalogLogRetentionB793B7B4",
         "SignalCatalog7BDD2B41",
         "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
         "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
         "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
         "SignalCatalogCatalogResourceFC71CDF4",
         "SignalCatalogRoleAD0FEEB7",
+        "SignalCatalogServiceLogRetention45E52A30",
         "SignalCatalogService82916B9B",
+        "SignalCatalogServiceCompleteLogRetention0DEFDE87",
         "SignalCatalogServiceComplete1E097648",
         "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
         "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
@@ -127,6 +208,29 @@ Object {
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "ModelALambdaLogRetentionE94AB023": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "ModelALambda1DBF5DCD",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "ModelAProviderframeworkonEventCF0EA117": Object {
       "DependsOn": Array [
@@ -437,6 +541,29 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "SignalCatalogLogRetentionB793B7B4": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalog7BDD2B41",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
     "SignalCatalogRoleAD0FEEB7": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
@@ -535,6 +662,52 @@ Object {
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceCompleteLogRetention0DEFDE87": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceComplete1E097648",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "SignalCatalogServiceLogRetention45E52A30": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogService82916B9B",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4": Object {
       "DependsOn": Array [
@@ -1122,6 +1295,7 @@ Object {
     "vin1001B581DB8": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "ModelALambdaLogRetentionE94AB023",
         "ModelALambda1DBF5DCD",
         "ModelAProviderframeworkonEventCF0EA117",
         "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13",
@@ -1215,6 +1389,29 @@ Object {
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "vin100LambdaLogRetentionEBFE3476": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "vin100LambdaD0DEBF5A",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "vin100PolicyABC41F0A": Object {
       "DependsOn": Array [

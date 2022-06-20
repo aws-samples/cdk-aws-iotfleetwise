@@ -44,7 +44,7 @@ export class Vehicle extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.vehicleModel.signalCatalog.lambdaLayer],
       role: this.vehicleModel.signalCatalog.lambdaRole,
-      logRetention: this.vehicleModel.signalCatalog.logRetention
+      logRetention: this.vehicleModel.signalCatalog.logRetention,
     });
 
     const provider = new cr.Provider(this, 'Provider', {

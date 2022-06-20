@@ -129,7 +129,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
-      logRetention: this.logRetention
+      logRetention: this.logRetention,
     });
 
     const isCompleteHandlerService = new lambda.Function(this, 'ServiceComplete', {
@@ -139,7 +139,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
-      logRetention: this.logRetention
+      logRetention: this.logRetention,
     });
 
     const providerService = new cr.Provider(this, 'ServiceProvider', {
@@ -163,7 +163,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
-      logRetention: this.logRetention
+      logRetention: this.logRetention,
     });
 
     const providerCatalog = new cr.Provider(this, 'CatalogProvider', {
