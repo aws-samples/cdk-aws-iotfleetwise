@@ -15,7 +15,8 @@ cdk_aws_iotfleetwise.Campaign(
   collection_scheme: CollectionScheme,
   name: str,
   signals: typing.List[CampaignSignal],
-  target: Vehicle
+  target: Vehicle,
+  auto_approve: bool = None
 )
 ```
 
@@ -27,6 +28,7 @@ cdk_aws_iotfleetwise.Campaign(
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.autoApprove">auto_approve</a></code> | <code>bool</code> | *No description.* |
 
 ---
 
@@ -63,6 +65,12 @@ cdk_aws_iotfleetwise.Campaign(
 ##### `target`<sup>Required</sup> <a name="target" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target"></a>
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+
+---
+
+##### `auto_approve`<sup>Optional</sup> <a name="auto_approve" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.autoApprove"></a>
+
+- *Type:* bool
 
 ---
 
@@ -947,7 +955,8 @@ cdk_aws_iotfleetwise.CampaignProps(
   collection_scheme: CollectionScheme,
   name: str,
   signals: typing.List[CampaignSignal],
-  target: Vehicle
+  target: Vehicle,
+  auto_approve: bool = None
 )
 ```
 
@@ -959,6 +968,7 @@ cdk_aws_iotfleetwise.CampaignProps(
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.autoApprove">auto_approve</a></code> | <code>bool</code> | *No description.* |
 
 ---
 
@@ -999,6 +1009,16 @@ target: Vehicle
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+
+---
+
+##### `auto_approve`<sup>Optional</sup> <a name="auto_approve" id="cdk-aws-iotfleetwise.CampaignProps.property.autoApprove"></a>
+
+```python
+auto_approve: bool
+```
+
+- *Type:* bool
 
 ---
 

@@ -780,6 +780,7 @@ const campaignProps: CampaignProps = { ... }
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.autoApprove">autoApprove</a></code> | <code>boolean</code> | *No description.* |
 
 ---
 
@@ -820,6 +821,16 @@ public readonly target: Vehicle;
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>
+
+---
+
+##### `autoApprove`<sup>Optional</sup> <a name="autoApprove" id="cdk-aws-iotfleetwise.CampaignProps.property.autoApprove"></a>
+
+```typescript
+public readonly autoApprove: boolean;
+```
+
+- *Type:* boolean
 
 ---
 
