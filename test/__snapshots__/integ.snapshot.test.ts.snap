@@ -190,7 +190,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
+          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -380,7 +380,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
+          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -616,7 +616,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
+          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -644,7 +644,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
+          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -1371,7 +1371,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0a8a6a31f5be91a38ad30c51df8c98bbedefe163116bc31abec4ce203ffbe31d.zip",
+          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [

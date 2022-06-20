@@ -58,6 +58,7 @@ export interface CampaignProps {
   readonly target: Vehicle;
   readonly collectionScheme: CollectionScheme;
   readonly signals: CampaignSignal[];
+  readonly autoApprove?: boolean;
 }
 
 export class Campaign extends Construct {
@@ -95,6 +96,7 @@ export class Campaign extends Construct {
         target_arn: this.target.arn,
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
         signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
+        auto_approve: props.autoApprove || false,
       },
     });
     resource.node.addDependency(this.target);

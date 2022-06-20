@@ -196,13 +196,14 @@ export class IntegTesting {
     new cdk.CfnOutput(stack, 'Vehicle IP Address', { value: instance.instancePublicIp });
     new cdk.CfnOutput(stack, 'Vehicle ssh command', { value: 'ssh -i salamida.pem -o IdentitiesOnly=yes ec2-user@' + instance.instancePublicIp });
 
-    new ifw.Campaign(stack, 'Campaign', {
-      name: 'FwTimeBasedCampaign',
+    new ifw.Campaign(stack, 'Campaign1', {
+      name: 'FwTimeBasedCampaign1',
       target: vin100,
       collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
       signals: [
         new ifw.CampaignSignal('Vehicle.EngineTorque'),
       ],
+      autoApprove: true,
     });
 
     this.stack = [stack];

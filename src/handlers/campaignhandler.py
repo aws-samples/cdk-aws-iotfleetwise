@@ -1,5 +1,6 @@
 import boto3
 import json
+import time
 
 def on_event(event, context):
     print(f'on_event {event} {context}')
@@ -26,11 +27,23 @@ def on_create(event):
     )
     print(f"create_campaign response {response}")
     
-    # response = client.update_campaign(
-    #   campaignName = props['campaign_name'],
-    #   action = 'APPROVE'
-    # )
-    # print(f"update_campaign response {response}")
+    if props['auto_approve'] == 'true':
+        retry_count = 10;
+        delay = 2;
+        while retry_count > 1:
+            print(f"waiting for campaign {props['campaign_name']} to be created")
+            response = client.get_campaign(campaignName = props['campaign_name'])
+            print(f"get_campaign response {response}")
+            if response['status'] == "WAITING_FOR_APPROVAL":
+                break
+            time.sleep(delay)
+            retry_count = retry_count - 1            
+        print(f"approving the campaign {props['campaign_name']}")
+        response = client.update_campaign(
+          campaignName = props['campaign_name'],
+          action = 'APPROVE'
+        )
+        print(f"update_campaign response {response}")
     return { 'PhysicalResourceId': props['campaign_name'] }
 
 def on_update(event):
