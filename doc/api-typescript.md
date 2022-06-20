@@ -759,6 +759,7 @@ public readonly signalCatalog: SignalCatalog;
 
 ---
 
+
 ## Structs <a name="Structs" id="Structs"></a>
 
 ### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
@@ -1094,6 +1095,7 @@ public readonly vehicleId: string;
 ---
 
 ##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel"></a>
+
 ```typescript
 public readonly vehicleModel: VehicleModel;
 ```
