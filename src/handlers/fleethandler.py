@@ -47,6 +47,17 @@ def on_delete(event):
     print(f"delete resource {props['fleet_id']} {physical_id}")
     client=boto3.client('iotfleetwise')
 
+    print(f"list_vehicles_in_fleet {props['fleet_id']}")
+    response = client.list_vehicles_in_fleet(fleetId = props['fleet_id'])
+    print(f"list_vehicles_in_fleet response {response}")
+    for v in response["vehicles"]:
+        print(f"disassociate_vehicle {v} from {props['fleet_id']}")
+        response = client.disassociate_vehicle(
+            fleetId = props['fleet_id'],
+            vehicleId = v)
+        print(f"disassociate_vehicle response {response}")
+
+    print(f"delete_fleet {props['fleet_id']}")    
     response = client.delete_fleet(
       fleetId = props['fleet_id'],
     )

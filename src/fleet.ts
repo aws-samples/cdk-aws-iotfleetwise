@@ -48,6 +48,7 @@ export class Fleet extends Construct {
 
     const provider = new cr.Provider(this, 'Provider', {
       onEventHandler: onEventHandler,
+      logRetention: this.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
@@ -55,7 +56,7 @@ export class Fleet extends Construct {
       properties: {
         fleet_id: this.fleetId,
         signal_catalog_arn: this.signalCatalog.arn,
-        description: props.description,
+        description: props.description || ' ',
         vehicle_ids: this.vehicles!.map(v => v.vehicleId),
       },
     });

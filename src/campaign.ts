@@ -58,6 +58,7 @@ export interface CampaignProps {
   readonly target: Vehicle;
   readonly collectionScheme: CollectionScheme;
   readonly signals: CampaignSignal[];
+  readonly autoApprove?: boolean;
 }
 
 export class Campaign extends Construct {
@@ -85,6 +86,7 @@ export class Campaign extends Construct {
 
     const provider = new cr.Provider(this, 'Provider', {
       onEventHandler: onEventHandler,
+      logRetention: this.target.vehicleModel.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
@@ -95,6 +97,7 @@ export class Campaign extends Construct {
         target_arn: this.target.arn,
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
         signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
+        auto_approve: props.autoApprove || false,
       },
     });
     resource.node.addDependency(this.target);
