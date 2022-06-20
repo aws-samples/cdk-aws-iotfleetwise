@@ -206,6 +206,12 @@ export class IntegTesting {
       autoApprove: true,
     });
 
+    new ifw.Fleet(stack, 'Fleet2', {
+      fleetId: 'fleet2',
+      signalCatalog,
+      vehicles: [vin100],
+    });
+
     this.stack = [stack];
   }
 }

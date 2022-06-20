@@ -20,11 +20,511 @@ Object {
     },
   },
   "Resources": Object {
+    "Campaign19ECB62AF": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "vin100Attachment69984A52",
+        "vin100LambdaLogRetentionEBFE3476",
+        "vin100LambdaD0DEBF5A",
+        "vin100PolicyABC41F0A",
+        "vin100ProviderframeworkonEventLogRetention08E95340",
+        "vin100ProviderframeworkonEventF338173F",
+        "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "vin100ProviderframeworkonEventServiceRole345C8DB7",
+        "vin1001B581DB8",
+        "vin100ThingAttachment43EBFB2B",
+      ],
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "Campaign1ProviderframeworkonEvent4E2A6AED",
+            "Arn",
+          ],
+        },
+        "auto_approve": true,
+        "campaign_name": "FwTimeBasedCampaign1",
+        "collection_scheme": "{\\"timeBasedCollectionScheme\\":{\\"periodMs\\":10000}}",
+        "signal_catalog_arn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:aws:iotfleetwise:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":signal-catalog/default",
+            ],
+          ],
+        },
+        "signals_to_collect": "[{\\"signalName\\":\\"Vehicle.EngineTorque\\"}]",
+        "target_arn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:aws:iotfleetwise:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":vehicle/vin100",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "Campaign1Lambda0419ABC2": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "campaignhandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Campaign1LambdaLogRetentionAE5CAEF0": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Campaign1Lambda0419ABC2",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Campaign1ProviderframeworkonEvent4E2A6AED": Object {
+      "DependsOn": Array [
+        "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758",
+        "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/Campaign1/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "Campaign1Lambda0419ABC2",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Campaign1ProviderframeworkonEventLogRetentionFD16D3AE": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Campaign1ProviderframeworkonEvent4E2A6AED",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Campaign1ProviderframeworkonEventServiceRoleABA5E102": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Campaign1Lambda0419ABC2",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Campaign1Lambda0419ABC2",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758",
+        "Roles": Array [
+          Object {
+            "Ref": "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "Database": Object {
       "Properties": Object {
         "DatabaseName": "FleetWise",
       },
       "Type": "AWS::Timestream::Database",
+    },
+    "Fleet277887135": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "SignalCatalogBoto3783CEE3E",
+        "SignalCatalogLogRetentionB793B7B4",
+        "SignalCatalog7BDD2B41",
+        "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0",
+        "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
+        "SignalCatalogCatalogResourceFC71CDF4",
+        "SignalCatalogRoleAD0FEEB7",
+        "SignalCatalogServiceLogRetention45E52A30",
+        "SignalCatalogService82916B9B",
+        "SignalCatalogServiceCompleteLogRetention0DEFDE87",
+        "SignalCatalogServiceComplete1E097648",
+        "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7",
+        "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+        "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27",
+        "SignalCatalogServiceProviderframeworkonEvent04EB655B",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
+        "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353",
+        "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
+        "SignalCatalogServiceProviderwaiterstatemachineC848039F",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
+        "SignalCatalogServiceResourceD3614339",
+        "vin100Attachment69984A52",
+        "vin100LambdaLogRetentionEBFE3476",
+        "vin100LambdaD0DEBF5A",
+        "vin100PolicyABC41F0A",
+        "vin100ProviderframeworkonEventLogRetention08E95340",
+        "vin100ProviderframeworkonEventF338173F",
+        "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "vin100ProviderframeworkonEventServiceRole345C8DB7",
+        "vin1001B581DB8",
+        "vin100ThingAttachment43EBFB2B",
+      ],
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "Fleet2ProviderframeworkonEventA129D387",
+            "Arn",
+          ],
+        },
+        "description": " ",
+        "fleet_id": "fleet2",
+        "signal_catalog_arn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:aws:iotfleetwise:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":signal-catalog/default",
+            ],
+          ],
+        },
+        "vehicle_ids": Array [
+          "vin100",
+        ],
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "Fleet2Lambda2CAD9B7F": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "fleethandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Fleet2LambdaLogRetentionFD978CE2": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Fleet2Lambda2CAD9B7F",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Fleet2ProviderframeworkonEventA129D387": Object {
+      "DependsOn": Array [
+        "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252",
+        "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/Fleet2/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "Fleet2Lambda2CAD9B7F",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Fleet2ProviderframeworkonEventLogRetentionE74D17DC": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Fleet2ProviderframeworkonEventA129D387",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Fleet2ProviderframeworkonEventServiceRole86B93EF4": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Fleet2Lambda2CAD9B7F",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Fleet2Lambda2CAD9B7F",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252",
+        "Roles": Array [
+          Object {
+            "Ref": "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
       "DependsOn": Array [
@@ -110,6 +610,7 @@ Object {
         "SignalCatalogBoto3783CEE3E",
         "SignalCatalogLogRetentionB793B7B4",
         "SignalCatalog7BDD2B41",
+        "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0",
         "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
         "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
         "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
@@ -119,12 +620,15 @@ Object {
         "SignalCatalogService82916B9B",
         "SignalCatalogServiceCompleteLogRetention0DEFDE87",
         "SignalCatalogServiceComplete1E097648",
+        "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7",
         "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
         "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
         "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+        "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27",
         "SignalCatalogServiceProviderframeworkonEvent04EB655B",
         "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
         "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
+        "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353",
         "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
         "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
         "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
@@ -190,7 +694,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -266,6 +770,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "ModelAProviderframeworkonEventLogRetentionF8BE83BA": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "ModelAProviderframeworkonEventCF0EA117",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "ModelAProviderframeworkonEventServiceRoleDFF1F14D": Object {
       "Properties": Object {
@@ -380,7 +907,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -448,6 +975,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91": Object {
       "Properties": Object {
@@ -616,7 +1166,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -644,7 +1194,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -749,6 +1299,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA": Object {
       "Properties": Object {
@@ -892,6 +1465,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceProviderframeworkonEvent04EB655B",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB": Object {
       "Properties": Object {
@@ -1039,6 +1635,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35": Object {
       "Properties": Object {
@@ -1297,6 +1916,7 @@ Object {
       "DependsOn": Array [
         "ModelALambdaLogRetentionE94AB023",
         "ModelALambda1DBF5DCD",
+        "ModelAProviderframeworkonEventLogRetentionF8BE83BA",
         "ModelAProviderframeworkonEventCF0EA117",
         "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13",
         "ModelAProviderframeworkonEventServiceRoleDFF1F14D",
@@ -1371,7 +1991,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "0e1e469bd6e0e770d50ce4202f4b655b19a0e5cfadf2d24ac8746fe3b7808f65.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [
@@ -1504,6 +2124,29 @@ Object {
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
+    },
+    "vin100ProviderframeworkonEventLogRetention08E95340": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "vin100ProviderframeworkonEventF338173F",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "vin100ProviderframeworkonEventServiceRole345C8DB7": Object {
       "Properties": Object {

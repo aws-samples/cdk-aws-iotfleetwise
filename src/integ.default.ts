@@ -71,6 +71,22 @@ export class IntegTesting {
     });
     new cdk.CfnOutput(stack, 'certificateId', { value: vin100.certificateId! });
 
+    new ifw.Campaign(stack, 'Campaign1', {
+      name: 'FwTimeBasedCampaign1',
+      target: vin100,
+      collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
+      signals: [
+        new ifw.CampaignSignal('Vehicle.EngineTorque'),
+      ],
+      autoApprove: true,
+    });
+
+    new ifw.Fleet(stack, 'Fleet2', {
+      fleetId: 'fleet2',
+      signalCatalog,
+      vehicles: [vin100],
+    });
+
     this.stack = [stack];
   }
 }

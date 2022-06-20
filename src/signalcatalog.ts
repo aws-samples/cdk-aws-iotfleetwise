@@ -145,6 +145,7 @@ export class SignalCatalog extends Construct {
     const providerService = new cr.Provider(this, 'ServiceProvider', {
       onEventHandler: onEventHandlerService,
       isCompleteHandler: isCompleteHandlerService,
+      logRetention: this.logRetention,
     });
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
@@ -168,6 +169,7 @@ export class SignalCatalog extends Construct {
 
     const providerCatalog = new cr.Provider(this, 'CatalogProvider', {
       onEventHandler: onEventHandlerCatalog,
+      logRetention: this.logRetention,
     });
 
     const resourceCatalog = new cdk.CustomResource(this, 'CatalogResource', {

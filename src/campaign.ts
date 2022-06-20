@@ -86,6 +86,7 @@ export class Campaign extends Construct {
 
     const provider = new cr.Provider(this, 'Provider', {
       onEventHandler: onEventHandler,
+      logRetention: this.target.vehicleModel.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {

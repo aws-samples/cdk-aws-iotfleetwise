@@ -49,6 +49,7 @@ export class Vehicle extends Construct {
 
     const provider = new cr.Provider(this, 'Provider', {
       onEventHandler: onEventHandler,
+      logRetention: this.vehicleModel.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
