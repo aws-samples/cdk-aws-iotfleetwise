@@ -101,7 +101,6 @@ and data will start to show up in the Timestream table.
 ## TODO
 
 Warning: this construct should be considered at alpha stage and is not feature complete.
-- Reduce Lambda log retention to 1d
 - Apply the least priviledge principle to roles
 - Implement updates for all the custom resources
 - Conditional campaigns

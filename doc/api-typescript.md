@@ -369,6 +369,7 @@ Any object.
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.arn">arn</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaLayer">lambdaLayer</a></code> | <code>aws-cdk-lib.aws_lambda.LayerVersion</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaRole">lambdaRole</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.logRetention">logRetention</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>string</code> | The name of the signal catalog. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.description">description</a></code> | <code>string</code> | *No description.* |
 
@@ -413,6 +414,16 @@ public readonly lambdaRole: Role;
 ```
 
 - *Type:* aws-cdk-lib.aws_iam.Role
+
+---
+
+##### `logRetention`<sup>Required</sup> <a name="logRetention" id="cdk-aws-iotfleetwise.SignalCatalog.property.logRetention"></a>
+
+```typescript
+public readonly logRetention: RetentionDays;
+```
+
+- *Type:* aws-cdk-lib.aws_logs.RetentionDays
 
 ---
 

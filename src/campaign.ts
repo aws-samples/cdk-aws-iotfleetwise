@@ -79,6 +79,7 @@ export class Campaign extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.target.vehicleModel.signalCatalog.lambdaLayer],
       role: this.target.vehicleModel.signalCatalog.lambdaRole,
+      logRetention: this.target.vehicleModel.signalCatalog.logRetention,
     });
 
 

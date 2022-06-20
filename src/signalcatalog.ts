@@ -4,6 +4,7 @@ import {
   aws_iam as iam,
   aws_timestream as ts,
   aws_lambda as lambda,
+  aws_logs as logs,
   custom_resources as cr,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
@@ -93,6 +94,7 @@ export class SignalCatalog extends Construct {
   readonly arn: string;
   readonly lambdaRole: iam.Role;
   readonly lambdaLayer: lambda.LayerVersion;
+  readonly logRetention: logs.RetentionDays;
 
   constructor(scope: Construct, id: string, props: SignalCatalogProps) {
     super(scope, id);
@@ -118,6 +120,8 @@ export class SignalCatalog extends Construct {
 
     const code = lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers'));
 
+    this.logRetention = logs.RetentionDays.ONE_DAY;
+
     const onEventHandlerService = new lambda.Function(this, 'Service', {
       code,
       handler: 'servicehandler.on_event',
@@ -125,6 +129,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
+      logRetention: this.logRetention,
     });
 
     const isCompleteHandlerService = new lambda.Function(this, 'ServiceComplete', {
@@ -134,6 +139,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
+      logRetention: this.logRetention,
     });
 
     const providerService = new cr.Provider(this, 'ServiceProvider', {
@@ -157,6 +163,7 @@ export class SignalCatalog extends Construct {
       runtime: lambda.Runtime.PYTHON_3_9,
       layers: [this.lambdaLayer],
       role: this.lambdaRole,
+      logRetention: this.logRetention,
     });
 
     const providerCatalog = new cr.Provider(this, 'CatalogProvider', {
