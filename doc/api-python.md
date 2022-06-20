@@ -932,10 +932,7 @@ signal_catalog: SignalCatalog
 - *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalog">SignalCatalog</a>
 
 ---
-
-
 ## Structs <a name="Structs" id="Structs"></a>
-
 ### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CampaignProps.Initializer"></a>
