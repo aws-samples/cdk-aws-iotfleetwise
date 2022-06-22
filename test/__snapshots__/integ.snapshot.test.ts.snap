@@ -363,7 +363,7 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
-    "SingletonLambdaTokenAWSStackName9campaignhandleronevent03097FCA": Object {
+    "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -391,7 +391,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9campaignhandleroneventLogRetentionCEC3D6FA": Object {
+    "SingletonLambdaTokenAWSStackName12campaignhandleroneventLogRetentionB51FD2E8": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -399,7 +399,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9campaignhandleronevent03097FCA",
+                "Ref": "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
               },
             ],
           ],
@@ -414,7 +414,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE": Object {
+    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -442,7 +442,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9fleethandleroneventLogRetention36B7A35A": Object {
+    "SingletonLambdaTokenAWSStackName12fleethandleroneventLogRetention164B00CD": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -450,7 +450,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                "Ref": "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
               },
             ],
           ],
@@ -465,7 +465,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742": Object {
+    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -493,7 +493,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9servicehandleriscompleteLogRetention846C6B5C": Object {
+    "SingletonLambdaTokenAWSStackName12servicehandleriscompleteLogRetention9501A0CF": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -501,7 +501,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                "Ref": "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
               },
             ],
           ],
@@ -516,7 +516,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A": Object {
+    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -544,7 +544,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9servicehandleroneventLogRetention47B23400": Object {
+    "SingletonLambdaTokenAWSStackName12servicehandleroneventLogRetentionFEF4DA00": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -552,7 +552,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                "Ref": "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
               },
             ],
           ],
@@ -567,7 +567,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventD0421223": Object {
+    "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -595,7 +595,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventLogRetentionF3A550DC": Object {
+    "SingletonLambdaTokenAWSStackName12signalcataloghandleroneventLogRetention3033576B": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -603,7 +603,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventD0421223",
+                "Ref": "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
               },
             ],
           ],
@@ -618,7 +618,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF": Object {
+    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -646,7 +646,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9vehiclehandleroneventLogRetention26905EB2": Object {
+    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventLogRetentionE8076C0F": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -654,7 +654,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                "Ref": "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
               },
             ],
           ],
@@ -669,7 +669,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "SingletonLambdaTokenAWSStackName9vehiclemodelhandleronevent9CB33C16": Object {
+    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623": Object {
       "DependsOn": Array [
         "integstackhandlerroleRoleC931488D",
       ],
@@ -697,7 +697,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName9vehiclemodelhandleroneventLogRetentionD6F1356E": Object {
+    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleroneventLogRetentionA1ACD4C8": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -705,7 +705,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "SingletonLambdaTokenAWSStackName9vehiclemodelhandleronevent9CB33C16",
+                "Ref": "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
               },
             ],
           ],
@@ -747,7 +747,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9campaignhandleronevent03097FCA",
+                "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
                 "Arn",
               ],
             },
@@ -829,7 +829,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9campaignhandleronevent03097FCA",
+                    "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
                     "Arn",
                   ],
                 },
@@ -839,7 +839,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9campaignhandleronevent03097FCA",
+                          "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
                           "Arn",
                         ],
                       },
@@ -878,7 +878,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                 "Arn",
               ],
             },
@@ -960,7 +960,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                     "Arn",
                   ],
                 },
@@ -970,7 +970,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                          "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                           "Arn",
                         ],
                       },
@@ -1009,7 +1009,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                 "Arn",
               ],
             },
@@ -1091,7 +1091,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                     "Arn",
                   ],
                 },
@@ -1101,7 +1101,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9fleethandleronevent689585DE",
+                          "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
                           "Arn",
                         ],
                       },
@@ -1140,7 +1140,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9vehiclemodelhandleronevent9CB33C16",
+                "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
                 "Arn",
               ],
             },
@@ -1222,7 +1222,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9vehiclemodelhandleronevent9CB33C16",
+                    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
                     "Arn",
                   ],
                 },
@@ -1232,7 +1232,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9vehiclemodelhandleronevent9CB33C16",
+                          "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
                           "Arn",
                         ],
                       },
@@ -1271,13 +1271,13 @@ Object {
           "Variables": Object {
             "USER_IS_COMPLETE_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                 "Arn",
               ],
             },
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                 "Arn",
               ],
             },
@@ -1359,7 +1359,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                     "Arn",
                   ],
                 },
@@ -1369,7 +1369,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                           "Arn",
                         ],
                       },
@@ -1385,7 +1385,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                     "Arn",
                   ],
                 },
@@ -1395,7 +1395,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                           "Arn",
                         ],
                       },
@@ -1434,13 +1434,13 @@ Object {
           "Variables": Object {
             "USER_IS_COMPLETE_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                 "Arn",
               ],
             },
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                 "Arn",
               ],
             },
@@ -1525,7 +1525,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                     "Arn",
                   ],
                 },
@@ -1535,7 +1535,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                           "Arn",
                         ],
                       },
@@ -1551,7 +1551,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                     "Arn",
                   ],
                 },
@@ -1561,7 +1561,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                           "Arn",
                         ],
                       },
@@ -1607,13 +1607,13 @@ Object {
           "Variables": Object {
             "USER_IS_COMPLETE_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                 "Arn",
               ],
             },
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                 "Arn",
               ],
             },
@@ -1695,7 +1695,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                     "Arn",
                   ],
                 },
@@ -1705,7 +1705,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleronevent1D679A4A",
+                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
                           "Arn",
                         ],
                       },
@@ -1721,7 +1721,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                     "Arn",
                   ],
                 },
@@ -1731,7 +1731,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9servicehandleriscompleteCED82742",
+                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
                           "Arn",
                         ],
                       },
@@ -1892,7 +1892,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventD0421223",
+                "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
                 "Arn",
               ],
             },
@@ -1974,7 +1974,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventD0421223",
+                    "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
                     "Arn",
                   ],
                 },
@@ -1984,7 +1984,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9signalcataloghandleroneventD0421223",
+                          "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
                           "Arn",
                         ],
                       },
@@ -2081,7 +2081,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                 "Arn",
               ],
             },
@@ -2132,7 +2132,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                     "Arn",
                   ],
                 },
@@ -2142,7 +2142,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                          "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                           "Arn",
                         ],
                       },
@@ -2212,7 +2212,7 @@ Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                 "Arn",
               ],
             },
@@ -2294,7 +2294,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                     "Arn",
                   ],
                 },
@@ -2304,7 +2304,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName9vehiclehandleroneventB293CFBF",
+                          "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
                           "Arn",
                         ],
                       },
