@@ -101,7 +101,6 @@ export class CanDefinition extends NetworkFileDefinition {
   ) {
     super();
 
-    
 
     this.definition = {
       networkFileType: 'CAN_DBC',
