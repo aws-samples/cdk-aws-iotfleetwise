@@ -101,10 +101,12 @@ export class CanDefinition extends NetworkFileDefinition {
   ) {
     super();
 
+    
+
     this.definition = {
       networkFileType: 'CAN_DBC',
       canDbc: {
-        canDbcFiles,
+        canDbcFiles: canDbcFiles.map(file => Buffer.from(file).toString('base64')),
         networkInterface,
         signalsMap,
       },
