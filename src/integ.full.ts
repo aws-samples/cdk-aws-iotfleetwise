@@ -90,6 +90,15 @@ export class IntegTesting {
       ],
     });
 
+    ec2_role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        's3:List*',
+        's3:Get*',
+      ],
+      resources: ['arn:aws:s3:::*'],
+    }));
+
     // Ubuntu 18.04 for Arm64
     const machineImage = ec2.MachineImage.fromSsmParameter(
       '/aws/service/canonical/ubuntu/server/18.04/stable/current/arm64/hvm/ebs-gp2/ami-id',
@@ -97,12 +106,13 @@ export class IntegTesting {
     );
 
     // Create the Vehicle simulator
+    const keyName = stack.node.tryGetContext("key_name");
     const instance = new ec2.Instance(stack, 'VehicleSim', {
       vpc: vpc,
       instanceType: new ec2.InstanceType('m6g.xlarge'),
       machineImage,
       securityGroup,
-      keyName: 'salamida',
+      keyName,
       role: ec2_role,
       vpcSubnets: {
         subnetGroupName: 'Public',
@@ -207,8 +217,7 @@ export class IntegTesting {
     /opt/aws/bin/cfn-signal --stack ${stack.stackName} --resource ${instance.instance.logicalId} --region ${stack.region}`;
 
     instance.addUserData(userData);
-    new cdk.CfnOutput(stack, 'Vehicle IP Address', { value: instance.instancePublicIp });
-    new cdk.CfnOutput(stack, 'Vehicle ssh command', { value: 'ssh -i salamida.pem -o IdentitiesOnly=yes ec2-user@' + instance.instancePublicIp });
+    new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}`});
 
     new ifw.Campaign(stack, 'Campaign1', {
       name: 'FwTimeBasedCampaign1',

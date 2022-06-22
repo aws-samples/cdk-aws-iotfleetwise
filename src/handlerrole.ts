@@ -21,5 +21,23 @@ export class HandlerRole extends Construct {
         iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
       ],
     });
+
+    this.role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'iotfleetwise:*',
+        'iot:DescribeThing',
+        'iot:CreateThing',
+        'iot:CreateKeysAndCertificate',
+        'iot:DescribeEndpoint',
+        'iot:ListThingPrincipals',
+        'iot:DeleteCertificate',
+        'iot:DeleteThing',
+        'timestream:DescribeEndpoints',
+        'timestream:DescribeDatabase',
+        'timestream:DescribeTable',
+      ],
+      resources: ['*'],
+    }));
   }
 }

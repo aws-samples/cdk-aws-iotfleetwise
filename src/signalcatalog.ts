@@ -107,6 +107,15 @@ export class SignalCatalog extends Construct {
       handler: 'servicehandler.is_complete',
     });
 
+
+    handler.role!.addToPrincipalPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        "iam:PassRole",
+      ],
+      resources: [props.role.roleArn],
+    }));
+
     const provider = Provider.getOrCreate(this, handler, isCompleteHandler);
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
