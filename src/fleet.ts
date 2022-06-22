@@ -1,13 +1,9 @@
-import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
-import {
-  Aws,
-  aws_lambda as lambda,
-} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Handler } from './handler';
+import { Provider } from './provider';
 import { SignalCatalog } from './signalcatalog';
 import { Vehicle } from './vehicle';
-import { Provider } from './provider';
 
 
 /**
@@ -37,19 +33,12 @@ export class Fleet extends Construct {
     (this.fleetId as string)= props.fleetId;
     (this.vehicles as Vehicle[]) = props.vehicles || [];
 
-    const onEventHandler = new lambda.SingletonFunction(this, 'Lambda', {
-      uuid: `${Aws.STACK_NAME}-fleet-handler`,
-      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
+    const handler = new Handler(this, 'Handler', {
       handler: 'fleethandler.on_event',
-      timeout: cdk.Duration.seconds(300),
-      runtime: lambda.Runtime.PYTHON_3_9,
-      layers: [this.signalCatalog.lambdaLayer],
-      role: this.signalCatalog.lambdaRole,
-      logRetention: this.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
-      serviceToken: Provider.getOrCreate(this, onEventHandler).provider.serviceToken,
+      serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
       properties: {
         fleet_id: this.fleetId,
         signal_catalog_arn: this.signalCatalog.arn,

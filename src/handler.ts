@@ -5,26 +5,24 @@ import {
   aws_logs as logs,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Boto3LayerVersion } from './boto3layerversion';
+import { HandlerRole } from './handlerrole';
 
 
 export interface EventHandlerProps {
   handler: string;
 }
 
-export class EventHandler extends Construct {
-  public readonly handler: lambda.SingletonFunction;
-
+export class Handler extends lambda.SingletonFunction {
   constructor(scope: Construct, id: string, props: EventHandlerProps) {
-    super(scope, id)
-
-    this.handler = new lambda.SingletonFunction(this, 'Lambda', {
+    super(scope, id, {
       uuid: `${cdk.Aws.STACK_NAME}-${props.handler}`,
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
       handler: props.handler,
       timeout: cdk.Duration.seconds(300),
       runtime: lambda.Runtime.PYTHON_3_9,
-      layers: [this.signalCatalog.lambdaLayer],
-      role: this.signalCatalog.lambdaRole,
+      layers: [Boto3LayerVersion.getOrCreate(scope).lambdaLayer],
+      role: HandlerRole.getOrCreate(scope).role,
       logRetention: logs.RetentionDays.ONE_DAY,
     });
   }

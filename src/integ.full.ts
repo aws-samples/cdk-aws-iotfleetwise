@@ -121,7 +121,7 @@ export class IntegTesting {
             i=0
         else
             i=\`expr $i + 1\`
-            if expr $i \>= 10 > /dev/null; then
+            if expr $i \\>= 10 > /dev/null; then
                 break
             fi
         fi
