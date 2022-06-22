@@ -1,12 +1,13 @@
+import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
 import {
   aws_iam as iam,
   aws_timestream as ts,
+  aws_lambda as lambda,
+  aws_logs as logs,
+  custom_resources as cr,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Handler } from './handler';
-import { Provider } from './provider';
-
 
 export class SignalCatalogNode {
   protected node: object;
@@ -91,26 +92,64 @@ export class SignalCatalog extends Construct {
   readonly name: string;
   readonly description: (string|undefined);
   readonly arn: string;
+  readonly lambdaRole: iam.Role;
+  readonly lambdaLayer: lambda.LayerVersion;
+  readonly logRetention: logs.RetentionDays;
 
   constructor(scope: Construct, id: string, props: SignalCatalogProps) {
     super(scope, id);
+
 
     this.name = props.name || 'default';
     this.description = props.description;
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:signal-catalog/${this.name}`;
 
-    const handler = new Handler(this, 'Handler', {
+    this.lambdaRole = new iam.Role(this, 'Role', {
+      assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
+      ],
+    });
+
+    this.lambdaLayer = new lambda.LayerVersion(this, 'Boto3', {
+      description: 'Boto3 Library with Iot Fleetwise Support',
+      compatibleRuntimes: [lambda.Runtime.PYTHON_3_9],
+      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../layer.zip')),
+    });
+
+    const code = lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers'));
+
+    this.logRetention = logs.RetentionDays.ONE_DAY;
+
+    const onEventHandlerService = new lambda.Function(this, 'Service', {
+      code,
       handler: 'servicehandler.on_event',
+      timeout: cdk.Duration.seconds(300),
+      runtime: lambda.Runtime.PYTHON_3_9,
+      layers: [this.lambdaLayer],
+      role: this.lambdaRole,
+      logRetention: this.logRetention,
     });
 
-    const isCompleteHandler = new Handler(this, 'IsCompleteHandler', {
+    const isCompleteHandlerService = new lambda.Function(this, 'ServiceComplete', {
+      code,
       handler: 'servicehandler.is_complete',
+      timeout: cdk.Duration.seconds(300),
+      runtime: lambda.Runtime.PYTHON_3_9,
+      layers: [this.lambdaLayer],
+      role: this.lambdaRole,
+      logRetention: this.logRetention,
     });
 
-    const provider = Provider.getOrCreate(this, handler, isCompleteHandler);
+    const providerService = new cr.Provider(this, 'ServiceProvider', {
+      onEventHandler: onEventHandlerService,
+      isCompleteHandler: isCompleteHandlerService,
+      logRetention: this.logRetention,
+    });
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
-      serviceToken: provider.provider.serviceToken,
+      serviceToken: providerService.serviceToken,
       properties: {
         role_arn: props.role.roleArn,
         database_name: props.database.databaseName,
@@ -118,12 +157,23 @@ export class SignalCatalog extends Construct {
       },
     });
 
-    const serviceCatalogHandler = new Handler(this, 'ServiceCatalogHandler', {
+    const onEventHandlerCatalog = new lambda.Function(this, 'Catalog', {
+      code,
       handler: 'signalcataloghandler.on_event',
+      timeout: cdk.Duration.seconds(300),
+      runtime: lambda.Runtime.PYTHON_3_9,
+      layers: [this.lambdaLayer],
+      role: this.lambdaRole,
+      logRetention: this.logRetention,
+    });
+
+    const providerCatalog = new cr.Provider(this, 'CatalogProvider', {
+      onEventHandler: onEventHandlerCatalog,
+      logRetention: this.logRetention,
     });
 
     const resourceCatalog = new cdk.CustomResource(this, 'CatalogResource', {
-      serviceToken: Provider.getOrCreate(this, serviceCatalogHandler).provider.serviceToken,
+      serviceToken: providerCatalog.serviceToken,
       properties: {
         name: this.name,
         description: this.description,

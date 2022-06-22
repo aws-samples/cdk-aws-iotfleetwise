@@ -69,13 +69,7 @@ export class IntegTesting {
       vehicleModel: model_a,
       createIotThing: true,
     });
-
-    const vin200 = new ifw.Vehicle(stack, 'vin200', {
-      vehicleId: 'vin200',
-      vehicleModel: model_a,
-      createIotThing: true,
-    });
-
+    new cdk.CfnOutput(stack, 'certificateId', { value: vin100.certificateId! });
 
     new ifw.Campaign(stack, 'Campaign1', {
       name: 'FwTimeBasedCampaign1',
@@ -85,12 +79,6 @@ export class IntegTesting {
         new ifw.CampaignSignal('Vehicle.EngineTorque'),
       ],
       autoApprove: true,
-    });
-
-    new ifw.Fleet(stack, 'Fleet1', {
-      fleetId: 'fleet1',
-      signalCatalog,
-      vehicles: [vin100, vin200],
     });
 
     new ifw.Fleet(stack, 'Fleet2', {
