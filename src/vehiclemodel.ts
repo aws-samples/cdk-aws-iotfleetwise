@@ -1,7 +1,10 @@
+import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
+import {
+  aws_lambda as lambda,
+  custom_resources as cr,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Handler } from './handler';
-import { Provider } from './provider';
 import { SignalCatalog } from './signalcatalog';
 
 export class VehicleInterface {
@@ -129,12 +132,23 @@ export class VehicleModel extends Construct {
     (this.name as string) = props.name || '';
     (this.signalCatalog as SignalCatalog) = props.signalCatalog;
 
-    const handler = new Handler(this, 'Handler', {
+    const onEventHandler = new lambda.Function(this, 'Lambda', {
+      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
       handler: 'vehiclemodelhandler.on_event',
+      timeout: cdk.Duration.seconds(300),
+      runtime: lambda.Runtime.PYTHON_3_9,
+      layers: [this.signalCatalog.lambdaLayer],
+      role: this.signalCatalog.lambdaRole,
+      logRetention: this.signalCatalog.logRetention,
+    });
+
+    const provider = new cr.Provider(this, 'Provider', {
+      onEventHandler: onEventHandler,
+      logRetention: this.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
-      serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
+      serviceToken: provider.serviceToken,
       properties: {
         name: this.name,
         signal_catalog_arn: props.signalCatalog.arn,

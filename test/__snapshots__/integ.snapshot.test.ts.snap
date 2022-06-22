@@ -2,6 +2,16 @@
 
 exports[`default validation 1`] = `
 Object {
+  "Outputs": Object {
+    "certificateId": Object {
+      "Value": Object {
+        "Fn::GetAtt": Array [
+          "vin1001B581DB8",
+          "certificateId",
+        ],
+      },
+    },
+  },
   "Parameters": Object {
     "BootstrapVersion": Object {
       "Default": "/cdk-bootstrap/hnb659fds/version",
@@ -14,14 +24,20 @@ Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
         "vin100Attachment69984A52",
+        "vin100LambdaLogRetentionEBFE3476",
+        "vin100LambdaD0DEBF5A",
         "vin100PolicyABC41F0A",
+        "vin100ProviderframeworkonEventLogRetention08E95340",
+        "vin100ProviderframeworkonEventF338173F",
+        "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "vin100ProviderframeworkonEventServiceRole345C8DB7",
         "vin1001B581DB8",
         "vin100ThingAttachment43EBFB2B",
       ],
       "Properties": Object {
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "integstackCampaign1HandlerProviderframeworkonEventF2C4C246",
+            "Campaign1ProviderframeworkonEvent4E2A6AED",
             "Arn",
           ],
         },
@@ -65,73 +81,241 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "Campaign1Lambda0419ABC2": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "campaignhandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Campaign1LambdaLogRetentionAE5CAEF0": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Campaign1Lambda0419ABC2",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Campaign1ProviderframeworkonEvent4E2A6AED": Object {
+      "DependsOn": Array [
+        "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758",
+        "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/Campaign1/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "Campaign1Lambda0419ABC2",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Campaign1ProviderframeworkonEventLogRetentionFD16D3AE": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Campaign1ProviderframeworkonEvent4E2A6AED",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Campaign1ProviderframeworkonEventServiceRoleABA5E102": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Campaign1Lambda0419ABC2",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Campaign1Lambda0419ABC2",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "Campaign1ProviderframeworkonEventServiceRoleDefaultPolicyC76D3758",
+        "Roles": Array [
+          Object {
+            "Ref": "Campaign1ProviderframeworkonEventServiceRoleABA5E102",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "Database": Object {
       "Properties": Object {
         "DatabaseName": "FleetWise",
       },
       "Type": "AWS::Timestream::Database",
     },
-    "Fleet150EF280A": Object {
-      "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "SignalCatalogCatalogResourceFC71CDF4",
-        "SignalCatalogServiceResourceD3614339",
-        "vin100Attachment69984A52",
-        "vin100PolicyABC41F0A",
-        "vin1001B581DB8",
-        "vin100ThingAttachment43EBFB2B",
-        "vin200AttachmentD0E37BC9",
-        "vin200PolicyF1A8989E",
-        "vin200112EC84E",
-        "vin200ThingAttachmentB8AF0D1E",
-      ],
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "integstackFleet1HandlerProviderframeworkonEvent01BAB6EC",
-            "Arn",
-          ],
-        },
-        "description": " ",
-        "fleet_id": "fleet1",
-        "signal_catalog_arn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:aws:iotfleetwise:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":signal-catalog/default",
-            ],
-          ],
-        },
-        "vehicle_ids": Array [
-          "vin100",
-          "vin200",
-        ],
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
     "Fleet277887135": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "SignalCatalogBoto3783CEE3E",
+        "SignalCatalogLogRetentionB793B7B4",
+        "SignalCatalog7BDD2B41",
+        "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0",
+        "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
         "SignalCatalogCatalogResourceFC71CDF4",
+        "SignalCatalogRoleAD0FEEB7",
+        "SignalCatalogServiceLogRetention45E52A30",
+        "SignalCatalogService82916B9B",
+        "SignalCatalogServiceCompleteLogRetention0DEFDE87",
+        "SignalCatalogServiceComplete1E097648",
+        "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7",
+        "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+        "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27",
+        "SignalCatalogServiceProviderframeworkonEvent04EB655B",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
+        "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353",
+        "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
+        "SignalCatalogServiceProviderwaiterstatemachineC848039F",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
         "SignalCatalogServiceResourceD3614339",
         "vin100Attachment69984A52",
+        "vin100LambdaLogRetentionEBFE3476",
+        "vin100LambdaD0DEBF5A",
         "vin100PolicyABC41F0A",
+        "vin100ProviderframeworkonEventLogRetention08E95340",
+        "vin100ProviderframeworkonEventF338173F",
+        "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "vin100ProviderframeworkonEventServiceRole345C8DB7",
         "vin1001B581DB8",
         "vin100ThingAttachment43EBFB2B",
       ],
       "Properties": Object {
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "integstackFleet2HandlerProviderframeworkonEvent4D4708C2",
+            "Fleet2ProviderframeworkonEventA129D387",
             "Arn",
           ],
         },
@@ -159,6 +343,188 @@ Object {
       },
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
+    },
+    "Fleet2Lambda2CAD9B7F": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "fleethandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Fleet2LambdaLogRetentionFD978CE2": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Fleet2Lambda2CAD9B7F",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Fleet2ProviderframeworkonEventA129D387": Object {
+      "DependsOn": Array [
+        "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252",
+        "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/Fleet2/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "Fleet2Lambda2CAD9B7F",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "Fleet2ProviderframeworkonEventLogRetentionE74D17DC": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "Fleet2ProviderframeworkonEventA129D387",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "Fleet2ProviderframeworkonEventServiceRole86B93EF4": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "Fleet2Lambda2CAD9B7F",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "Fleet2Lambda2CAD9B7F",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "Fleet2ProviderframeworkonEventServiceRoleDefaultPolicyA356F252",
+        "Roles": Array [
+          Object {
+            "Ref": "Fleet2ProviderframeworkonEventServiceRole86B93EF4",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A": Object {
       "DependsOn": Array [
@@ -241,13 +607,40 @@ Object {
     "ModelA133A72B5": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "SignalCatalogBoto3783CEE3E",
+        "SignalCatalogLogRetentionB793B7B4",
+        "SignalCatalog7BDD2B41",
+        "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0",
+        "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
         "SignalCatalogCatalogResourceFC71CDF4",
+        "SignalCatalogRoleAD0FEEB7",
+        "SignalCatalogServiceLogRetention45E52A30",
+        "SignalCatalogService82916B9B",
+        "SignalCatalogServiceCompleteLogRetention0DEFDE87",
+        "SignalCatalogServiceComplete1E097648",
+        "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7",
+        "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+        "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27",
+        "SignalCatalogServiceProviderframeworkonEvent04EB655B",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
+        "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353",
+        "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
+        "SignalCatalogServiceProviderwaiterstatemachineC848039F",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
         "SignalCatalogServiceResourceD3614339",
       ],
       "Properties": Object {
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "integstackModelAHandlerProviderframeworkonEvent44379B23",
+            "ModelAProviderframeworkonEventCF0EA117",
             "Arn",
           ],
         },
@@ -292,6 +685,188 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "ModelALambda1DBF5DCD": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "vehiclemodelhandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ModelALambdaLogRetentionE94AB023": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "ModelALambda1DBF5DCD",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "ModelAProviderframeworkonEventCF0EA117": Object {
+      "DependsOn": Array [
+        "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13",
+        "ModelAProviderframeworkonEventServiceRoleDFF1F14D",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/ModelA/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "ModelALambda1DBF5DCD",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "ModelAProviderframeworkonEventServiceRoleDFF1F14D",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "ModelAProviderframeworkonEventLogRetentionF8BE83BA": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "ModelAProviderframeworkonEventCF0EA117",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "ModelAProviderframeworkonEventServiceRoleDFF1F14D": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "ModelALambda1DBF5DCD",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "ModelALambda1DBF5DCD",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13",
+        "Roles": Array [
+          Object {
+            "Ref": "ModelAProviderframeworkonEventServiceRoleDFF1F14D",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "Role1ABCC5F0": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
@@ -323,253 +898,9 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "SignalCatalogCatalogResourceFC71CDF4": Object {
-      "DeletionPolicy": "Delete",
+    "SignalCatalog7BDD2B41": Object {
       "DependsOn": Array [
-        "SignalCatalogServiceResourceD3614339",
-      ],
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEvent5D9FFAB4",
-            "Arn",
-          ],
-        },
-        "description": "my signal catalog",
-        "name": "default",
-        "nodes": "[{\\"type\\":\\"Branch\\",\\"branch\\":{\\"name\\":\\"Vehicle\\",\\"fullyQualifiedName\\":\\"Vehicle\\"}},{\\"type\\":\\"Sensor\\",\\"sensor\\":{\\"name\\":\\"EngineTorque\\",\\"fullyQualifiedName\\":\\"Vehicle.EngineTorque\\",\\"dataType\\":\\"DOUBLE\\"}}]",
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "SignalCatalogServiceResourceD3614339": Object {
-      "DeletionPolicy": "Delete",
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogHandlerProviderframeworkonEvent7EF2E62E",
-            "Arn",
-          ],
-        },
-        "database_name": "FleetWise",
-        "role_arn": Object {
-          "Fn::GetAtt": Array [
-            "Role1ABCC5F0",
-            "Arn",
-          ],
-        },
-        "table_name": "FleetWise",
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
-        },
-        "Handler": "campaignhandler.on_event",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "SingletonLambdaTokenAWSStackName12campaignhandleroneventLogRetentionB51FD2E8": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
-        },
-        "Handler": "fleethandler.on_event",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "SingletonLambdaTokenAWSStackName12fleethandleroneventLogRetention164B00CD": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
-        },
-        "Handler": "servicehandler.is_complete",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "SingletonLambdaTokenAWSStackName12servicehandleriscompleteLogRetention9501A0CF": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
-        },
-        "Handler": "servicehandler.on_event",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "SingletonLambdaTokenAWSStackName12servicehandleroneventLogRetentionFEF4DA00": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
+        "SignalCatalogRoleAD0FEEB7",
       ],
       "Properties": Object {
         "Code": Object {
@@ -581,12 +912,12 @@ Object {
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
           Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
+            "Ref": "SignalCatalogBoto3783CEE3E",
           },
         ],
         "Role": Object {
           "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
+            "SignalCatalogRoleAD0FEEB7",
             "Arn",
           ],
         },
@@ -595,145 +926,25 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "SingletonLambdaTokenAWSStackName12signalcataloghandleroneventLogRetention3033576B": Object {
+    "SignalCatalogBoto3783CEE3E": Object {
       "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5": Object {
-      "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
+        "CompatibleRuntimes": Array [
+          "python3.9",
+        ],
+        "Content": Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+          "S3Key": "58e666607b1a1f413f63b013633558c0a9186542993036d3bf2f34e93e9a7fbf.zip",
         },
-        "Handler": "vehiclehandler.on_event",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
+        "Description": "Boto3 Library with Iot Fleetwise Support",
       },
-      "Type": "AWS::Lambda::Function",
+      "Type": "AWS::Lambda::LayerVersion",
     },
-    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventLogRetentionE8076C0F": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623": Object {
+    "SignalCatalogCatalogProviderframeworkonEventE0AEED21": Object {
       "DependsOn": Array [
-        "integstackhandlerroleRoleC931488D",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
-        },
-        "Handler": "vehiclemodelhandler.on_event",
-        "Layers": Array [
-          Object {
-            "Ref": "integstackiotfleetwiselayerversionBoto3C676EE56",
-          },
-        ],
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackhandlerroleRoleC931488D",
-            "Arn",
-          ],
-        },
-        "Runtime": "python3.9",
-        "Timeout": 300,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleroneventLogRetentionA1ACD4C8": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "Table": Object {
-      "DependsOn": Array [
-        "Database",
-      ],
-      "Properties": Object {
-        "DatabaseName": "FleetWise",
-        "TableName": "FleetWise",
-      },
-      "Type": "AWS::Timestream::Table",
-    },
-    "integstackCampaign1HandlerProviderframeworkonEventF2C4C246": Object {
-      "DependsOn": Array [
-        "integstackCampaign1HandlerProviderframeworkonEventServiceRoleDefaultPolicy8DAF4960",
-        "integstackCampaign1HandlerProviderframeworkonEventServiceRole3A74D78A",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
+        "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
       ],
       "Properties": Object {
         "Code": Object {
@@ -742,12 +953,12 @@ Object {
           },
           "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
         },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--Campaign1--Handler/Provider)",
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/SignalCatalog/CatalogProvider)",
         "Environment": Object {
           "Variables": Object {
             "USER_ON_EVENT_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
+                "SignalCatalog7BDD2B41",
                 "Arn",
               ],
             },
@@ -756,7 +967,7 @@ Object {
         "Handler": "framework.onEvent",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "integstackCampaign1HandlerProviderframeworkonEventServiceRole3A74D78A",
+            "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
             "Arn",
           ],
         },
@@ -765,7 +976,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "integstackCampaign1HandlerProviderframeworkonEventLogRetention46BFC2D1": Object {
+    "SignalCatalogCatalogProviderframeworkonEventLogRetention609EECF0": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -773,7 +984,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "integstackCampaign1HandlerProviderframeworkonEventF2C4C246",
+                "Ref": "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
               },
             ],
           ],
@@ -788,7 +999,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "integstackCampaign1HandlerProviderframeworkonEventServiceRole3A74D78A": Object {
+    "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -819,7 +1030,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "integstackCampaign1HandlerProviderframeworkonEventServiceRoleDefaultPolicy8DAF4960": Object {
+    "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -829,7 +1040,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
+                    "SignalCatalog7BDD2B41",
                     "Arn",
                   ],
                 },
@@ -839,7 +1050,7 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12campaignhandleronevent669F4060",
+                          "SignalCatalog7BDD2B41",
                           "Arn",
                         ],
                       },
@@ -852,51 +1063,35 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "integstackCampaign1HandlerProviderframeworkonEventServiceRoleDefaultPolicy8DAF4960",
+        "PolicyName": "SignalCatalogCatalogProviderframeworkonEventServiceRoleDefaultPolicy01510BE2",
         "Roles": Array [
           Object {
-            "Ref": "integstackCampaign1HandlerProviderframeworkonEventServiceRole3A74D78A",
+            "Ref": "SignalCatalogCatalogProviderframeworkonEventServiceRoleAA06EE91",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "integstackFleet1HandlerProviderframeworkonEvent01BAB6EC": Object {
+    "SignalCatalogCatalogResourceFC71CDF4": Object {
+      "DeletionPolicy": "Delete",
       "DependsOn": Array [
-        "integstackFleet1HandlerProviderframeworkonEventServiceRoleDefaultPolicy32A16832",
-        "integstackFleet1HandlerProviderframeworkonEventServiceRole45D7C9BE",
+        "SignalCatalogServiceResourceD3614339",
       ],
       "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--Fleet1--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
+        "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "integstackFleet1HandlerProviderframeworkonEventServiceRole45D7C9BE",
+            "SignalCatalogCatalogProviderframeworkonEventE0AEED21",
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
+        "description": "my signal catalog",
+        "name": "default",
+        "nodes": "[{\\"type\\":\\"Branch\\",\\"branch\\":{\\"name\\":\\"Vehicle\\",\\"fullyQualifiedName\\":\\"Vehicle\\"}},{\\"type\\":\\"Sensor\\",\\"sensor\\":{\\"name\\":\\"EngineTorque\\",\\"fullyQualifiedName\\":\\"Vehicle.EngineTorque\\",\\"dataType\\":\\"DOUBLE\\"}}]",
       },
-      "Type": "AWS::Lambda::Function",
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
     },
-    "integstackFleet1HandlerProviderframeworkonEventLogRetentionBD257260": Object {
+    "SignalCatalogLogRetentionB793B7B4": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -904,7 +1099,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "integstackFleet1HandlerProviderframeworkonEvent01BAB6EC",
+                "Ref": "SignalCatalog7BDD2B41",
               },
             ],
           ],
@@ -919,1094 +1114,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "integstackFleet1HandlerProviderframeworkonEventServiceRole45D7C9BE": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackFleet1HandlerProviderframeworkonEventServiceRoleDefaultPolicy32A16832": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackFleet1HandlerProviderframeworkonEventServiceRoleDefaultPolicy32A16832",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackFleet1HandlerProviderframeworkonEventServiceRole45D7C9BE",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackFleet2HandlerProviderframeworkonEvent4D4708C2": Object {
-      "DependsOn": Array [
-        "integstackFleet2HandlerProviderframeworkonEventServiceRoleDefaultPolicy63EEA440",
-        "integstackFleet2HandlerProviderframeworkonEventServiceRole147AA93C",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--Fleet2--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackFleet2HandlerProviderframeworkonEventServiceRole147AA93C",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackFleet2HandlerProviderframeworkonEventLogRetentionCFDCCC7D": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackFleet2HandlerProviderframeworkonEvent4D4708C2",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackFleet2HandlerProviderframeworkonEventServiceRole147AA93C": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackFleet2HandlerProviderframeworkonEventServiceRoleDefaultPolicy63EEA440": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12fleethandleronevent5F358835",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackFleet2HandlerProviderframeworkonEventServiceRoleDefaultPolicy63EEA440",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackFleet2HandlerProviderframeworkonEventServiceRole147AA93C",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackModelAHandlerProviderframeworkonEvent44379B23": Object {
-      "DependsOn": Array [
-        "integstackModelAHandlerProviderframeworkonEventServiceRoleDefaultPolicy23EA8997",
-        "integstackModelAHandlerProviderframeworkonEventServiceRoleD6B4E278",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--ModelA--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackModelAHandlerProviderframeworkonEventServiceRoleD6B4E278",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackModelAHandlerProviderframeworkonEventLogRetentionE408C0A7": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackModelAHandlerProviderframeworkonEvent44379B23",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackModelAHandlerProviderframeworkonEventServiceRoleD6B4E278": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackModelAHandlerProviderframeworkonEventServiceRoleDefaultPolicy23EA8997": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12vehiclemodelhandleronevent7E2F7623",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackModelAHandlerProviderframeworkonEventServiceRoleDefaultPolicy23EA8997",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackModelAHandlerProviderframeworkonEventServiceRoleD6B4E278",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkisCompleteCE714C8C": Object {
-      "DependsOn": Array [
-        "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRoleDefaultPolicyDDD9554E",
-        "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRole8BDC385A",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - isComplete (integ-stack/integ-stack--SignalCatalog--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.isComplete",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRole8BDC385A",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkisCompleteLogRetentionECDD2ABB": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackSignalCatalogHandlerProviderframeworkisCompleteCE714C8C",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRole8BDC385A": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRoleDefaultPolicyDDD9554E": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRoleDefaultPolicyDDD9554E",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackSignalCatalogHandlerProviderframeworkisCompleteServiceRole8BDC385A",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonEvent7EF2E62E": Object {
-      "DependsOn": Array [
-        "integstackSignalCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy27FAAC94",
-        "integstackSignalCatalogHandlerProviderframeworkonEventServiceRole6BFABFD6",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--SignalCatalog--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                "Arn",
-              ],
-            },
-            "WAITER_STATE_MACHINE_ARN": Object {
-              "Ref": "integstackSignalCatalogHandlerProviderwaiterstatemachine0556D4A2",
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogHandlerProviderframeworkonEventServiceRole6BFABFD6",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonEventLogRetention22F90008": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackSignalCatalogHandlerProviderframeworkonEvent7EF2E62E",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonEventServiceRole6BFABFD6": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy27FAAC94": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "states:StartExecution",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Ref": "integstackSignalCatalogHandlerProviderwaiterstatemachine0556D4A2",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackSignalCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy27FAAC94",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackSignalCatalogHandlerProviderframeworkonEventServiceRole6BFABFD6",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonTimeout8EF9AEE3": Object {
-      "DependsOn": Array [
-        "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleDefaultPolicyB582F988",
-        "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleB74424EF",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onTimeout (integ-stack/integ-stack--SignalCatalog--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                "Arn",
-              ],
-            },
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onTimeout",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleB74424EF",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonTimeoutLogRetention1B776F62": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackSignalCatalogHandlerProviderframeworkonTimeout8EF9AEE3",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleB74424EF": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleDefaultPolicyB582F988": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleroneventA887AFBB",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12servicehandleriscomplete456504ED",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleDefaultPolicyB582F988",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackSignalCatalogHandlerProviderframeworkonTimeoutServiceRoleB74424EF",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackSignalCatalogHandlerProviderwaiterstatemachine0556D4A2": Object {
-      "DependsOn": Array [
-        "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleDefaultPolicy9C3D3032",
-        "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleA18AEC37",
-      ],
-      "Properties": Object {
-        "DefinitionString": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":360,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "integstackSignalCatalogHandlerProviderframeworkisCompleteCE714C8C",
-                  "Arn",
-                ],
-              },
-              "\\"},\\"framework-onTimeout-task\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "integstackSignalCatalogHandlerProviderframeworkonTimeout8EF9AEE3",
-                  "Arn",
-                ],
-              },
-              "\\"}}}",
-            ],
-          ],
-        },
-        "RoleArn": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleA18AEC37",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::StepFunctions::StateMachine",
-    },
-    "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleA18AEC37": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "states.eu-central-1.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleDefaultPolicy9C3D3032": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "integstackSignalCatalogHandlerProviderframeworkisCompleteCE714C8C",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "integstackSignalCatalogHandlerProviderframeworkisCompleteCE714C8C",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "integstackSignalCatalogHandlerProviderframeworkonTimeout8EF9AEE3",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "integstackSignalCatalogHandlerProviderframeworkonTimeout8EF9AEE3",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleDefaultPolicy9C3D3032",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackSignalCatalogHandlerProviderwaiterstatemachineRoleA18AEC37",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEvent5D9FFAB4": Object {
-      "DependsOn": Array [
-        "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy7EEE7A33",
-        "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRole594FAC07",
-      ],
-      "Properties": Object {
-        "Code": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
-        },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--SignalCatalog--ServiceCatalogHandler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
-                "Arn",
-              ],
-            },
-          },
-        },
-        "Handler": "framework.onEvent",
-        "Role": Object {
-          "Fn::GetAtt": Array [
-            "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRole594FAC07",
-            "Arn",
-          ],
-        },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
-      },
-      "Type": "AWS::Lambda::Function",
-    },
-    "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventLogRetention6D55ABEB": Object {
-      "Properties": Object {
-        "LogGroupName": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "/aws/lambda/",
-              Object {
-                "Ref": "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEvent5D9FFAB4",
-              },
-            ],
-          ],
-        },
-        "RetentionInDays": 1,
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "Custom::LogRetention",
-    },
-    "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRole594FAC07": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "lambda.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "ManagedPolicyArns": Array [
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
-              ],
-            ],
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy7EEE7A33": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12signalcataloghandleronevent33603680",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
-              ],
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRoleDefaultPolicy7EEE7A33",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackSignalCatalogServiceCatalogHandlerProviderframeworkonEventServiceRole594FAC07",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
-    "integstackhandlerroleRoleC931488D": Object {
+    "SignalCatalogRoleAD0FEEB7": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -2049,57 +1157,63 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "integstackiotfleetwiselayerversionBoto3C676EE56": Object {
-      "Properties": Object {
-        "CompatibleRuntimes": Array [
-          "python3.9",
-        ],
-        "Content": Object {
-          "S3Bucket": Object {
-            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
-          },
-          "S3Key": "58e666607b1a1f413f63b013633558c0a9186542993036d3bf2f34e93e9a7fbf.zip",
-        },
-        "Description": "Boto3 Library with Iot Fleetwise Support",
-      },
-      "Type": "AWS::Lambda::LayerVersion",
-    },
-    "integstackvin100HandlerProviderframeworkonEvent82C29964": Object {
+    "SignalCatalogService82916B9B": Object {
       "DependsOn": Array [
-        "integstackvin100HandlerProviderframeworkonEventServiceRoleDefaultPolicyB6B2057E",
-        "integstackvin100HandlerProviderframeworkonEventServiceRoleE1D99A4B",
+        "SignalCatalogRoleAD0FEEB7",
       ],
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
         },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--vin100--Handler/Provider)",
-        "Environment": Object {
-          "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
-              "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
-                "Arn",
-              ],
-            },
+        "Handler": "servicehandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
           },
-        },
-        "Handler": "framework.onEvent",
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
-            "integstackvin100HandlerProviderframeworkonEventServiceRoleE1D99A4B",
+            "SignalCatalogRoleAD0FEEB7",
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
-        "Timeout": 900,
+        "Runtime": "python3.9",
+        "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
     },
-    "integstackvin100HandlerProviderframeworkonEventLogRetentionBF732EF8": Object {
+    "SignalCatalogServiceComplete1E097648": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "servicehandler.is_complete",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceCompleteLogRetention0DEFDE87": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -2107,7 +1221,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "integstackvin100HandlerProviderframeworkonEvent82C29964",
+                "Ref": "SignalCatalogServiceComplete1E097648",
               },
             ],
           ],
@@ -2122,49 +1236,94 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "integstackvin100HandlerProviderframeworkonEventServiceRoleDefaultPolicyB6B2057E": Object {
+    "SignalCatalogServiceLogRetention45E52A30": Object {
       "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "lambda:InvokeFunction",
-              "Effect": "Allow",
-              "Resource": Array [
-                Object {
-                  "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
-                    "Arn",
-                  ],
-                },
-                Object {
-                  "Fn::Join": Array [
-                    "",
-                    Array [
-                      Object {
-                        "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
-                          "Arn",
-                        ],
-                      },
-                      ":*",
-                    ],
-                  ],
-                },
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogService82916B9B",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4": Object {
+      "DependsOn": Array [
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
+        "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - isComplete (integ-stack/SignalCatalog/ServiceProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SignalCatalogServiceComplete1E097648",
+                "Arn",
               ],
             },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "integstackvin100HandlerProviderframeworkonEventServiceRoleDefaultPolicyB6B2057E",
-        "Roles": Array [
-          Object {
-            "Ref": "integstackvin100HandlerProviderframeworkonEventServiceRoleE1D99A4B",
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SignalCatalogService82916B9B",
+                "Arn",
+              ],
+            },
           },
-        ],
+        },
+        "Handler": "framework.isComplete",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
       },
-      "Type": "AWS::IAM::Policy",
+      "Type": "AWS::Lambda::Function",
     },
-    "integstackvin100HandlerProviderframeworkonEventServiceRoleE1D99A4B": Object {
+    "SignalCatalogServiceProviderframeworkisCompleteLogRetention328149D7": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -2195,10 +1354,78 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "integstackvin200HandlerProviderframeworkonEventB14DE12D": Object {
+    "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogService82916B9B",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogService82916B9B",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogServiceComplete1E097648",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogServiceComplete1E097648",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SignalCatalogServiceProviderframeworkisCompleteServiceRoleDefaultPolicy199894D6",
+        "Roles": Array [
+          Object {
+            "Ref": "SignalCatalogServiceProviderframeworkisCompleteServiceRole75A6CEBA",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SignalCatalogServiceProviderframeworkonEvent04EB655B": Object {
       "DependsOn": Array [
-        "integstackvin200HandlerProviderframeworkonEventServiceRoleDefaultPolicy1E239E9C",
-        "integstackvin200HandlerProviderframeworkonEventServiceRole02B70F01",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
+        "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
       ],
       "Properties": Object {
         "Code": Object {
@@ -2207,21 +1434,30 @@ Object {
           },
           "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
         },
-        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/integ-stack--vin200--Handler/Provider)",
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/SignalCatalog/ServiceProvider)",
         "Environment": Object {
           "Variables": Object {
-            "USER_ON_EVENT_FUNCTION_ARN": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
               "Fn::GetAtt": Array [
-                "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
+                "SignalCatalogServiceComplete1E097648",
                 "Arn",
               ],
+            },
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SignalCatalogService82916B9B",
+                "Arn",
+              ],
+            },
+            "WAITER_STATE_MACHINE_ARN": Object {
+              "Ref": "SignalCatalogServiceProviderwaiterstatemachineC848039F",
             },
           },
         },
         "Handler": "framework.onEvent",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "integstackvin200HandlerProviderframeworkonEventServiceRole02B70F01",
+            "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
             "Arn",
           ],
         },
@@ -2230,7 +1466,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "integstackvin200HandlerProviderframeworkonEventLogRetentionE47DDB66": Object {
+    "SignalCatalogServiceProviderframeworkonEventLogRetentionCA897B27": Object {
       "Properties": Object {
         "LogGroupName": Object {
           "Fn::Join": Array [
@@ -2238,7 +1474,7 @@ Object {
             Array [
               "/aws/lambda/",
               Object {
-                "Ref": "integstackvin200HandlerProviderframeworkonEventB14DE12D",
+                "Ref": "SignalCatalogServiceProviderframeworkonEvent04EB655B",
               },
             ],
           ],
@@ -2253,7 +1489,7 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
-    "integstackvin200HandlerProviderframeworkonEventServiceRole02B70F01": Object {
+    "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -2284,7 +1520,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "integstackvin200HandlerProviderframeworkonEventServiceRoleDefaultPolicy1E239E9C": Object {
+    "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -2294,7 +1530,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
+                    "SignalCatalogService82916B9B",
                     "Arn",
                   ],
                 },
@@ -2304,7 +1540,203 @@ Object {
                     Array [
                       Object {
                         "Fn::GetAtt": Array [
-                          "SingletonLambdaTokenAWSStackName12vehiclehandleroneventFA7E22E5",
+                          "SignalCatalogService82916B9B",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogServiceComplete1E097648",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogServiceComplete1E097648",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "states:StartExecution",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Ref": "SignalCatalogServiceProviderwaiterstatemachineC848039F",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SignalCatalogServiceProviderframeworkonEventServiceRoleDefaultPolicyF442B8AE",
+        "Roles": Array [
+          Object {
+            "Ref": "SignalCatalogServiceProviderframeworkonEventServiceRoleD535BDAB",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759": Object {
+      "DependsOn": Array [
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
+        "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onTimeout (integ-stack/SignalCatalog/ServiceProvider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_IS_COMPLETE_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SignalCatalogServiceComplete1E097648",
+                "Arn",
+              ],
+            },
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SignalCatalogService82916B9B",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onTimeout",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SignalCatalogServiceProviderframeworkonTimeoutLogRetentionC7DAA353": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogService82916B9B",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogService82916B9B",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogServiceComplete1E097648",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogServiceComplete1E097648",
                           "Arn",
                         ],
                       },
@@ -2317,24 +1749,183 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "integstackvin200HandlerProviderframeworkonEventServiceRoleDefaultPolicy1E239E9C",
+        "PolicyName": "SignalCatalogServiceProviderframeworkonTimeoutServiceRoleDefaultPolicyEB28275C",
         "Roles": Array [
           Object {
-            "Ref": "integstackvin200HandlerProviderframeworkonEventServiceRole02B70F01",
+            "Ref": "SignalCatalogServiceProviderframeworkonTimeoutServiceRole1B18BC35",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "SignalCatalogServiceProviderwaiterstatemachineC848039F": Object {
+      "DependsOn": Array [
+        "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140",
+        "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
+      ],
+      "Properties": Object {
+        "DefinitionString": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":360,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+                  "Arn",
+                ],
+              },
+              "\\"},\\"framework-onTimeout-task\\":{\\"End\\":true,\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+                  "Arn",
+                ],
+              },
+              "\\"}}}",
+            ],
+          ],
+        },
+        "RoleArn": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::StepFunctions::StateMachine",
+    },
+    "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "states.eu-central-1.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogServiceProviderframeworkisCompleteC8A54DC4",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SignalCatalogServiceProviderframeworkonTimeoutA3CAD759",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "SignalCatalogServiceProviderwaiterstatemachineRoleDefaultPolicyA501B140",
+        "Roles": Array [
+          Object {
+            "Ref": "SignalCatalogServiceProviderwaiterstatemachineRoleC2D06180",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "SignalCatalogServiceResourceD3614339": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogServiceProviderframeworkonEvent04EB655B",
+            "Arn",
+          ],
+        },
+        "database_name": "FleetWise",
+        "role_arn": Object {
+          "Fn::GetAtt": Array [
+            "Role1ABCC5F0",
+            "Arn",
+          ],
+        },
+        "table_name": "FleetWise",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "Table": Object {
+      "DependsOn": Array [
+        "Database",
+      ],
+      "Properties": Object {
+        "DatabaseName": "FleetWise",
+        "TableName": "FleetWise",
+      },
+      "Type": "AWS::Timestream::Table",
     },
     "vin1001B581DB8": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
+        "ModelALambdaLogRetentionE94AB023",
+        "ModelALambda1DBF5DCD",
+        "ModelAProviderframeworkonEventLogRetentionF8BE83BA",
+        "ModelAProviderframeworkonEventCF0EA117",
+        "ModelAProviderframeworkonEventServiceRoleDefaultPolicyC00D2B13",
+        "ModelAProviderframeworkonEventServiceRoleDFF1F14D",
         "ModelA133A72B5",
       ],
       "Properties": Object {
         "ServiceToken": Object {
           "Fn::GetAtt": Array [
-            "integstackvin100HandlerProviderframeworkonEvent82C29964",
+            "vin100ProviderframeworkonEventF338173F",
             "Arn",
           ],
         },
@@ -2390,6 +1981,57 @@ Object {
         },
       },
       "Type": "AWS::IoT::PolicyPrincipalAttachment",
+    },
+    "vin100LambdaD0DEBF5A": Object {
+      "DependsOn": Array [
+        "SignalCatalogRoleAD0FEEB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "06ad09065ace12ae7d48ba9ce1416945864ed1ead2fd7b4391c84c0649a95f6e.zip",
+        },
+        "Handler": "vehiclehandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "SignalCatalogBoto3783CEE3E",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "SignalCatalogRoleAD0FEEB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "vin100LambdaLogRetentionEBFE3476": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "vin100LambdaD0DEBF5A",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
     },
     "vin100PolicyABC41F0A": Object {
       "DependsOn": Array [
@@ -2448,6 +2090,137 @@ Object {
       },
       "Type": "AWS::IoT::Policy",
     },
+    "vin100ProviderframeworkonEventF338173F": Object {
+      "DependsOn": Array [
+        "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "vin100ProviderframeworkonEventServiceRole345C8DB7",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-eu-central-1",
+          },
+          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/vin100/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "vin100LambdaD0DEBF5A",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "vin100ProviderframeworkonEventServiceRole345C8DB7",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "vin100ProviderframeworkonEventLogRetention08E95340": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "vin100ProviderframeworkonEventF338173F",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "vin100ProviderframeworkonEventServiceRole345C8DB7": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "vin100LambdaD0DEBF5A",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "vin100LambdaD0DEBF5A",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "vin100ProviderframeworkonEventServiceRoleDefaultPolicy9C373657",
+        "Roles": Array [
+          Object {
+            "Ref": "vin100ProviderframeworkonEventServiceRole345C8DB7",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
     "vin100ThingAttachment43EBFB2B": Object {
       "DependsOn": Array [
         "vin100Attachment69984A52",
@@ -2460,143 +2233,6 @@ Object {
           ],
         },
         "ThingName": "vin100",
-      },
-      "Type": "AWS::IoT::ThingPrincipalAttachment",
-    },
-    "vin200112EC84E": Object {
-      "DeletionPolicy": "Delete",
-      "DependsOn": Array [
-        "ModelA133A72B5",
-      ],
-      "Properties": Object {
-        "ServiceToken": Object {
-          "Fn::GetAtt": Array [
-            "integstackvin200HandlerProviderframeworkonEventB14DE12D",
-            "Arn",
-          ],
-        },
-        "create_iot_thing": true,
-        "decoder_manifest_arn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:aws:iotfleetwise:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":decoder-manifest/modelA",
-            ],
-          ],
-        },
-        "model_manifest_arn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:aws:iotfleetwise:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":model-manifest/modelA",
-            ],
-          ],
-        },
-        "vehicle_id": "vin200",
-      },
-      "Type": "AWS::CloudFormation::CustomResource",
-      "UpdateReplacePolicy": "Delete",
-    },
-    "vin200AttachmentD0E37BC9": Object {
-      "DependsOn": Array [
-        "vin200PolicyF1A8989E",
-      ],
-      "Properties": Object {
-        "PolicyName": "vin200-policy",
-        "Principal": Object {
-          "Fn::GetAtt": Array [
-            "vin200112EC84E",
-            "certificateArn",
-          ],
-        },
-      },
-      "Type": "AWS::IoT::PolicyPrincipalAttachment",
-    },
-    "vin200PolicyF1A8989E": Object {
-      "DependsOn": Array [
-        "vin200112EC84E",
-      ],
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "{
-          \\"Version\\": \\"2012-10-17\\",
-          \\"Statement\\": [{
-                  \\"Effect\\": \\"Allow\\",
-                  \\"Action\\": [
-                      \\"iot:Connect\\",
-                      \\"iot:Subscribe\\",
-                      \\"iot:Publish\\",
-                      \\"iot:Receive\\"
-                  ],
-                  \\"Resource\\": [
-                      \\"arn:aws:iot:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":client/vin200*\\",
-                      \\"arn:aws:iot:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":topic/*\\",
-                      \\"arn:aws:iot:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":topicfilter/*\\"
-                  ]
-          }]
-        }",
-            ],
-          ],
-        },
-        "PolicyName": "vin200-policy",
-      },
-      "Type": "AWS::IoT::Policy",
-    },
-    "vin200ThingAttachmentB8AF0D1E": Object {
-      "DependsOn": Array [
-        "vin200AttachmentD0E37BC9",
-      ],
-      "Properties": Object {
-        "Principal": Object {
-          "Fn::GetAtt": Array [
-            "vin200112EC84E",
-            "certificateArn",
-          ],
-        },
-        "ThingName": "vin200",
       },
       "Type": "AWS::IoT::ThingPrincipalAttachment",
     },
