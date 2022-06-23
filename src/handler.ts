@@ -17,7 +17,7 @@ export class Handler extends lambda.SingletonFunction {
   public readonly handler: string;
   constructor(scope: Construct, id: string, props: EventHandlerProps) {
     super(scope, id, {
-      uuid: `${cdk.Aws.STACK_NAME}-${props.handler}`,
+      uuid: `${props.handler}`,
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
       handler: props.handler,
       timeout: cdk.Duration.seconds(300),

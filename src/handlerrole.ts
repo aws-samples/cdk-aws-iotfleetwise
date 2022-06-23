@@ -7,7 +7,7 @@ import { Construct } from 'constructs';
 export class HandlerRole extends Construct {
   public static getOrCreate(scope: Construct) {
     const stack = Stack.of(scope);
-    const id = `${stack.stackName}-handler-role`;
+    const id = `handler-role`;
     return stack.node.tryFindChild(id) as HandlerRole || new HandlerRole(stack, id);
   }
 
