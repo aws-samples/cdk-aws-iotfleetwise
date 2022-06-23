@@ -111,7 +111,7 @@ export class SignalCatalog extends Construct {
     handler.role!.addToPrincipalPolicy(new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       actions: [
-        "iam:PassRole",
+        'iam:PassRole',
       ],
       resources: [props.role.roleArn],
     }));

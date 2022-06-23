@@ -18,23 +18,41 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
+    const databaseName = 'FleetWise';
+    const tableName = 'FleetWise';
+
     const database = new ts.CfnDatabase(stack, 'Database', {
-      databaseName: 'FleetWise',
+      databaseName,
     });
 
     const table = new ts.CfnTable(stack, 'Table', {
-      databaseName: 'FleetWise',
-      tableName: 'FleetWise',
+      databaseName,
+      tableName,
     });
 
     table.node.addDependency(database);
 
     const role = new iam.Role(stack, 'Role', {
+      roleName: 'iotfleetwise-role',
       assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
-      ],
     });
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:WriteRecords',
+        'timestream:Select',
+      ],
+      resources: ['*'],
+    }));
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:DescribeEndpoints',
+      ],
+      resources: ['*'],
+    }));
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
@@ -102,8 +120,5 @@ export class IntegTesting {
     this.stack = [stack];
   }
 }
-
-process.env.GITLAB_REGISTRATION_TOKEN='mock';
-process.env.CDK_INTEG_REGION='eu-central-1';
 
 new IntegTesting();

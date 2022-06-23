@@ -42,9 +42,9 @@ export class IntegTesting {
       effect: iam.Effect.ALLOW,
       actions: [
         'timestream:WriteRecords',
-        'timestream:Select'
+        'timestream:Select',
       ],
-      resources: ['*']
+      resources: ['*'],
     }));
 
     role.addToPolicy(new iam.PolicyStatement({
@@ -52,7 +52,7 @@ export class IntegTesting {
       actions: [
         'timestream:DescribeEndpoints',
       ],
-      resources: ['*']
+      resources: ['*'],
     }));
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
@@ -123,7 +123,7 @@ export class IntegTesting {
     );
 
     // Create the Vehicle simulator
-    const keyName = stack.node.tryGetContext("key_name");
+    const keyName = stack.node.tryGetContext('key_name');
     const instance = new ec2.Instance(stack, 'VehicleSim', {
       vpc: vpc,
       instanceType: new ec2.InstanceType('m6g.xlarge'),
@@ -234,7 +234,7 @@ export class IntegTesting {
     /opt/aws/bin/cfn-signal --stack ${stack.stackName} --resource ${instance.instance.logicalId} --region ${stack.region}`;
 
     instance.addUserData(userData);
-    new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}`});
+    new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
     new ifw.Campaign(stack, 'Campaign', {
       name: 'FwTimeBasedCampaign',

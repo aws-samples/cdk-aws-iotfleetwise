@@ -8,7 +8,7 @@ import { Construct } from 'constructs';
 export class Boto3LayerVersion extends Construct {
   public static getOrCreate(scope: Construct) {
     const stack = Stack.of(scope);
-    const id = `iot-fleetwise-layer-version`;
+    const id = 'iot-fleetwise-layer-version';
     return stack.node.tryFindChild(id) as Boto3LayerVersion || new Boto3LayerVersion(stack, id);
   }
 
