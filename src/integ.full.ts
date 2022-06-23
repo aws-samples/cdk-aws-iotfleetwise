@@ -70,7 +70,6 @@ export class IntegTesting {
       vehicleModel: model_a,
       createIotThing: true,
     });
-    new cdk.CfnOutput(stack, 'certificateId', { value: vin100.certificateId! });
 
     const vpc = ec2.Vpc.fromLookup(stack, 'VPC', { isDefault: true });
 
@@ -97,12 +96,13 @@ export class IntegTesting {
     );
 
     // Create the Vehicle simulator
+    const keyName = stack.node.tryGetContext('key_name');
     const instance = new ec2.Instance(stack, 'VehicleSim', {
       vpc: vpc,
       instanceType: new ec2.InstanceType('m6g.xlarge'),
       machineImage,
       securityGroup,
-      keyName: 'salamida',
+      keyName,
       role: ec2_role,
       vpcSubnets: {
         subnetGroupName: 'Public',
@@ -121,7 +121,7 @@ export class IntegTesting {
             i=0
         else
             i=\`expr $i + 1\`
-            if expr $i \>= 10 > /dev/null; then
+            if expr $i \\>= 10 > /dev/null; then
                 break
             fi
         fi
@@ -207,11 +207,10 @@ export class IntegTesting {
     /opt/aws/bin/cfn-signal --stack ${stack.stackName} --resource ${instance.instance.logicalId} --region ${stack.region}`;
 
     instance.addUserData(userData);
-    new cdk.CfnOutput(stack, 'Vehicle IP Address', { value: instance.instancePublicIp });
-    new cdk.CfnOutput(stack, 'Vehicle ssh command', { value: 'ssh -i salamida.pem -o IdentitiesOnly=yes ec2-user@' + instance.instancePublicIp });
+    new cdk.CfnOutput(stack, 'Vehicle ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
-    new ifw.Campaign(stack, 'Campaign1', {
-      name: 'FwTimeBasedCampaign1',
+    new ifw.Campaign(stack, 'Campaign', {
+      name: 'FwTimeBasedCampaign',
       target: vin100,
       collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
       signals: [
@@ -220,8 +219,8 @@ export class IntegTesting {
       autoApprove: true,
     });
 
-    new ifw.Fleet(stack, 'Fleet2', {
-      fleetId: 'fleet2',
+    new ifw.Fleet(stack, 'Fleet', {
+      fleetId: 'fleet',
       signalCatalog,
       vehicles: [vin100],
     });
@@ -229,8 +228,5 @@ export class IntegTesting {
     this.stack = [stack];
   }
 }
-
-process.env.GITLAB_REGISTRATION_TOKEN='mock';
-process.env.CDK_INTEG_REGION='eu-central-1';
 
 new IntegTesting();
