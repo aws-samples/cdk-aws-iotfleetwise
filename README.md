@@ -88,7 +88,7 @@ yarn install
 projen && projen build
 npx cdk -a lib/integ.full.js deploy -c key_name=mykey
 ```
-Where `mykey` is an exsisting keypair name present in your account.
+Where `mykey` is an existing keypair name present in your account.
 The deploy takes about 15 mins mostly due to compilation of the IoT FleetWise agent in the
 EC2 instance that simulate the vehicle. Once deploy is finshed, data will start to show up in your Timestream table.
 
