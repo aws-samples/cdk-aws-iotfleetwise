@@ -19,23 +19,41 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
+    const databaseName = 'FleetWise';
+    const tableName = 'FleetWise';
+
     const database = new ts.CfnDatabase(stack, 'Database', {
-      databaseName: 'FleetWise',
+      databaseName,
     });
 
     const table = new ts.CfnTable(stack, 'Table', {
-      databaseName: 'FleetWise',
-      tableName: 'FleetWise',
+      databaseName,
+      tableName,
     });
 
     table.node.addDependency(database);
 
     const role = new iam.Role(stack, 'Role', {
+      roleName: 'iotfleetwise-role',
       assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
-      ],
     });
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:WriteRecords',
+        'timestream:Select'
+      ],
+      resources: ['*']
+    }));
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:DescribeEndpoints',
+      ],
+      resources: ['*']
+    }));
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
@@ -86,7 +104,6 @@ export class IntegTesting {
       assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'),
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
       ],
     });
 
@@ -219,8 +236,8 @@ export class IntegTesting {
     instance.addUserData(userData);
     new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}`});
 
-    new ifw.Campaign(stack, 'Campaign1', {
-      name: 'FwTimeBasedCampaign1',
+    new ifw.Campaign(stack, 'Campaign', {
+      name: 'FwTimeBasedCampaign',
       target: vin100,
       collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
       signals: [
@@ -229,8 +246,8 @@ export class IntegTesting {
       autoApprove: true,
     });
 
-    new ifw.Fleet(stack, 'Fleet2', {
-      fleetId: 'fleet2',
+    new ifw.Fleet(stack, 'Fleet', {
+      fleetId: 'fleet',
       signalCatalog,
       vehicles: [vin100],
     });
@@ -238,8 +255,5 @@ export class IntegTesting {
     this.stack = [stack];
   }
 }
-
-process.env.GITLAB_REGISTRATION_TOKEN='mock';
-process.env.CDK_INTEG_REGION='eu-central-1';
 
 new IntegTesting();

@@ -5,15 +5,16 @@ import {
   custom_resources as cr,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Handler } from './handler';
 
 export class Provider extends Construct {
   public static getOrCreate(
     scope: Construct,
-    eventHandler: lambda.SingletonFunction,
-    isCompleteHandler?: lambda.SingletonFunction,
+    eventHandler: Handler,
+    isCompleteHandler?: Handler,
   ) {
     const stack = Stack.of(scope);
-    const id = eventHandler.toString();
+    const id = `${eventHandler.handler}-provider`;
     return stack.node.tryFindChild(id) as Provider || new Provider(stack, id, eventHandler, isCompleteHandler);
   }
 

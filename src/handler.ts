@@ -14,6 +14,7 @@ export interface EventHandlerProps {
 }
 
 export class Handler extends lambda.SingletonFunction {
+  public readonly handler: string;
   constructor(scope: Construct, id: string, props: EventHandlerProps) {
     super(scope, id, {
       uuid: `${cdk.Aws.STACK_NAME}-${props.handler}`,
@@ -25,5 +26,6 @@ export class Handler extends lambda.SingletonFunction {
       role: HandlerRole.getOrCreate(scope).role,
       logRetention: logs.RetentionDays.ONE_DAY,
     });
+    this.handler = props.handler;
   }
 }
