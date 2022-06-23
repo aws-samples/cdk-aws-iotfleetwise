@@ -88,7 +88,6 @@ export class IntegTesting {
       vehicleModel: model_a,
       createIotThing: true,
     });
-    new cdk.CfnOutput(stack, 'certificateId', { value: vin100.certificateId! });
 
     const vpc = ec2.Vpc.fromLookup(stack, 'VPC', { isDefault: true });
 
