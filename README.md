@@ -86,22 +86,16 @@ To deploy a simple end-to-end example you can use the following commands
 ```sh
 yarn install
 projen && projen build
-npx cdk -a lib/integ.full.js deploy
+npx cdk -a lib/integ.full.js deploy -c key_name=mykey
 ```
-
+Where `mykey` is an existing keypair name present in your account.
 The deploy takes about 15 mins mostly due to compilation of the IoT FleetWise agent in the
-EC2 instance that simulate the vehicle. Once deploy is finshed, approve the campaign with the command:
-
-```sh
-aws iotfleetwise update-campaign --campaign-name FwTimeBasedCampaign --action APPROVE
-```
-
-and data will start to show up in the Timestream table.
+EC2 instance that simulate the vehicle. Once deploy is finshed, data will start to show up in your Timestream table.
 
 ## TODO
 
 Warning: this construct should be considered at alpha stage and is not feature complete.
-- Apply the least priviledge principle to roles
+
 - Implement updates for all the custom resources
 - Conditional campaigns
 
@@ -113,4 +107,3 @@ information.
 ## License
 
 This code is licensed under the MIT-0 License. See the LICENSE file.
-
