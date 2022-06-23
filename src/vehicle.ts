@@ -1,12 +1,12 @@
-import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
 import {
-  aws_lambda as lambda,
   aws_iot as iot,
-  custom_resources as cr,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Handler } from './handler';
+import { Provider } from './provider';
 import { VehicleModel } from './vehiclemodel';
+
 
 /**
  * Interface
@@ -37,23 +37,12 @@ export class Vehicle extends Construct {
     (this.vehicleModel as VehicleModel) = props.vehicleModel;
     (this.vehicleId as string) = props.vehicleId;
 
-    const onEventHandler = new lambda.Function(this, 'Lambda', {
-      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
+    const handler = new Handler(this, 'Handler', {
       handler: 'vehiclehandler.on_event',
-      timeout: cdk.Duration.seconds(300),
-      runtime: lambda.Runtime.PYTHON_3_9,
-      layers: [this.vehicleModel.signalCatalog.lambdaLayer],
-      role: this.vehicleModel.signalCatalog.lambdaRole,
-      logRetention: this.vehicleModel.signalCatalog.logRetention,
-    });
-
-    const provider = new cr.Provider(this, 'Provider', {
-      onEventHandler: onEventHandler,
-      logRetention: this.vehicleModel.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
-      serviceToken: provider.serviceToken,
+      serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
       properties: {
         vehicle_id: props.vehicleId,
         create_iot_thing: props.createIotThing,

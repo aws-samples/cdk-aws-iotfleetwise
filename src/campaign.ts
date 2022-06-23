@@ -1,10 +1,7 @@
-import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
-import {
-  aws_lambda as lambda,
-  custom_resources as cr,
-} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
+import { Handler } from './handler';
+import { Provider } from './provider';
 import { Vehicle } from './vehicle';
 
 
@@ -73,24 +70,12 @@ export class Campaign extends Construct {
     this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.target}`;
     (this.target as Vehicle) = props.target;
 
-    const onEventHandler = new lambda.Function(this, 'Lambda', {
-      code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
+    const handler = new Handler(this, 'Handler', {
       handler: 'campaignhandler.on_event',
-      timeout: cdk.Duration.seconds(300),
-      runtime: lambda.Runtime.PYTHON_3_9,
-      layers: [this.target.vehicleModel.signalCatalog.lambdaLayer],
-      role: this.target.vehicleModel.signalCatalog.lambdaRole,
-      logRetention: this.target.vehicleModel.signalCatalog.logRetention,
-    });
-
-
-    const provider = new cr.Provider(this, 'Provider', {
-      onEventHandler: onEventHandler,
-      logRetention: this.target.vehicleModel.signalCatalog.logRetention,
     });
 
     const resource = new cdk.CustomResource(this, 'Resource', {
-      serviceToken: provider.serviceToken,
+      serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
       properties: {
         campaign_name: this.name,
         signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,

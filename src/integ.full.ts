@@ -19,23 +19,41 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
+    const databaseName = 'FleetWise';
+    const tableName = 'FleetWise';
+
     const database = new ts.CfnDatabase(stack, 'Database', {
-      databaseName: 'FleetWise',
+      databaseName,
     });
 
     const table = new ts.CfnTable(stack, 'Table', {
-      databaseName: 'FleetWise',
-      tableName: 'FleetWise',
+      databaseName,
+      tableName,
     });
 
     table.node.addDependency(database);
 
     const role = new iam.Role(stack, 'Role', {
+      roleName: 'iotfleetwise-role',
       assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
-      ],
     });
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:WriteRecords',
+        'timestream:Select',
+      ],
+      resources: ['*'],
+    }));
+
+    role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        'timestream:DescribeEndpoints',
+      ],
+      resources: ['*'],
+    }));
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
@@ -85,9 +103,17 @@ export class IntegTesting {
       assumedBy: new iam.ServicePrincipal('ec2.amazonaws.com'),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonSSMManagedInstanceCore'),
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
       ],
     });
+
+    ec2_role.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: [
+        's3:List*',
+        's3:Get*',
+      ],
+      resources: ['arn:aws:s3:::*'],
+    }));
 
     // Ubuntu 18.04 for Arm64
     const machineImage = ec2.MachineImage.fromSsmParameter(
@@ -207,7 +233,7 @@ export class IntegTesting {
     /opt/aws/bin/cfn-signal --stack ${stack.stackName} --resource ${instance.instance.logicalId} --region ${stack.region}`;
 
     instance.addUserData(userData);
-    new cdk.CfnOutput(stack, 'Vehicle ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
+    new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
     new ifw.Campaign(stack, 'Campaign', {
       name: 'FwTimeBasedCampaign',

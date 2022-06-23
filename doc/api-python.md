@@ -481,9 +481,6 @@ Any object.
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.arn">arn</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaLayer">lambda_layer</a></code> | <code>aws_cdk.aws_lambda.LayerVersion</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.lambdaRole">lambda_role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.logRetention">log_retention</a></code> | <code>aws_cdk.aws_logs.RetentionDays</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>str</code> | The name of the signal catalog. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.description">description</a></code> | <code>str</code> | *No description.* |
 
@@ -508,36 +505,6 @@ arn: str
 ```
 
 - *Type:* str
-
----
-
-##### `lambda_layer`<sup>Required</sup> <a name="lambda_layer" id="cdk-aws-iotfleetwise.SignalCatalog.property.lambdaLayer"></a>
-
-```python
-lambda_layer: LayerVersion
-```
-
-- *Type:* aws_cdk.aws_lambda.LayerVersion
-
----
-
-##### `lambda_role`<sup>Required</sup> <a name="lambda_role" id="cdk-aws-iotfleetwise.SignalCatalog.property.lambdaRole"></a>
-
-```python
-lambda_role: Role
-```
-
-- *Type:* aws_cdk.aws_iam.Role
-
----
-
-##### `log_retention`<sup>Required</sup> <a name="log_retention" id="cdk-aws-iotfleetwise.SignalCatalog.property.logRetention"></a>
-
-```python
-log_retention: RetentionDays
-```
-
-- *Type:* aws_cdk.aws_logs.RetentionDays
 
 ---
 

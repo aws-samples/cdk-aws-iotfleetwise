@@ -95,7 +95,7 @@ EC2 instance that simulate the vehicle. Once deploy is finshed, data will start 
 ## TODO
 
 Warning: this construct should be considered at alpha stage and is not feature complete.
-- Apply the least priviledge principle to roles
+
 - Implement updates for all the custom resources
 - Conditional campaigns
 
@@ -107,4 +107,3 @@ information.
 ## License
 
 This code is licensed under the MIT-0 License. See the LICENSE file.
-
