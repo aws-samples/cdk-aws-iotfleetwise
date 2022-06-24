@@ -1,4 +1,5 @@
 from pydoc import describe
+from collections import Counter
 import boto3
 
 def on_event(event, context):
@@ -37,9 +38,27 @@ def on_create(event):
 def on_update(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
+    old_props = event["OldResourceProperties"]
+    c = Counter(props['vehicle_ids'])
+    c.subtract(old_props['vehicle_ids'])
+    client=boto3.client('iotfleetwise')
+    for vehicleId, operation in c.items():
+        if operation == -1:
+            print(f"removing {vehicleId} to {props['fleet_id']}")
+            response = client.disassociate_vehicle(
+                fleetId = props['fleet_id'],
+                vehicleId = vehicleId)
+            print(f"disassociate_vehicle response {response}")
+        elif operation == 1:
+            print(f"adding {vehicleId} to {props['fleet_id']}")
+            response = client.associate_vehicle(
+                fleetId = props['fleet_id'],
+                vehicleId = vehicleId)
+            print(f"associate_vehicle response {response}")            
+        
     print(f"update resource {physical_id} with props {props}")
-    raise Exception("update not implemented yet")
-    #return { 'PhysicalResourceId': physical_id }
+    #raise Exception("update not implemented yet")
+    return { 'PhysicalResourceId': physical_id }
 
 def on_delete(event):
     physical_id = event["PhysicalResourceId"]

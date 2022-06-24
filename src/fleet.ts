@@ -43,7 +43,7 @@ export class Fleet extends Construct {
         fleet_id: this.fleetId,
         signal_catalog_arn: this.signalCatalog.arn,
         description: props.description || ' ',
-        vehicle_ids: this.vehicles!.map(v => v.vehicleId),
+        vehicle_ids: Array.from(new Set(this.vehicles!.map(v => v.vehicleId))),
       },
     });
 
