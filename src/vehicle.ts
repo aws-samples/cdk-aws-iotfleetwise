@@ -63,21 +63,21 @@ export class Vehicle extends Construct {
       const policy = new iot.CfnPolicy(this, 'Policy', {
         policyName: `${props.vehicleName}-policy`,
         policyDocument: {
-          "Version": "2012-10-17",
-          "Statement": [{
-                  "Effect": "Allow",
-                  "Action": [
-                      "iot:Connect",
-                      "iot:Subscribe",
-                      "iot:Publish",
-                      "iot:Receive"
-                  ],
-                  "Resource": [
-                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:client/${props.vehicleName}*`,
-                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topic/*`,
-                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topicfilter/*`
-                  ]
-          }]
+          Version: '2012-10-17',
+          Statement: [{
+            Effect: 'Allow',
+            Action: [
+              'iot:Connect',
+              'iot:Subscribe',
+              'iot:Publish',
+              'iot:Receive',
+            ],
+            Resource: [
+              `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:client/${props.vehicleName}*`,
+              `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topic/*`,
+              `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topicfilter/*`,
+            ],
+          }],
         },
       });
       policy.node.addDependency(resource);
