@@ -13,7 +13,7 @@ import { VehicleModel } from './vehiclemodel';
  */
 export interface VehicleProps {
   readonly vehicleModel: VehicleModel;
-  readonly vehicleId: string;
+  readonly vehicleName: string;
   readonly createIotThing: boolean;
 }
 
@@ -23,7 +23,7 @@ export interface VehicleProps {
 export class Vehicle extends Construct {
   public readonly arn: string;
   public readonly vehicleModel: VehicleModel = ({} as VehicleModel);
-  public readonly vehicleId: string = '';
+  public readonly vehicleName: string = '';
   public readonly endpointAddress?: string;
   public readonly certificateId?: string;
   public readonly certificateArn?: string;
@@ -33,9 +33,9 @@ export class Vehicle extends Construct {
   constructor(scope: Construct, id: string, props: VehicleProps) {
     super(scope, id);
 
-    this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.vehicleId}`;
+    this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.vehicleName}`;
     (this.vehicleModel as VehicleModel) = props.vehicleModel;
-    (this.vehicleId as string) = props.vehicleId;
+    (this.vehicleName as string) = props.vehicleName;
 
     const handler = new Handler(this, 'Handler', {
       handler: 'vehiclehandler.on_event',
@@ -44,7 +44,7 @@ export class Vehicle extends Construct {
     const resource = new cdk.CustomResource(this, 'Resource', {
       serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
       properties: {
-        vehicle_id: props.vehicleId,
+        vehicle_name: props.vehicleName,
         create_iot_thing: props.createIotThing,
         decoder_manifest_arn: `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:decoder-manifest/${props.vehicleModel.name}`,
         model_manifest_arn: `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:model-manifest/${props.vehicleModel.name}`,
@@ -61,8 +61,8 @@ export class Vehicle extends Construct {
       this.privateKey = resource.getAtt('privateKey').toString();
 
       const policy = new iot.CfnPolicy(this, 'Policy', {
-        policyName: `${props.vehicleId}-policy`,
-        policyDocument: `{
+        policyName: `${props.vehicleName}-policy`,
+        policyDocument: {
           "Version": "2012-10-17",
           "Statement": [{
                   "Effect": "Allow",
@@ -73,12 +73,12 @@ export class Vehicle extends Construct {
                       "iot:Receive"
                   ],
                   "Resource": [
-                      "arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:client/${props.vehicleId}*",
-                      "arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topic/*",
-                      "arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topicfilter/*"
+                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:client/${props.vehicleName}*`,
+                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topic/*`,
+                      `arn:aws:iot:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:topicfilter/*`
                   ]
           }]
-        }`,
+        },
       });
       policy.node.addDependency(resource);
 
@@ -89,7 +89,7 @@ export class Vehicle extends Construct {
       policy_attachement.node.addDependency(policy);
 
       const thing_attachment = new iot.CfnThingPrincipalAttachment(this, 'ThingAttachment', {
-        thingName: props.vehicleId,
+        thingName: props.vehicleName,
         principal: this.certificateArn,
       });
       thing_attachment.node.addDependency(policy_attachement);

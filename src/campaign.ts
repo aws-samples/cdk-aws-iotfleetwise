@@ -39,7 +39,7 @@ export class CampaignSignal {
     minimumSamplingInterval?: cdk.Duration) {
 
     this.signal = {
-      signalName: name,
+      name,
       ...maxSampleCount && { maxSampleCount },
       ...minimumSamplingInterval && { minimumSamplingInterval },
     };
@@ -77,7 +77,7 @@ export class Campaign extends Construct {
     const resource = new cdk.CustomResource(this, 'Resource', {
       serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
       properties: {
-        campaign_name: this.name,
+        name: this.name,
         signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
         target_arn: this.target.arn,
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),

@@ -503,8 +503,8 @@ Any object.
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.arn">arn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.vehicleName">vehicleName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificateArn">certificateArn</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificateId">certificateId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.property.certificatePem">certificatePem</a></code> | <code>string</code> | *No description.* |
@@ -535,16 +535,6 @@ public readonly arn: string;
 
 ---
 
-##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="cdk-aws-iotfleetwise.Vehicle.property.vehicleId"></a>
-
-```typescript
-public readonly vehicleId: string;
-```
-
-- *Type:* string
-
----
-
 ##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.Vehicle.property.vehicleModel"></a>
 
 ```typescript
@@ -552,6 +542,16 @@ public readonly vehicleModel: VehicleModel;
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+
+---
+
+##### `vehicleName`<sup>Required</sup> <a name="vehicleName" id="cdk-aws-iotfleetwise.Vehicle.property.vehicleName"></a>
+
+```typescript
+public readonly vehicleName: string;
+```
+
+- *Type:* string
 
 ---
 
@@ -1047,8 +1047,8 @@ const vehicleProps: VehicleProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleId">vehicleId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleName">vehicleName</a></code> | <code>string</code> | *No description.* |
 
 ---
 
@@ -1062,16 +1062,6 @@ public readonly createIotThing: boolean;
 
 ---
 
-##### `vehicleId`<sup>Required</sup> <a name="vehicleId" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleId"></a>
-
-```typescript
-public readonly vehicleId: string;
-```
-
-- *Type:* string
-
----
-
 ##### `vehicleModel`<sup>Required</sup> <a name="vehicleModel" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel"></a>
 
 ```typescript
@@ -1079,6 +1069,16 @@ public readonly vehicleModel: VehicleModel;
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a>
+
+---
+
+##### `vehicleName`<sup>Required</sup> <a name="vehicleName" id="cdk-aws-iotfleetwise.VehicleProps.property.vehicleName"></a>
+
+```typescript
+public readonly vehicleName: string;
+```
+
+- *Type:* string
 
 ---
 
@@ -1243,12 +1243,11 @@ public toObject(): object
 ```typescript
 import { CanVehicleSignal } from 'cdk-aws-iotfleetwise'
 
-new CanVehicleSignal(name: string, fullyQualifiedName: string, interfaceId: string, messageId: number, factor: number, isBigEndian: boolean, isSigned: boolean, length: number, offset: number, startBit: number)
+new CanVehicleSignal(fullyQualifiedName: string, interfaceId: string, messageId: number, factor: number, isBigEndian: boolean, isSigned: boolean, length: number, offset: number, startBit: number)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId">messageId</a></code> | <code>number</code> | *No description.* |
@@ -1258,12 +1257,6 @@ new CanVehicleSignal(name: string, fullyQualifiedName: string, interfaceId: stri
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length">length</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset">offset</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit">startBit</a></code> | <code>number</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name"></a>
-
-- *Type:* string
 
 ---
 
@@ -1409,20 +1402,13 @@ public toObject(): object
 ```typescript
 import { SignalCatalogBranch } from 'cdk-aws-iotfleetwise'
 
-new SignalCatalogBranch(name: string, fullyQualifiedName: string, description?: string)
+new SignalCatalogBranch(fullyQualifiedName: string, description?: string)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer.parameter.name"></a>
-
-- *Type:* string
 
 ---
 
@@ -1494,24 +1480,17 @@ public toObject(): object
 ```typescript
 import { SignalCatalogSensor } from 'cdk-aws-iotfleetwise'
 
-new SignalCatalogSensor(name: string, fullyQualifiedName: string, dataType: string, unit?: string, min?: number, max?: number, description?: string)
+new SignalCatalogSensor(fullyQualifiedName: string, dataType: string, unit?: string, min?: number, max?: number, description?: string)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.dataType">dataType</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit">unit</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min">min</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.max">max</a></code> | <code>number</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.name"></a>
-
-- *Type:* string
 
 ---
 

@@ -42,8 +42,8 @@ const signalCatalog = new SignalCatalog(stack, 'SignalCatalog', {
   table,
   role,
   nodes: [
-    new SignalCatalogBranch('Vehicle', 'Vehicle'),
-    new SignalCatalogSensor('EngineTorque', 'Vehicle.EngineTorque', 'DOUBLE'),
+    new SignalCatalogBranch('Vehicle'),
+    new SignalCatalogSensor('Vehicle.EngineTorque', 'DOUBLE'),
   ],
 });
 
@@ -53,7 +53,7 @@ const model_a = new VehicleModel(stack, 'ModelA', {
   description: 'Model A vehicle',
   networkInterfaces: [new CanVehicleInterface('1', 'vcan0')],
   signals: [
-    new CanVehicleSignal('EngineTorque', 'Vehicle.EngineTorque', '1',
+    new CanVehicleSignal('Vehicle.EngineTorque', '1',
       401, // messageId
       1.0, // factor
       true, // isBigEndian
@@ -65,7 +65,7 @@ const model_a = new VehicleModel(stack, 'ModelA', {
 });
 
 const vin100 = new Vehicle(stack, 'vin100', {
-  vehicleId: 'vin100',
+  vehicleName: 'vin100',
   vehicleModel: model_a,
   createIotThing: true
 });

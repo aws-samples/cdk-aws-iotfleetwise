@@ -60,7 +60,7 @@ export class IntegTesting {
     const nodes: Array<ifw.SignalCatalogNode> = [new ifw.SignalCatalogBranch('Vehicle', 'Vehicle')];
     canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
       const signal_name = line.split(/\s+/)[2];
-      nodes.push(new ifw.SignalCatalogSensor(signal_name, `Vehicle.${signal_name}`, 'DOUBLE'));
+      nodes.push(new ifw.SignalCatalogSensor(`Vehicle.${signal_name}`, 'DOUBLE'));
     });
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
@@ -90,7 +90,7 @@ export class IntegTesting {
     });
 
     const vin100 = new ifw.Vehicle(stack, 'vin100', {
-      vehicleId: 'vin100',
+      vehicleName: 'vin100',
       vehicleModel: model_a,
       createIotThing: true,
     });

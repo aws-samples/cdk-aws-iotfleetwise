@@ -25,11 +25,11 @@ def on_create(event):
     )
     print(f"create_fleet response {response}")
     
-    for id in props['vehicle_ids']:
-      print(f"associating vehicle id {id} to fleet {props['fleet_id']}")    
-      response = client.associate_vehicle(
+    for name in props['vehicle_names']:
+      print(f"associating vehicle {name} to fleet {props['fleet_id']}")    
+      response = client.associate_vehicle_fleet(
         fleetId = props['fleet_id'],
-        vehicleId = id,
+        vehicleName = name,
       )
       print(f"associate_vehicle response {response}")      
 
@@ -39,21 +39,21 @@ def on_update(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
     old_props = event["OldResourceProperties"]
-    c = Counter(props['vehicle_ids'])
-    c.subtract(old_props['vehicle_ids'])
+    c = Counter(props['vehicle_names'])
+    c.subtract(old_props['vehicle_names'])
     client=boto3.client('iotfleetwise')
-    for vehicleId, operation in c.items():
+    for vehicleName, operation in c.items():
         if operation == -1:
-            print(f"removing {vehicleId} to {props['fleet_id']}")
-            response = client.disassociate_vehicle(
+            print(f"removing {vehicleName} to {props['fleet_id']}")
+            response = client.disassociate_vehicle_fleet(
                 fleetId = props['fleet_id'],
-                vehicleId = vehicleId)
+                vehicleName = vehicleName)
             print(f"disassociate_vehicle response {response}")
         elif operation == 1:
-            print(f"adding {vehicleId} to {props['fleet_id']}")
-            response = client.associate_vehicle(
+            print(f"adding {vehicleName} to {props['fleet_id']}")
+            response = client.associate_vehicle_fleet(
                 fleetId = props['fleet_id'],
-                vehicleId = vehicleId)
+                vehicleId = vehicleName)
             print(f"associate_vehicle response {response}")            
         
     print(f"update resource {physical_id} with props {props}")
@@ -70,11 +70,11 @@ def on_delete(event):
     response = client.list_vehicles_in_fleet(fleetId = props['fleet_id'])
     print(f"list_vehicles_in_fleet response {response}")
     for v in response["vehicles"]:
-        print(f"disassociate_vehicle {v} from {props['fleet_id']}")
-        response = client.disassociate_vehicle(
+        print(f"disassociate_vehicle_fleet {v} from {props['fleet_id']}")
+        response = client.disassociate_vehicle_fleet(
             fleetId = props['fleet_id'],
-            vehicleId = v)
-        print(f"disassociate_vehicle response {response}")
+            vehicleName = v)
+        print(f"disassociate_vehicle_fleet response {response}")
 
     print(f"delete_fleet {props['fleet_id']}")    
     response = client.delete_fleet(
