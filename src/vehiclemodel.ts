@@ -26,7 +26,7 @@ export class CanVehicleInterface extends VehicleInterface {
       type: 'CAN_INTERFACE',
       interfaceId,
       canInterface: {
-        canInterfaceName: name,
+        name: name,
         protocolName: 'CAN',
         protocolVersion: '2.0b',
       },
@@ -48,7 +48,6 @@ export class VehicleSignal {
 
 export class CanVehicleSignal extends VehicleSignal {
   constructor(
-    name: string,
     fullyQualifiedName: string,
     interfaceId: string,
     messageId: number,
@@ -65,7 +64,6 @@ export class CanVehicleSignal extends VehicleSignal {
       fullyQualifiedName,
       interfaceId,
       canSignal: {
-        canSignalName: name,
         factor,
         isBigEndian,
         isSigned,
@@ -100,7 +98,6 @@ export class CanDefinition extends NetworkFileDefinition {
 
 
     this.definition = {
-      networkFileType: 'CAN_DBC',
       canDbc: {
         canDbcFiles: canDbcFiles.map(file => Buffer.from(file).toString('base64')),
         networkInterface,

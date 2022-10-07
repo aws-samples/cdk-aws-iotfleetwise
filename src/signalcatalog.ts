@@ -22,7 +22,6 @@ export class SignalCatalogNode {
 
 export class SignalCatalogBranch extends SignalCatalogNode {
   constructor(
-    name: string,
     fullyQualifiedName: string,
     description?: string,
 
@@ -30,9 +29,7 @@ export class SignalCatalogBranch extends SignalCatalogNode {
     super();
 
     this.node = {
-      type: 'Branch',
       branch: {
-        name: name,
         fullyQualifiedName: fullyQualifiedName,
         ...description && { description },
       },
@@ -42,7 +39,6 @@ export class SignalCatalogBranch extends SignalCatalogNode {
 
 export class SignalCatalogSensor extends SignalCatalogNode {
   constructor(
-    name: string,
     fullyQualifiedName: string,
     dataType: string,
     unit?: string,
@@ -52,9 +48,7 @@ export class SignalCatalogSensor extends SignalCatalogNode {
     super();
 
     this.node = {
-      type: 'Sensor',
       sensor: {
-        name,
         fullyQualifiedName,
         dataType,
         ...unit && { unit },

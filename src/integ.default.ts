@@ -60,8 +60,8 @@ export class IntegTesting {
       role,
       description: 'my signal catalog',
       nodes: [
-        new ifw.SignalCatalogBranch('Vehicle', 'Vehicle'),
-        new ifw.SignalCatalogSensor('EngineTorque', 'Vehicle.EngineTorque', 'DOUBLE'),
+        new ifw.SignalCatalogBranch('Vehicle'),
+        new ifw.SignalCatalogSensor('Vehicle.EngineTorque', 'DOUBLE'),
       ],
     });
 
@@ -71,7 +71,7 @@ export class IntegTesting {
       description: 'Model A vehicle',
       networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
       signals: [
-        new ifw.CanVehicleSignal('EngineTorque', 'Vehicle.EngineTorque', '1',
+        new ifw.CanVehicleSignal('Vehicle.EngineTorque', '1',
           401, // messageId
           1.0, // factor
           true, // isBigEndian
@@ -83,13 +83,13 @@ export class IntegTesting {
     });
 
     const vin100 = new ifw.Vehicle(stack, 'vin100', {
-      vehicleId: 'vin100',
+      vehicleName: 'vin100',
       vehicleModel: model_a,
       createIotThing: true,
     });
 
     const vin200 = new ifw.Vehicle(stack, 'vin200', {
-      vehicleId: 'vin200',
+      vehicleName: 'vin200',
       vehicleModel: model_a,
       createIotThing: true,
     });

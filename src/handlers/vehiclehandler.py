@@ -16,7 +16,7 @@ def on_event(event, context):
 def on_create(event, context):
     props = event["ResourceProperties"]
     print(f"create new resource with props {props}")    
-    ret = { 'PhysicalResourceId': props['vehicle_id'] }
+    ret = { 'PhysicalResourceId': props['vehicle_name'] }
     
     if (props['create_iot_thing']):
         print("creating certificate for iot thing")
@@ -41,7 +41,7 @@ def on_create(event, context):
     client=boto3.client('iotfleetwise')
     response = client.create_vehicle(
       associationBehavior = "CreateIotThing" if props['create_iot_thing'] else "ValidateIotThingExists",
-      vehicleId = props['vehicle_id'],
+      vehicleName = props['vehicle_name'],
       modelManifestArn = props['model_manifest_arn'],
       decoderManifestArn = props['decoder_manifest_arn'],
     )
@@ -58,11 +58,11 @@ def on_update(event):
 def on_delete(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
-    print(f"delete resource {props['vehicle_id']} {physical_id}")
+    print(f"delete resource {props['vehicle_name']} {physical_id}")
     client=boto3.client('iotfleetwise')
 
     response = client.delete_vehicle(
-      vehicleId = props['vehicle_id']
+      vehicleName = props['vehicle_name']
     )
     print(f"delete_vehicle response {response}")
     
@@ -70,7 +70,7 @@ def on_delete(event):
         client=boto3.client('iot')
         
         response = client.list_thing_principals(
-            thingName=props['vehicle_id']
+            thingName=props['vehicle_name']
         )
         print(f"list_thing_principals response {response}")
         
@@ -84,7 +84,7 @@ def on_delete(event):
 
         print(f"delete_thing")
         response = client.delete_thing(
-            thingName=props['vehicle_id']
+            thingName=props['vehicle_name']
         )
         print(f"delete_thing response {response}")
     return { 'PhysicalResourceId': physical_id }
