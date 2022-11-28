@@ -880,7 +880,6 @@ const signalCatalogProps: SignalCatalogProps = { ... }
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.Role</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
@@ -904,16 +903,6 @@ public readonly nodes: SignalCatalogNode[];
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
-
----
-
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.role"></a>
-
-```typescript
-public readonly role: Role;
-```
-
-- *Type:* aws-cdk-lib.aws_iam.Role
 
 ---
 

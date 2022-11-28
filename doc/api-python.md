@@ -363,7 +363,6 @@ cdk_aws_iotfleetwise.SignalCatalog(
   id: str,
   database: CfnDatabase,
   nodes: typing.List[SignalCatalogNode],
-  role: Role,
   table: CfnTable,
   description: str = None,
   name: str = None
@@ -376,7 +375,6 @@ cdk_aws_iotfleetwise.SignalCatalog(
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.role">role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
@@ -404,12 +402,6 @@ cdk_aws_iotfleetwise.SignalCatalog(
 ##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes"></a>
 
 - *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
-
----
-
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.role"></a>
-
-- *Type:* aws_cdk.aws_iam.Role
 
 ---
 
@@ -1067,7 +1059,6 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.SignalCatalogProps(
   database: CfnDatabase,
   nodes: typing.List[SignalCatalogNode],
-  role: Role,
   table: CfnTable,
   description: str = None,
   name: str = None
@@ -1080,7 +1071,6 @@ cdk_aws_iotfleetwise.SignalCatalogProps(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.role">role</a></code> | <code>aws_cdk.aws_iam.Role</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>str</code> | *No description.* |
@@ -1104,16 +1094,6 @@ nodes: typing.List[SignalCatalogNode]
 ```
 
 - *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
-
----
-
-##### `role`<sup>Required</sup> <a name="role" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.role"></a>
-
-```python
-role: Role
-```
-
-- *Type:* aws_cdk.aws_iam.Role
 
 ---
 
