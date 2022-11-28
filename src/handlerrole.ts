@@ -36,6 +36,9 @@ export class HandlerRole extends Construct {
         'timestream:DescribeEndpoints',
         'timestream:DescribeDatabase',
         'timestream:DescribeTable',
+        'logs:CreateLogGroup',
+        'logs:CreateLogStream',
+        'logs:PutLogEvents',
       ],
       resources: ['*'],
     }));

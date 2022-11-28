@@ -85,7 +85,7 @@ To deploy a simple end-to-end example you can use the following commands
 
 ```sh
 yarn install
-projen && projen build
+projen && projen compile
 npx cdk -a lib/integ.full.js deploy -c key_name=mykey
 ```
 Where `mykey` is an existing keypair name present in your account.

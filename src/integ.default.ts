@@ -1,7 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import {
   aws_timestream as ts,
-  aws_iam as iam,
 } from 'aws-cdk-lib';
 import * as ifw from '.';
 
@@ -32,32 +31,9 @@ export class IntegTesting {
 
     table.node.addDependency(database);
 
-    const role = new iam.Role(stack, 'Role', {
-      roleName: 'iotfleetwise-role',
-      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-    });
-
-    role.addToPolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        'timestream:WriteRecords',
-        'timestream:Select',
-      ],
-      resources: ['*'],
-    }));
-
-    role.addToPolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        'timestream:DescribeEndpoints',
-      ],
-      resources: ['*'],
-    }));
-
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
       table,
-      role,
       description: 'my signal catalog',
       nodes: [
         new ifw.SignalCatalogBranch('Vehicle'),

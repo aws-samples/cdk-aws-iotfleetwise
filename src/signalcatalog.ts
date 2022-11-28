@@ -1,6 +1,5 @@
 import * as cdk from 'aws-cdk-lib';
 import {
-  aws_iam as iam,
   aws_timestream as ts,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
@@ -64,7 +63,6 @@ export class SignalCatalogSensor extends SignalCatalogNode {
 export interface SignalCatalogProps {
   readonly name?: string;
   readonly description?: string;
-  readonly role: iam.Role;
   readonly database: ts.CfnDatabase;
   readonly table: ts.CfnTable;
   readonly nodes: SignalCatalogNode[];
@@ -101,21 +99,11 @@ export class SignalCatalog extends Construct {
       handler: 'servicehandler.is_complete',
     });
 
-
-    handler.role!.addToPrincipalPolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        'iam:PassRole',
-      ],
-      resources: [props.role.roleArn],
-    }));
-
     const provider = Provider.getOrCreate(this, handler, isCompleteHandler);
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
       serviceToken: provider.provider.serviceToken,
       properties: {
-        role_arn: props.role.roleArn,
         database_name: props.database.databaseName,
         table_name: props.table.tableName,
       },

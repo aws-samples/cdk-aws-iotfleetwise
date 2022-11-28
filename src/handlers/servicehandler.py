@@ -16,9 +16,6 @@ def on_create(event):
     print(f"create new resource with props {props}")
     client=boto3.client('iotfleetwise')
     response = client.register_account(
-        iamResources={
-            'roleArn': props['role_arn']
-        },
         timestreamResources={
             'timestreamDatabaseName': props['database_name'],
             'timestreamTableName': props['table_name']
@@ -33,9 +30,6 @@ def on_update(event):
     print(f"update resource {physical_id} with props {props}")
     client=boto3.client('iotfleetwise')
     response = client.register_account(
-        iamResources={
-            'roleArn': props['role_arn']
-        },
         timestreamResources={
             'timestreamDatabaseName': props['database_name'],
             'timestreamTableName': props['table_name']

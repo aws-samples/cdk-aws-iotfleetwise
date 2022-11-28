@@ -170,7 +170,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "e5032a7ed03a7762b99560439c17f58d046a35d40ebf64ba70c63157df388563.zip",
+          "S3Key": "eb5b005c858404ea0c8f68098ed5dcdf5340e02461f149751d10f59c210d5ef8.zip",
         },
         "Handler": "index.handler",
         "Role": Object {
@@ -292,53 +292,6 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
-    "Role1ABCC5F0": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "iotfleetwise.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "RoleName": "iotfleetwise-role",
-      },
-      "Type": "AWS::IAM::Role",
-    },
-    "RoleDefaultPolicy5FFB7DAB": Object {
-      "Properties": Object {
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "timestream:WriteRecords",
-                "timestream:Select",
-              ],
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-            Object {
-              "Action": "timestream:DescribeEndpoints",
-              "Effect": "Allow",
-              "Resource": "*",
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "PolicyName": "RoleDefaultPolicy5FFB7DAB",
-        "Roles": Array [
-          Object {
-            "Ref": "Role1ABCC5F0",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Policy",
-    },
     "SignalCatalogCatalogResourceFC71CDF4": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
@@ -368,12 +321,6 @@ Object {
           ],
         },
         "database_name": "FleetWise",
-        "role_arn": Object {
-          "Fn::GetAtt": Array [
-            "Role1ABCC5F0",
-            "Arn",
-          ],
-        },
         "table_name": "FleetWise",
       },
       "Type": "AWS::CloudFormation::CustomResource",
@@ -389,7 +336,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "campaignhandler.on_event",
         "Layers": Array [
@@ -441,7 +388,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "fleethandler.on_event",
         "Layers": Array [
@@ -493,7 +440,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -545,7 +492,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -597,7 +544,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -649,7 +596,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [
@@ -701,7 +648,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "a571b1036a43541cb1d8c7cf16398db8814dc0c389fbc8a5f1e621b5b559bfda.zip",
+          "S3Key": "5d05bc94ee2631533a6249b16ce96e597bb43e45d90cc14ac9c9eb4446b17626.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -763,7 +710,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/campaignhandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -783,7 +730,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -894,7 +841,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/fleethandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -914,7 +861,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1032,19 +979,12 @@ Object {
                 "timestream:DescribeEndpoints",
                 "timestream:DescribeDatabase",
                 "timestream:DescribeTable",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
               ],
               "Effect": "Allow",
               "Resource": "*",
-            },
-            Object {
-              "Action": "iam:PassRole",
-              "Effect": "Allow",
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "Role1ABCC5F0",
-                  "Arn",
-                ],
-              },
             },
           ],
           "Version": "2012-10-17",
@@ -1126,7 +1066,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - isComplete (integ-stack/servicehandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -1152,7 +1092,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1289,7 +1229,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/servicehandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -1318,7 +1258,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1462,7 +1402,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onTimeout (integ-stack/servicehandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -1488,7 +1428,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1747,7 +1687,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/signalcataloghandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -1767,7 +1707,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -1878,7 +1818,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/vehiclehandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -1898,7 +1838,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",
@@ -2009,7 +1949,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "eaeb69bc290b516fe3b049f89d6118b22249df682fbabf56af300cf345198574.zip",
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
         },
         "Description": "AWS CDK resource provider framework - onEvent (integ-stack/vehiclemodelhandler.on_event-provider/Provider)",
         "Environment": Object {
@@ -2029,7 +1969,7 @@ Object {
             "Arn",
           ],
         },
-        "Runtime": "nodejs12.x",
+        "Runtime": "nodejs14.x",
         "Timeout": 900,
       },
       "Type": "AWS::Lambda::Function",

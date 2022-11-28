@@ -33,32 +33,9 @@ export class IntegTesting {
 
     table.node.addDependency(database);
 
-    const role = new iam.Role(stack, 'Role', {
-      roleName: 'iotfleetwise-role',
-      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-    });
-
-    role.addToPolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        'timestream:WriteRecords',
-        'timestream:Select',
-      ],
-      resources: ['*'],
-    }));
-
-    role.addToPolicy(new iam.PolicyStatement({
-      effect: iam.Effect.ALLOW,
-      actions: [
-        'timestream:DescribeEndpoints',
-      ],
-      resources: ['*'],
-    }));
-
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
       table,
-      role,
       description: 'my signal catalog',
       nodes: [
         new ifw.SignalCatalogBranch('Vehicle'),
@@ -153,6 +130,10 @@ export class IntegTesting {
         fi
         sleep 1
     done
+
+    # Fix to ubuntu upgrade circular dep >>>
+    #apt update && apt --only-upgrade -y install grub-efi-arm64-signed
+    # <<<
 
     # Upgrade system and reboot if required
     apt update && apt upgrade -y
