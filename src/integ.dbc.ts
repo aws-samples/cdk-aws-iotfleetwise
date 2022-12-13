@@ -1,9 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
-import {
-  aws_timestream as ts,
-} from 'aws-cdk-lib';
+import { aws_timestream as ts } from 'aws-cdk-lib';
 import * as ifw from '.';
 
 export class IntegTesting {
@@ -12,7 +10,10 @@ export class IntegTesting {
     const app = new cdk.App();
 
     const env = {
-      region: process.env.CDK_INTEG_REGION || process.env.CDK_DEFAULT_REGION || 'us-east-1',
+      region:
+        process.env.CDK_INTEG_REGION ||
+        process.env.CDK_DEFAULT_REGION ||
+        'us-east-1',
       account: process.env.CDK_INTEG_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
     };
 
@@ -32,13 +33,29 @@ export class IntegTesting {
 
     table.node.addDependency(database);
 
-    const canDbc = fs.readFileSync(path.join(__dirname, '/../hscan.dbc'), 'utf8');
+    const canDbc = fs.readFileSync(
+      path.join(__dirname, '/../hscan.dbc'),
+      'utf8',
+    );
 
-    const nodes: Array<ifw.SignalCatalogNode> = [new ifw.SignalCatalogBranch('Vehicle', 'Vehicle')];
-    canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
-      const signal_name = line.split(/\s+/)[2];
-      nodes.push(new ifw.SignalCatalogSensor(`Vehicle.${signal_name}`, 'DOUBLE'));
-    });
+    const nodes: Array<ifw.SignalCatalogNode> = [
+      new ifw.SignalCatalogBranch({
+        fullyQualifiedName: 'Vehicle',
+        description: 'Vehicle Catalog',
+      }),
+    ];
+    canDbc
+      .split('\n')
+      .filter((line) => /^\s+SG_\s+\w+/.test(line))
+      .map((line) => {
+        const signal_name = line.split(/\s+/)[2];
+        nodes.push(
+          new ifw.SignalCatalogSensor({
+            fullyQualifiedName: `Vehicle.${signal_name}`,
+            dataType: 'DOUBLE',
+          }),
+        );
+      });
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       database,
@@ -48,21 +65,22 @@ export class IntegTesting {
     });
 
     const signalsMap: Record<string, string> = {};
-    canDbc.split('\n').filter(line => /^\s+SG_\s+\w+/.test(line)).map(line => {
-      const signal_name = line.split(/\s+/)[2];
-      signalsMap[signal_name] =`Vehicle.${signal_name}`;
-    });
+    canDbc
+      .split('\n')
+      .filter((line) => /^\s+SG_\s+\w+/.test(line))
+      .map((line) => {
+        const signal_name = line.split(/\s+/)[2];
+        signalsMap[signal_name] = `Vehicle.${signal_name}`;
+      });
 
     const model_a = new ifw.VehicleModel(stack, 'ModelA', {
       signalCatalog,
       name: 'modelA',
       description: 'Model A vehicle',
       networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
-      networkFileDefinitions: [new ifw.CanDefinition(
-        '1',
-        signalsMap,
-        [canDbc],
-      )],
+      networkFileDefinitions: [
+        new ifw.CanDefinition('1', signalsMap, [canDbc]),
+      ],
     });
 
     const vin100 = new ifw.Vehicle(stack, 'vin100', {

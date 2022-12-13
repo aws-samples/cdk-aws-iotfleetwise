@@ -1,9 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
-import {
-  aws_timestream as ts,
-} from 'aws-cdk-lib';
+import { aws_timestream as ts } from 'aws-cdk-lib';
 import * as ifw from '.';
-
 
 export class IntegTesting {
   readonly stack: cdk.Stack[];
@@ -11,7 +8,10 @@ export class IntegTesting {
     const app = new cdk.App();
 
     const env = {
-      region: process.env.CDK_INTEG_REGION || process.env.CDK_DEFAULT_REGION || 'us-east-1',
+      region:
+        process.env.CDK_INTEG_REGION ||
+        process.env.CDK_DEFAULT_REGION ||
+        'us-east-1',
       account: process.env.CDK_INTEG_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
     };
 
@@ -36,8 +36,11 @@ export class IntegTesting {
       table,
       description: 'my signal catalog',
       nodes: [
-        new ifw.SignalCatalogBranch('Vehicle'),
-        new ifw.SignalCatalogSensor('Vehicle.EngineTorque', 'DOUBLE'),
+        new ifw.SignalCatalogBranch({ fullyQualifiedName: 'Vehicle' }),
+        new ifw.SignalCatalogSensor({
+          fullyQualifiedName: 'Vehicle.EngineTorque',
+          dataType: 'DOUBLE',
+        }),
       ],
     });
 
@@ -47,14 +50,17 @@ export class IntegTesting {
       description: 'Model A vehicle',
       networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
       signals: [
-        new ifw.CanVehicleSignal('Vehicle.EngineTorque', '1',
+        new ifw.CanVehicleSignal(
+          'Vehicle.EngineTorque',
+          '1',
           401, // messageId
           1.0, // factor
           true, // isBigEndian
           false, // isSigned
           8, // length
           0.0, // offset
-          9), // startBit
+          9,
+        ), // startBit
       ],
     });
 
@@ -70,14 +76,13 @@ export class IntegTesting {
       createIotThing: true,
     });
 
-
     new ifw.Campaign(stack, 'Campaign1', {
       name: 'FwTimeBasedCampaign1',
       target: vin100,
-      collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
-      signals: [
-        new ifw.CampaignSignal('Vehicle.EngineTorque'),
-      ],
+      collectionScheme: new ifw.TimeBasedCollectionScheme(
+        cdk.Duration.seconds(10),
+      ),
+      signals: [new ifw.CampaignSignal('Vehicle.EngineTorque')],
       autoApprove: true,
     });
 

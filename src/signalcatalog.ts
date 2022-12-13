@@ -1,12 +1,37 @@
 import * as cdk from 'aws-cdk-lib';
-import {
-  aws_timestream as ts,
-} from 'aws-cdk-lib';
+import { aws_timestream as ts } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Handler } from './handler';
 import { Provider } from './provider';
 
-
+type dataTypeList =
+  | 'INT8'
+  | 'UINT8'
+  | 'INT16'
+  | 'UINT16'
+  | 'INT32'
+  | 'UINT32'
+  | 'INT64'
+  | 'UINT64'
+  | 'BOOLEAN'
+  | 'FLOAT'
+  | 'DOUBLE'
+  | 'STRING'
+  | 'UNIX_TIMESTAMP'
+  | 'INT8_ARRAY'
+  | 'UINT8_ARRAY'
+  | 'INT16_ARRAY'
+  | 'UINT16_ARRAY'
+  | 'INT32_ARRAY'
+  | 'UINT32_ARRAY'
+  | 'INT64_ARRAY'
+  | 'UINT64_ARRAY'
+  | 'BOOLEAN_ARRAY'
+  | 'FLOAT_ARRAY'
+  | 'DOUBLE_ARRAY'
+  | 'STRING_ARRAY'
+  | 'UNIX_TIMESTAMP_ARRAY'
+  | 'UNKNOWN';
 export class SignalCatalogNode {
   protected node: object;
 
@@ -15,51 +40,105 @@ export class SignalCatalogNode {
   }
 
   toObject(): object {
-    return (this.node);
+    return this.node;
   }
 }
 
-export class SignalCatalogBranch extends SignalCatalogNode {
-  constructor(
-    fullyQualifiedName: string,
-    description?: string,
+export interface SignalCatalogBranchProps {
+  readonly description?: string;
+  readonly fullyQualifiedName: string;
+}
 
-  ) {
+export class SignalCatalogBranch extends SignalCatalogNode {
+  constructor(props: SignalCatalogBranchProps) {
     super();
 
     this.node = {
       branch: {
-        fullyQualifiedName: fullyQualifiedName,
-        ...description && { description },
+        ...props,
       },
     };
   }
 }
 
+export interface SignalCatalogSensorProps {
+  readonly allowedValues?: string[];
+  readonly dataType: dataTypeList;
+  readonly description?: string;
+  readonly fullyQualifiedName: string;
+  readonly max?: number;
+  readonly min?: number;
+  readonly unit?: string;
+}
 export class SignalCatalogSensor extends SignalCatalogNode {
-  constructor(
-    fullyQualifiedName: string,
-    dataType: string,
-    unit?: string,
-    min?: number,
-    max?: number,
-    description?: string) {
+  constructor(props: SignalCatalogSensorProps) {
     super();
 
     this.node = {
       sensor: {
-        fullyQualifiedName,
-        dataType,
-        ...unit && { unit },
-        ...min && { min },
-        ...max && { max },
-        ...description && { description },
-
+        ...props,
       },
     };
   }
 }
 
+export class SignalCatalogActuator extends SignalCatalogNode {
+  constructor(
+    dataType: string,
+    fullyQualifiedName: string,
+    allowedValues?: string[],
+    assignedValue?: string,
+    description?: string,
+    max?: number,
+    min?: number,
+    unit?: string,
+  ) {
+    super();
+
+    this.node = {
+      actuator: {
+        dataType,
+        fullyQualifiedName,
+        ...(allowedValues && { allowedValues }),
+        ...(assignedValue && { assignedValue }),
+        ...(description && { description }),
+        ...(min && { min }),
+        ...(max && { max }),
+        ...(unit && { unit }),
+      },
+    };
+  }
+}
+
+export class SignalCatalogAttribute extends SignalCatalogNode {
+  constructor(
+    dataType: string,
+    fullyQualifiedName: string,
+    allowedValues?: string[],
+    assignedValue?: string,
+    defaultValue?: string,
+    description?: string,
+    max?: number,
+    min?: number,
+    unit?: string,
+  ) {
+    super();
+
+    this.node = {
+      attribute: {
+        dataType,
+        fullyQualifiedName,
+        ...(allowedValues && { allowedValues }),
+        ...(assignedValue && { assignedValue }),
+        ...(defaultValue && { defaultValue }),
+        ...(description && { description }),
+        ...(min && { min }),
+        ...(max && { max }),
+        ...(unit && { unit }),
+      },
+    };
+  }
+}
 export interface SignalCatalogProps {
   readonly name?: string;
   readonly description?: string;
@@ -73,7 +152,7 @@ export interface SignalCatalogProps {
  * the vehicles.
  *
  *
- * The AWS IoT Fleetwise preview can only support a single Signal Catalog per account.
+ * At present, AWS IoT FleetWise can only support a single Signal Catalog per account.
  *
  */
 export class SignalCatalog extends Construct {
@@ -81,7 +160,7 @@ export class SignalCatalog extends Construct {
    * The name of the signal catalog
    */
   readonly name: string;
-  readonly description: (string|undefined);
+  readonly description: string | undefined;
   readonly arn: string;
 
   constructor(scope: Construct, id: string, props: SignalCatalogProps) {
@@ -114,15 +193,15 @@ export class SignalCatalog extends Construct {
     });
 
     const resourceCatalog = new cdk.CustomResource(this, 'CatalogResource', {
-      serviceToken: Provider.getOrCreate(this, serviceCatalogHandler).provider.serviceToken,
+      serviceToken: Provider.getOrCreate(this, serviceCatalogHandler).provider
+        .serviceToken,
       properties: {
         name: this.name,
         description: this.description,
-        nodes: JSON.stringify(props.nodes.map(node => node.toObject())),
+        nodes: JSON.stringify(props.nodes.map((node) => node.toObject())),
       },
     });
 
     resourceCatalog.node.addDependency(serviceResource);
   }
 }
-
