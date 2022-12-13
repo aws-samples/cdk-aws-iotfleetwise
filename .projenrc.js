@@ -16,7 +16,15 @@ const project = new awscdk.AwsCdkConstructLibrary({
   },
 });
 
-const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log', '__pycache__', '.DS_Store', '/tmp/'];
+const common_exclude = [
+  'cdk.out',
+  'cdk.context.json',
+  'images',
+  'yarn-error.log',
+  '__pycache__',
+  '.DS_Store',
+  '/tmp/',
+];
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
 project.npmignore.include('/src/handlers/');

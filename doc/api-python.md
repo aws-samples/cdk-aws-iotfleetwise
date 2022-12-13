@@ -351,7 +351,7 @@ vehicles: typing.List[Vehicle]
 
 The Signal Catalog represents the list of all signals that you want to collect from all the vehicles.
 
-The AWS IoT Fleetwise preview can only support a single Signal Catalog per account.
+At present, AWS IoT FleetWise can only support a single Signal Catalog per account.
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer"></a>
 
@@ -1049,6 +1049,48 @@ vehicles: typing.List[Vehicle]
 
 ---
 
+### SignalCatalogBranchProps <a name="SignalCatalogBranchProps" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogBranchProps(
+  fully_qualified_name: str,
+  description: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranchProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogBranchProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
 ### SignalCatalogProps <a name="SignalCatalogProps" id="cdk-aws-iotfleetwise.SignalCatalogProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogProps.Initializer"></a>
@@ -1121,6 +1163,108 @@ description: str
 
 ```python
 name: str
+```
+
+- *Type:* str
+
+---
+
+### SignalCatalogSensorProps <a name="SignalCatalogSensorProps" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogSensorProps(
+  data_type: str,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  description: str = None,
+  max: typing.Union[int, float] = None,
+  min: typing.Union[int, float] = None,
+  unit: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.dataType">data_type</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.unit">unit</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `data_type`<sup>Required</sup> <a name="data_type" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.dataType"></a>
+
+```python
+data_type: str
+```
+
+- *Type:* str
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.allowedValues"></a>
+
+```python
+allowed_values: typing.List[str]
+```
+
+- *Type:* typing.List[str]
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.max"></a>
+
+```python
+max: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.min"></a>
+
+```python
+min: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogSensorProps.property.unit"></a>
+
+```python
+unit: str
 ```
 
 - *Type:* str
@@ -1607,6 +1751,208 @@ def to_object() -> any
 
 
 
+### SignalCatalogActuator <a name="SignalCatalogActuator" id="cdk-aws-iotfleetwise.SignalCatalogActuator"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogActuator(
+  data_type: str,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  assigned_value: str = None,
+  description: str = None,
+  max: typing.Union[int, float] = None,
+  min: typing.Union[int, float] = None,
+  unit: str = None
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.dataType">data_type</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.assignedValue">assigned_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.unit">unit</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `data_type`<sup>Required</sup> <a name="data_type" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.dataType"></a>
+
+- *Type:* str
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.fullyQualifiedName"></a>
+
+- *Type:* str
+
+---
+
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.allowedValues"></a>
+
+- *Type:* typing.List[str]
+
+---
+
+##### `assigned_value`<sup>Optional</sup> <a name="assigned_value" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.assignedValue"></a>
+
+- *Type:* str
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.description"></a>
+
+- *Type:* str
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.max"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.min"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.unit"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.SignalCatalogActuator.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
+### SignalCatalogAttribute <a name="SignalCatalogAttribute" id="cdk-aws-iotfleetwise.SignalCatalogAttribute"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogAttribute(
+  data_type: str,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  assigned_value: str = None,
+  default_value: str = None,
+  description: str = None,
+  max: typing.Union[int, float] = None,
+  min: typing.Union[int, float] = None,
+  unit: str = None
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.dataType">data_type</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.assignedValue">assigned_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.defaultValue">default_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.unit">unit</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `data_type`<sup>Required</sup> <a name="data_type" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.dataType"></a>
+
+- *Type:* str
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.fullyQualifiedName"></a>
+
+- *Type:* str
+
+---
+
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.allowedValues"></a>
+
+- *Type:* typing.List[str]
+
+---
+
+##### `assigned_value`<sup>Optional</sup> <a name="assigned_value" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.assignedValue"></a>
+
+- *Type:* str
+
+---
+
+##### `default_value`<sup>Optional</sup> <a name="default_value" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.defaultValue"></a>
+
+- *Type:* str
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.description"></a>
+
+- *Type:* str
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.max"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.min"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.unit"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
 ### SignalCatalogBranch <a name="SignalCatalogBranch" id="cdk-aws-iotfleetwise.SignalCatalogBranch"></a>
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalogBranch.Initializer"></a>
@@ -1696,29 +2042,25 @@ def to_object() -> any
 import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.SignalCatalogSensor(
-  fully_qualified_name: str,
   data_type: str,
-  unit: str = None,
-  min: typing.Union[int, float] = None,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  description: str = None,
   max: typing.Union[int, float] = None,
-  description: str = None
+  min: typing.Union[int, float] = None,
+  unit: str = None
 )
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.dataType">data_type</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit">unit</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
-
----
-
-##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName"></a>
-
-- *Type:* str
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit">unit</a></code> | <code>str</code> | *No description.* |
 
 ---
 
@@ -1728,15 +2070,21 @@ cdk_aws_iotfleetwise.SignalCatalogSensor(
 
 ---
 
-##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit"></a>
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.fullyQualifiedName"></a>
 
 - *Type:* str
 
 ---
 
-##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min"></a>
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.allowedValues"></a>
 
-- *Type:* typing.Union[int, float]
+- *Type:* typing.List[str]
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description"></a>
+
+- *Type:* str
 
 ---
 
@@ -1746,7 +2094,13 @@ cdk_aws_iotfleetwise.SignalCatalogSensor(
 
 ---
 
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.description"></a>
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.min"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogSensor.Initializer.parameter.unit"></a>
 
 - *Type:* str
 
