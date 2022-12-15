@@ -10,6 +10,9 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   name: 'cdk-aws-iotfleetwise',
   repositoryUrl: 'https://github.com/aws-samples/cdk-aws-iotfleetwise.git',
+  deps: ['js-yaml'],
+  devDeps: ['@types/js-yaml'],
+  bundledDeps: ['js-yaml'],
   publishToPypi: {
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk_aws_iotfleetwise',
