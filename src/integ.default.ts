@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as cdk from 'aws-cdk-lib';
 import { aws_timestream as ts } from 'aws-cdk-lib';
 import * as ifw from '.';
@@ -41,7 +42,24 @@ export class IntegTesting {
           fullyQualifiedName: 'Vehicle.EngineTorque',
           dataType: 'DOUBLE',
         }),
+        new ifw.SignalCatalogActuator({
+          fullyQualifiedName: 'Vehicle.FanSpeed',
+          allowedValues: ['OFF', 'LOW', 'MEDIUM', 'HIGH'],
+          assignedValue: 'OFF',
+          dataType: 'STRING_ARRAY',
+          description: 'Test fan speed',
+        }),
+        new ifw.SignalCatalogAttribute({
+          fullyQualifiedName: 'Vehicle.PowerMax',
+          dataType: 'UINT16',
+          defaultValue: '0',
+          description: 'Peak power, in kilowatts, that engine can generate.',
+          unit: 'kW',
+        }),
       ],
+      vssFile: path.join(__dirname, '..', 'test', 'OBD.vspec'),
+      vssPrefix: 'Vehicle.OBD',
+      vssGeneratePrefixBranch: true,
     });
 
     const model_a = new ifw.VehicleModel(stack, 'ModelA', {
@@ -98,6 +116,35 @@ export class IntegTesting {
       vehicles: [vin100],
     });
 
+    // Supplemental permutations of constructs
+    // no prefix
+    new ifw.SignalCatalog(stack, 'SignalCatalogFromVssNoPrefix', {
+      database,
+      table,
+      description: 'my signal catalog without prefix',
+      nodes: [],
+      vssFile: path.join(__dirname, '..', 'test', 'OBD.vspec'),
+      // vssPrefix: 'Vehicle.OBD',
+      // vssGeneratePrefixBranch: false,
+    });
+
+    // No nodes[] provide, but VSS file is provided - example without description
+    new ifw.SignalCatalog(stack, 'SignalCatalogFromVssOnly', {
+      database,
+      table,
+      vssFile: path.join(__dirname, '..', 'test', 'OBD.vspec'),
+    });
+
+    // No nodes[] or VSS file provided - expect error
+    expect(() => {
+      new ifw.SignalCatalog(stack, 'SignalCatalogWithNoSignals', {
+        database,
+        table,
+        description: 'my signal catalog without any Signals',
+      });
+    }).toThrowError(
+      /Either a VSS file or signal catalog nodes must be provided./,
+    );
     this.stack = [stack];
   }
 }

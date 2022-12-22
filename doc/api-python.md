@@ -349,9 +349,14 @@ vehicles: typing.List[Vehicle]
 
 ### SignalCatalog <a name="SignalCatalog" id="cdk-aws-iotfleetwise.SignalCatalog"></a>
 
-The Signal Catalog represents the list of all signals that you want to collect from all the vehicles.
+A signal catalog is a collection of signals that can be reused to create vehicle models.
 
-At present, AWS IoT FleetWise can only support a single Signal Catalog per account.
+You can have a maximum of one signal catalog.
+
+The signal catalog construct should be created first as it the basis for vehicle models and
+campaigns. Also, before using FleetWise, the service must be registered to send data to
+Timestream. At present, a Timestream database and table must be provided. During stack deletion,
+the registration details will remain.
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer"></a>
 
@@ -362,10 +367,14 @@ cdk_aws_iotfleetwise.SignalCatalog(
   scope: Construct,
   id: str,
   database: CfnDatabase,
-  nodes: typing.List[SignalCatalogNode],
   table: CfnTable,
+  deregister: bool = None,
   description: str = None,
-  name: str = None
+  name: str = None,
+  nodes: typing.List[SignalCatalogNode] = None,
+  vss_file: str = None,
+  vss_generate_prefix_branch: bool = None,
+  vss_prefix: str = None
 )
 ```
 
@@ -373,11 +382,15 @@ cdk_aws_iotfleetwise.SignalCatalog(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | Timestream database construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | Timestream table construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.deregister">deregister</a></code> | <code>bool</code> | Deregister FleetWise on stack deletion. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description">description</a></code> | <code>str</code> | Description of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name">name</a></code> | <code>str</code> | Name of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | An array of signal nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssFile">vss_file</a></code> | <code>str</code> | A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssGeneratePrefixBranch">vss_generate_prefix_branch</a></code> | <code>bool</code> | If set to true, this will parse the vssPrefix into branch nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssPrefix">vss_prefix</a></code> | <code>str</code> | A prefix to prepend to the fully qualified names found in the VSS file. |
 
 ---
 
@@ -396,30 +409,108 @@ cdk_aws_iotfleetwise.SignalCatalog(
 ##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database"></a>
 
 - *Type:* aws_cdk.aws_timestream.CfnDatabase
+- *Default:* None
 
----
+Timestream database construct.
 
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes"></a>
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+If the construct is provided along with the `table` value,
+the stack will attempt to register FleetWise.
 
 ---
 
 ##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table"></a>
 
 - *Type:* aws_cdk.aws_timestream.CfnTable
+- *Default:* None
+
+Timestream table construct.
+
+Provide the complete construct object.
+
+---
+
+##### `deregister`<sup>Optional</sup> <a name="deregister" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.deregister"></a>
+
+- *Type:* bool
+- *Default:* false
+
+Deregister FleetWise on stack deletion.
+
+If set to 'true',  FleetWise will be deregistered from the Timestream
+destination.
 
 ---
 
 ##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description"></a>
 
 - *Type:* str
+- *Default:* None
+
+Description of the Signal Catalog.
+
+If not provided no description is set.
 
 ---
 
 ##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name"></a>
 
 - *Type:* str
+- *Default:* default
+
+Name of the Signal Catalog.
+
+If not provided, default value is used.
+
+---
+
+##### `nodes`<sup>Optional</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+- *Default:* []
+
+An array of signal nodes.
+
+Nodes are a general abstraction of a signal.
+A node can be specified as an actuator, attribute, branch, or sensor. See `SignalCatalogBranch`,
+`SignalCatalogSensor`, `SignalCatalogActuator`, or `SignalCatalogAttribute` for creating nodes.
+
+---
+
+##### `vss_file`<sup>Optional</sup> <a name="vss_file" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssFile"></a>
+
+- *Type:* str
+- *Default:* None
+
+A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided.
+
+---
+
+##### `vss_generate_prefix_branch`<sup>Optional</sup> <a name="vss_generate_prefix_branch" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssGeneratePrefixBranch"></a>
+
+- *Type:* bool
+- *Default:* true
+
+If set to true, this will parse the vssPrefix into branch nodes.
+
+For instance if `OBD.MyData` was
+provided,  the `OBD.MyData` will be parsed into branch nodes of `OBD` and `OBD.MyData`. By default
+this is set to true. If you define branches in another way such as via `SignalCatalogNode`, set this
+to false to suppress creation of branch nodes.
+
+---
+
+##### `vss_prefix`<sup>Optional</sup> <a name="vss_prefix" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.vssPrefix"></a>
+
+- *Type:* str
+- *Default:* None
+
+A prefix to prepend to the fully qualified names found in the VSS file.
+
+The format of the prefix
+is in dotted notation, and will be the prepended to all signal names.
+
+For instance, with the prefix of `OBD.MyData` and signal names of `PidA` and `PidB` will be combined
+to create `OBD.MyData.PidA` and `OBD.MyData.PidB`.
 
 ---
 
@@ -473,8 +564,8 @@ Any object.
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.arn">arn</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>str</code> | The name of the signal catalog. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>str</code> | The name of the signal catalog. |
 
 ---
 
@@ -500,6 +591,16 @@ arn: str
 
 ---
 
+##### `description`<sup>Required</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
 ##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalog.property.name"></a>
 
 ```python
@@ -509,16 +610,6 @@ name: str
 - *Type:* str
 
 The name of the signal catalog.
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.property.description"></a>
-
-```python
-description: str
-```
-
-- *Type:* str
 
 ---
 
@@ -1049,6 +1140,246 @@ vehicles: typing.List[Vehicle]
 
 ---
 
+### SignalCatalogActuatorProps <a name="SignalCatalogActuatorProps" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogActuatorProps(
+  data_type: str,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  assigned_value: str = None,
+  description: str = None,
+  max: typing.Union[int, float] = None,
+  min: typing.Union[int, float] = None,
+  unit: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.dataType">data_type</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.assignedValue">assigned_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.unit">unit</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `data_type`<sup>Required</sup> <a name="data_type" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.dataType"></a>
+
+```python
+data_type: str
+```
+
+- *Type:* str
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.allowedValues"></a>
+
+```python
+allowed_values: typing.List[str]
+```
+
+- *Type:* typing.List[str]
+
+---
+
+##### `assigned_value`<sup>Optional</sup> <a name="assigned_value" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.assignedValue"></a>
+
+```python
+assigned_value: str
+```
+
+- *Type:* str
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.max"></a>
+
+```python
+max: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.min"></a>
+
+```python
+min: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.unit"></a>
+
+```python
+unit: str
+```
+
+- *Type:* str
+
+---
+
+### SignalCatalogAttributeProps <a name="SignalCatalogAttributeProps" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.SignalCatalogAttributeProps(
+  data_type: str,
+  fully_qualified_name: str,
+  allowed_values: typing.List[str] = None,
+  assigned_value: str = None,
+  default_value: str = None,
+  description: str = None,
+  max: typing.Union[int, float] = None,
+  min: typing.Union[int, float] = None,
+  unit: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.dataType">data_type</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.allowedValues">allowed_values</a></code> | <code>typing.List[str]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.assignedValue">assigned_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.defaultValue">default_value</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.description">description</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.max">max</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.min">min</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.unit">unit</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `data_type`<sup>Required</sup> <a name="data_type" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.dataType"></a>
+
+```python
+data_type: str
+```
+
+- *Type:* str
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `allowed_values`<sup>Optional</sup> <a name="allowed_values" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.allowedValues"></a>
+
+```python
+allowed_values: typing.List[str]
+```
+
+- *Type:* typing.List[str]
+
+---
+
+##### `assigned_value`<sup>Optional</sup> <a name="assigned_value" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.assignedValue"></a>
+
+```python
+assigned_value: str
+```
+
+- *Type:* str
+
+---
+
+##### `default_value`<sup>Optional</sup> <a name="default_value" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.defaultValue"></a>
+
+```python
+default_value: str
+```
+
+- *Type:* str
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.description"></a>
+
+```python
+description: str
+```
+
+- *Type:* str
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.max"></a>
+
+```python
+max: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.min"></a>
+
+```python
+min: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.unit"></a>
+
+```python
+unit: str
+```
+
+- *Type:* str
+
+---
+
 ### SignalCatalogBranchProps <a name="SignalCatalogBranchProps" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps.Initializer"></a>
@@ -1100,10 +1431,14 @@ import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.SignalCatalogProps(
   database: CfnDatabase,
-  nodes: typing.List[SignalCatalogNode],
   table: CfnTable,
+  deregister: bool = None,
   description: str = None,
-  name: str = None
+  name: str = None,
+  nodes: typing.List[SignalCatalogNode] = None,
+  vss_file: str = None,
+  vss_generate_prefix_branch: bool = None,
+  vss_prefix: str = None
 )
 ```
 
@@ -1111,11 +1446,15 @@ cdk_aws_iotfleetwise.SignalCatalogProps(
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | Timestream database construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | Timestream table construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.deregister">deregister</a></code> | <code>bool</code> | Deregister FleetWise on stack deletion. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>str</code> | Description of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>str</code> | Name of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | An array of signal nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssFile">vss_file</a></code> | <code>str</code> | A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssGeneratePrefixBranch">vss_generate_prefix_branch</a></code> | <code>bool</code> | If set to true, this will parse the vssPrefix into branch nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssPrefix">vss_prefix</a></code> | <code>str</code> | A prefix to prepend to the fully qualified names found in the VSS file. |
 
 ---
 
@@ -1126,16 +1465,12 @@ database: CfnDatabase
 ```
 
 - *Type:* aws_cdk.aws_timestream.CfnDatabase
+- *Default:* None
 
----
+Timestream database construct.
 
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
-
-```python
-nodes: typing.List[SignalCatalogNode]
-```
-
-- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+If the construct is provided along with the `table` value,
+the stack will attempt to register FleetWise.
 
 ---
 
@@ -1146,6 +1481,27 @@ table: CfnTable
 ```
 
 - *Type:* aws_cdk.aws_timestream.CfnTable
+- *Default:* None
+
+Timestream table construct.
+
+Provide the complete construct object.
+
+---
+
+##### `deregister`<sup>Optional</sup> <a name="deregister" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.deregister"></a>
+
+```python
+deregister: bool
+```
+
+- *Type:* bool
+- *Default:* false
+
+Deregister FleetWise on stack deletion.
+
+If set to 'true',  FleetWise will be deregistered from the Timestream
+destination.
 
 ---
 
@@ -1156,6 +1512,11 @@ description: str
 ```
 
 - *Type:* str
+- *Default:* None
+
+Description of the Signal Catalog.
+
+If not provided no description is set.
 
 ---
 
@@ -1166,6 +1527,78 @@ name: str
 ```
 
 - *Type:* str
+- *Default:* default
+
+Name of the Signal Catalog.
+
+If not provided, default value is used.
+
+---
+
+##### `nodes`<sup>Optional</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
+
+```python
+nodes: typing.List[SignalCatalogNode]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
+- *Default:* []
+
+An array of signal nodes.
+
+Nodes are a general abstraction of a signal.
+A node can be specified as an actuator, attribute, branch, or sensor. See `SignalCatalogBranch`,
+`SignalCatalogSensor`, `SignalCatalogActuator`, or `SignalCatalogAttribute` for creating nodes.
+
+---
+
+##### `vss_file`<sup>Optional</sup> <a name="vss_file" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssFile"></a>
+
+```python
+vss_file: str
+```
+
+- *Type:* str
+- *Default:* None
+
+A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided.
+
+---
+
+##### `vss_generate_prefix_branch`<sup>Optional</sup> <a name="vss_generate_prefix_branch" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssGeneratePrefixBranch"></a>
+
+```python
+vss_generate_prefix_branch: bool
+```
+
+- *Type:* bool
+- *Default:* true
+
+If set to true, this will parse the vssPrefix into branch nodes.
+
+For instance if `OBD.MyData` was
+provided,  the `OBD.MyData` will be parsed into branch nodes of `OBD` and `OBD.MyData`. By default
+this is set to true. If you define branches in another way such as via `SignalCatalogNode`, set this
+to false to suppress creation of branch nodes.
+
+---
+
+##### `vss_prefix`<sup>Optional</sup> <a name="vss_prefix" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssPrefix"></a>
+
+```python
+vss_prefix: str
+```
+
+- *Type:* str
+- *Default:* None
+
+A prefix to prepend to the fully qualified names found in the VSS file.
+
+The format of the prefix
+is in dotted notation, and will be the prepended to all signal names.
+
+For instance, with the prefix of `OBD.MyData` and signal names of `PidA` and `PidB` will be combined
+to create `OBD.MyData.PidA` and `OBD.MyData.PidB`.
 
 ---
 

@@ -1,0 +1,20 @@
+# Invalid property type in instances to create an instance tree. Only
+# 'string' and 'array' types are allowed. Introduce a number to throw
+# an error.
+InstanceTree:
+  instances:
+    - Sensor[1,8]
+    - 12345
+  type: branch
+  description: Invalid element type of number in 'instances'
+
+InstanceTree.Voltage:
+  datatype: float
+  type: sensor
+  unit: V
+  description: Sensor voltage
+
+UnknownType:
+  datatype: uint8
+  type: invalidsignaltype
+  description: for code coverage

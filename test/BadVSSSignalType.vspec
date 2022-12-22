@@ -1,0 +1,5 @@
+# Test for an unknown (invalid) signal type
+UnknownType:
+  datatype: uint8
+  type: invalidsignaltype
+  description: for code coverage

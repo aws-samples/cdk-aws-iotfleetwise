@@ -281,9 +281,14 @@ public readonly vehicles: Vehicle[];
 
 ### SignalCatalog <a name="SignalCatalog" id="cdk-aws-iotfleetwise.SignalCatalog"></a>
 
-The Signal Catalog represents the list of all signals that you want to collect from all the vehicles.
+A signal catalog is a collection of signals that can be reused to create vehicle models.
 
-At present, AWS IoT FleetWise can only support a single Signal Catalog per account.
+You can have a maximum of one signal catalog.
+
+The signal catalog construct should be created first as it the basis for vehicle models and
+campaigns. Also, before using FleetWise, the service must be registered to send data to
+Timestream. At present, a Timestream database and table must be provided. During stack deletion,
+the registration details will remain.
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer"></a>
 
@@ -367,8 +372,8 @@ Any object.
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.arn">arn</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>string</code> | The name of the signal catalog. |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.property.name">name</a></code> | <code>string</code> | The name of the signal catalog. |
 
 ---
 
@@ -394,6 +399,16 @@ public readonly arn: string;
 
 ---
 
+##### `description`<sup>Required</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+---
+
 ##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.SignalCatalog.property.name"></a>
 
 ```typescript
@@ -403,16 +418,6 @@ public readonly name: string;
 - *Type:* string
 
 The name of the signal catalog.
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalog.property.description"></a>
-
-```typescript
-public readonly description: string;
-```
-
-- *Type:* string
 
 ---
 
@@ -864,6 +869,227 @@ public readonly vehicles: Vehicle[];
 
 ---
 
+### SignalCatalogActuatorProps <a name="SignalCatalogActuatorProps" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.Initializer"></a>
+
+```typescript
+import { SignalCatalogActuatorProps } from 'cdk-aws-iotfleetwise'
+
+const signalCatalogActuatorProps: SignalCatalogActuatorProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.dataType">dataType</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.allowedValues">allowedValues</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.assignedValue">assignedValue</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.max">max</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.min">min</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.unit">unit</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `dataType`<sup>Required</sup> <a name="dataType" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.dataType"></a>
+
+```typescript
+public readonly dataType: string;
+```
+
+- *Type:* string
+
+---
+
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.fullyQualifiedName"></a>
+
+```typescript
+public readonly fullyQualifiedName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `allowedValues`<sup>Optional</sup> <a name="allowedValues" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.allowedValues"></a>
+
+```typescript
+public readonly allowedValues: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `assignedValue`<sup>Optional</sup> <a name="assignedValue" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.assignedValue"></a>
+
+```typescript
+public readonly assignedValue: string;
+```
+
+- *Type:* string
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.max"></a>
+
+```typescript
+public readonly max: number;
+```
+
+- *Type:* number
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.min"></a>
+
+```typescript
+public readonly min: number;
+```
+
+- *Type:* number
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogActuatorProps.property.unit"></a>
+
+```typescript
+public readonly unit: string;
+```
+
+- *Type:* string
+
+---
+
+### SignalCatalogAttributeProps <a name="SignalCatalogAttributeProps" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.Initializer"></a>
+
+```typescript
+import { SignalCatalogAttributeProps } from 'cdk-aws-iotfleetwise'
+
+const signalCatalogAttributeProps: SignalCatalogAttributeProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.dataType">dataType</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.allowedValues">allowedValues</a></code> | <code>string[]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.assignedValue">assignedValue</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.defaultValue">defaultValue</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.description">description</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.max">max</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.min">min</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.unit">unit</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `dataType`<sup>Required</sup> <a name="dataType" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.dataType"></a>
+
+```typescript
+public readonly dataType: string;
+```
+
+- *Type:* string
+
+---
+
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.fullyQualifiedName"></a>
+
+```typescript
+public readonly fullyQualifiedName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `allowedValues`<sup>Optional</sup> <a name="allowedValues" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.allowedValues"></a>
+
+```typescript
+public readonly allowedValues: string[];
+```
+
+- *Type:* string[]
+
+---
+
+##### `assignedValue`<sup>Optional</sup> <a name="assignedValue" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.assignedValue"></a>
+
+```typescript
+public readonly assignedValue: string;
+```
+
+- *Type:* string
+
+---
+
+##### `defaultValue`<sup>Optional</sup> <a name="defaultValue" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.defaultValue"></a>
+
+```typescript
+public readonly defaultValue: string;
+```
+
+- *Type:* string
+
+---
+
+##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.description"></a>
+
+```typescript
+public readonly description: string;
+```
+
+- *Type:* string
+
+---
+
+##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.max"></a>
+
+```typescript
+public readonly max: number;
+```
+
+- *Type:* number
+
+---
+
+##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.min"></a>
+
+```typescript
+public readonly min: number;
+```
+
+- *Type:* number
+
+---
+
+##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogAttributeProps.property.unit"></a>
+
+```typescript
+public readonly unit: string;
+```
+
+- *Type:* string
+
+---
+
 ### SignalCatalogBranchProps <a name="SignalCatalogBranchProps" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.SignalCatalogBranchProps.Initializer"></a>
@@ -917,11 +1143,15 @@ const signalCatalogProps: SignalCatalogProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | Timestream database construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | Timestream table construct. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.deregister">deregister</a></code> | <code>boolean</code> | Deregister FleetWise on stack deletion. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>string</code> | Description of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>string</code> | Name of the Signal Catalog. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | An array of signal nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssFile">vssFile</a></code> | <code>string</code> | A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssGeneratePrefixBranch">vssGeneratePrefixBranch</a></code> | <code>boolean</code> | If set to true, this will parse the vssPrefix into branch nodes. |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.vssPrefix">vssPrefix</a></code> | <code>string</code> | A prefix to prepend to the fully qualified names found in the VSS file. |
 
 ---
 
@@ -932,16 +1162,12 @@ public readonly database: CfnDatabase;
 ```
 
 - *Type:* aws-cdk-lib.aws_timestream.CfnDatabase
+- *Default:* None
 
----
+Timestream database construct.
 
-##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
-
-```typescript
-public readonly nodes: SignalCatalogNode[];
-```
-
-- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
+If the construct is provided along with the `table` value,
+the stack will attempt to register FleetWise.
 
 ---
 
@@ -952,6 +1178,27 @@ public readonly table: CfnTable;
 ```
 
 - *Type:* aws-cdk-lib.aws_timestream.CfnTable
+- *Default:* None
+
+Timestream table construct.
+
+Provide the complete construct object.
+
+---
+
+##### `deregister`<sup>Optional</sup> <a name="deregister" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.deregister"></a>
+
+```typescript
+public readonly deregister: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Deregister FleetWise on stack deletion.
+
+If set to 'true',  FleetWise will be deregistered from the Timestream
+destination.
 
 ---
 
@@ -962,6 +1209,11 @@ public readonly description: string;
 ```
 
 - *Type:* string
+- *Default:* None
+
+Description of the Signal Catalog.
+
+If not provided no description is set.
 
 ---
 
@@ -972,6 +1224,78 @@ public readonly name: string;
 ```
 
 - *Type:* string
+- *Default:* default
+
+Name of the Signal Catalog.
+
+If not provided, default value is used.
+
+---
+
+##### `nodes`<sup>Optional</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes"></a>
+
+```typescript
+public readonly nodes: SignalCatalogNode[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
+- *Default:* []
+
+An array of signal nodes.
+
+Nodes are a general abstraction of a signal.
+A node can be specified as an actuator, attribute, branch, or sensor. See `SignalCatalogBranch`,
+`SignalCatalogSensor`, `SignalCatalogActuator`, or `SignalCatalogAttribute` for creating nodes.
+
+---
+
+##### `vssFile`<sup>Optional</sup> <a name="vssFile" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssFile"></a>
+
+```typescript
+public readonly vssFile: string;
+```
+
+- *Type:* string
+- *Default:* None
+
+A YAML file that conforms to the [Vehicle Signal Specification format](https://covesa.github.io/vehicle_signal_specification/) and contains a list of signals. If provided, the contents of the file, along with the `prefix` property will be appended after any `SignalCatalogNode` objects provided.
+
+---
+
+##### `vssGeneratePrefixBranch`<sup>Optional</sup> <a name="vssGeneratePrefixBranch" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssGeneratePrefixBranch"></a>
+
+```typescript
+public readonly vssGeneratePrefixBranch: boolean;
+```
+
+- *Type:* boolean
+- *Default:* true
+
+If set to true, this will parse the vssPrefix into branch nodes.
+
+For instance if `OBD.MyData` was
+provided,  the `OBD.MyData` will be parsed into branch nodes of `OBD` and `OBD.MyData`. By default
+this is set to true. If you define branches in another way such as via `SignalCatalogNode`, set this
+to false to suppress creation of branch nodes.
+
+---
+
+##### `vssPrefix`<sup>Optional</sup> <a name="vssPrefix" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.vssPrefix"></a>
+
+```typescript
+public readonly vssPrefix: string;
+```
+
+- *Type:* string
+- *Default:* None
+
+A prefix to prepend to the fully qualified names found in the VSS file.
+
+The format of the prefix
+is in dotted notation, and will be the prepended to all signal names.
+
+For instance, with the prefix of `OBD.MyData` and signal names of `PidA` and `PidB` will be combined
+to create `OBD.MyData.PidA` and `OBD.MyData.PidB`.
 
 ---
 
@@ -1524,67 +1848,18 @@ public toObject(): object
 ```typescript
 import { SignalCatalogActuator } from 'cdk-aws-iotfleetwise'
 
-new SignalCatalogActuator(dataType: string, fullyQualifiedName: string, allowedValues?: string[], assignedValue?: string, description?: string, max?: number, min?: number, unit?: string)
+new SignalCatalogActuator(props: SignalCatalogActuatorProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.dataType">dataType</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.allowedValues">allowedValues</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.assignedValue">assignedValue</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.max">max</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.min">min</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.unit">unit</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps">SignalCatalogActuatorProps</a></code> | *No description.* |
 
 ---
 
-##### `dataType`<sup>Required</sup> <a name="dataType" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.dataType"></a>
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.props"></a>
 
-- *Type:* string
-
----
-
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.fullyQualifiedName"></a>
-
-- *Type:* string
-
----
-
-##### `allowedValues`<sup>Optional</sup> <a name="allowedValues" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.allowedValues"></a>
-
-- *Type:* string[]
-
----
-
-##### `assignedValue`<sup>Optional</sup> <a name="assignedValue" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.assignedValue"></a>
-
-- *Type:* string
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.description"></a>
-
-- *Type:* string
-
----
-
-##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.max"></a>
-
-- *Type:* number
-
----
-
-##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.min"></a>
-
-- *Type:* number
-
----
-
-##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogActuator.Initializer.parameter.unit"></a>
-
-- *Type:* string
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogActuatorProps">SignalCatalogActuatorProps</a>
 
 ---
 
@@ -1612,74 +1887,18 @@ public toObject(): object
 ```typescript
 import { SignalCatalogAttribute } from 'cdk-aws-iotfleetwise'
 
-new SignalCatalogAttribute(dataType: string, fullyQualifiedName: string, allowedValues?: string[], assignedValue?: string, defaultValue?: string, description?: string, max?: number, min?: number, unit?: string)
+new SignalCatalogAttribute(props: SignalCatalogAttributeProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.dataType">dataType</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.allowedValues">allowedValues</a></code> | <code>string[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.assignedValue">assignedValue</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.defaultValue">defaultValue</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.description">description</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.max">max</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.min">min</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.unit">unit</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps">SignalCatalogAttributeProps</a></code> | *No description.* |
 
 ---
 
-##### `dataType`<sup>Required</sup> <a name="dataType" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.dataType"></a>
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.props"></a>
 
-- *Type:* string
-
----
-
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.fullyQualifiedName"></a>
-
-- *Type:* string
-
----
-
-##### `allowedValues`<sup>Optional</sup> <a name="allowedValues" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.allowedValues"></a>
-
-- *Type:* string[]
-
----
-
-##### `assignedValue`<sup>Optional</sup> <a name="assignedValue" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.assignedValue"></a>
-
-- *Type:* string
-
----
-
-##### `defaultValue`<sup>Optional</sup> <a name="defaultValue" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.defaultValue"></a>
-
-- *Type:* string
-
----
-
-##### `description`<sup>Optional</sup> <a name="description" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.description"></a>
-
-- *Type:* string
-
----
-
-##### `max`<sup>Optional</sup> <a name="max" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.max"></a>
-
-- *Type:* number
-
----
-
-##### `min`<sup>Optional</sup> <a name="min" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.min"></a>
-
-- *Type:* number
-
----
-
-##### `unit`<sup>Optional</sup> <a name="unit" id="cdk-aws-iotfleetwise.SignalCatalogAttribute.Initializer.parameter.unit"></a>
-
-- *Type:* string
+- *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogAttributeProps">SignalCatalogAttributeProps</a>
 
 ---
 

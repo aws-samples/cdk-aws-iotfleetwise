@@ -45,6 +45,20 @@ export class IntegTesting {
           fullyQualifiedName: 'Vehicle.EngineTorque',
           dataType: 'DOUBLE',
         }),
+        new ifw.SignalCatalogActuator({
+          fullyQualifiedName: 'Vehicle.FanSpeed',
+          allowedValues: ['OFF', 'LOW', 'MEDIUM', 'HIGH'],
+          assignedValue: 'OFF',
+          dataType: 'STRING_ARRAY',
+          description: 'Test fan speed',
+        }),
+        new ifw.SignalCatalogAttribute({
+          fullyQualifiedName: 'Vehicle.PowerMax',
+          dataType: 'UINT16',
+          defaultValue: '0',
+          description: 'Peak power, in kilowatts, that engine can generate.',
+          unit: 'kW',
+        }),
       ],
     });
 
