@@ -40,13 +40,13 @@ def on_create(event, context):
         
     client=boto3.client('iotfleetwise')
     response = client.create_vehicle(
-      associationBehavior = "CreateIotThing" if props['create_iot_thing'] else "ValidateIotThingExists",
+      associationBehavior = "CreateIotThing" if (props['create_iot_thing'] == True) else "ValidateIotThingExists",
       vehicleName = props['vehicle_name'],
       modelManifestArn = props['model_manifest_arn'],
       decoderManifestArn = props['decoder_manifest_arn'],
     )
     print(f"create_vehicle response {response}")
-    return ret;
+    return ret
 
 def on_update(event):
     physical_id = event["PhysicalResourceId"]
