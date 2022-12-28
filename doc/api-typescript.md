@@ -734,6 +734,36 @@ public readonly signalCatalog: SignalCatalog;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### AttributeVehicleSignalProps <a name="AttributeVehicleSignalProps" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps"></a>
+
+Attribute Signal - needed when creating a vehicle with attributes.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps.Initializer"></a>
+
+```typescript
+import { AttributeVehicleSignalProps } from 'cdk-aws-iotfleetwise'
+
+const attributeVehicleSignalProps: AttributeVehicleSignalProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignalProps.property.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps.property.fullyQualifiedName"></a>
+
+```typescript
+public readonly fullyQualifiedName: string;
+```
+
+- *Type:* string
+
+---
+
 ### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CampaignProps.Initializer"></a>
@@ -1728,6 +1758,45 @@ public readonly attributes: {[ key: string ]: string};
 ---
 
 ## Classes <a name="Classes" id="Classes"></a>
+
+### AttributeVehicleSignal <a name="AttributeVehicleSignal" id="cdk-aws-iotfleetwise.AttributeVehicleSignal"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer"></a>
+
+```typescript
+import { AttributeVehicleSignal } from 'cdk-aws-iotfleetwise'
+
+new AttributeVehicleSignal(props: AttributeVehicleSignalProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignalProps">AttributeVehicleSignalProps</a></code> | *No description.* |
+
+---
+
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.AttributeVehicleSignalProps">AttributeVehicleSignalProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignal.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
 
 ### CampaignSignal <a name="CampaignSignal" id="cdk-aws-iotfleetwise.CampaignSignal"></a>
 

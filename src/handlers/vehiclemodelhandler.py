@@ -43,12 +43,15 @@ def on_create(event):
     print(f"update_model_manifest response {response}")
 
     if props["signals"] != "{}":
+        # remove any non-CAN or OBD signal types (e.g., Attribute)
+
         response = client.create_decoder_manifest(
             name=props["name"],
             description=props["description"],
             modelManifestArn=props["model_manifest_arn"],
             networkInterfaces=json.loads(props["network_interfaces"]),
-            signalDecoders=signals,
+            # Remove all non-CAN signals
+            signalDecoders=[i for i in signals if (i["type"] == "CAN_SIGNAL")],
         )
         print(f"create_decoder_manifest response {response}")
 

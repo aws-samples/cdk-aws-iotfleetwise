@@ -90,6 +90,24 @@ export class CanVehicleSignal extends VehicleSignal {
   }
 }
 
+/**
+ * Attribute Signal - needed when creating a vehicle with attributes
+ */
+export interface AttributeVehicleSignalProps {
+  readonly fullyQualifiedName: string;
+}
+
+export class AttributeVehicleSignal extends VehicleSignal {
+  constructor(props: AttributeVehicleSignalProps) {
+    super();
+
+    this.signal = {
+      type: 'ATTRIBUTE_SIGNAL',
+      fullyQualifiedName: props.fullyQualifiedName,
+    };
+  }
+}
+
 export class NetworkFileDefinition {
   protected definition: object;
 

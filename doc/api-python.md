@@ -1002,6 +1002,38 @@ signal_catalog: SignalCatalog
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### AttributeVehicleSignalProps <a name="AttributeVehicleSignalProps" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps"></a>
+
+Attribute Signal - needed when creating a vehicle with attributes.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.AttributeVehicleSignalProps(
+  fully_qualified_name: str
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignalProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.AttributeVehicleSignalProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
 ### CampaignProps <a name="CampaignProps" id="cdk-aws-iotfleetwise.CampaignProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CampaignProps.Initializer"></a>
@@ -2075,6 +2107,47 @@ attributes: typing.Mapping[str]
 ---
 
 ## Classes <a name="Classes" id="Classes"></a>
+
+### AttributeVehicleSignal <a name="AttributeVehicleSignal" id="cdk-aws-iotfleetwise.AttributeVehicleSignal"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.AttributeVehicleSignal(
+  fully_qualified_name: str
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.Initializer.parameter.fullyQualifiedName"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.AttributeVehicleSignal.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.AttributeVehicleSignal.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
 
 ### CampaignSignal <a name="CampaignSignal" id="cdk-aws-iotfleetwise.CampaignSignal"></a>
 

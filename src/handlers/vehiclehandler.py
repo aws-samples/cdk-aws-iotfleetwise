@@ -19,7 +19,7 @@ def on_create(event, context):
     print(f"create new resource with props {props}")
     ret = {"PhysicalResourceId": props["vehicle_name"]}
 
-    if props["create_iot_thing"]:
+    if props["create_iot_thing"] == "true":
         print("creating certificate for iot thing")
         client = boto3.client("iot")
         response = client.create_keys_and_certificate(setAsActive=True)
@@ -43,6 +43,7 @@ def on_create(event, context):
         vehicleName=props["vehicle_name"],
         modelManifestArn=props["model_manifest_arn"],
         decoderManifestArn=props["decoder_manifest_arn"],
+        attributes=props["attributes"],
     )
     print(f"create_vehicle response {response}")
     return ret
