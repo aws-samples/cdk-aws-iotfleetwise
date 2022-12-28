@@ -806,6 +806,194 @@ public readonly autoApprove: boolean;
 
 ---
 
+### CanVehicleInterfaceProps <a name="CanVehicleInterfaceProps" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.Initializer"></a>
+
+```typescript
+import { CanVehicleInterfaceProps } from 'cdk-aws-iotfleetwise'
+
+const canVehicleInterfaceProps: CanVehicleInterfaceProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolName">protocolName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolVersion">protocolVersion</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.interfaceId"></a>
+
+```typescript
+public readonly interfaceId: string;
+```
+
+- *Type:* string
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
+##### `protocolName`<sup>Optional</sup> <a name="protocolName" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolName"></a>
+
+```typescript
+public readonly protocolName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `protocolVersion`<sup>Optional</sup> <a name="protocolVersion" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolVersion"></a>
+
+```typescript
+public readonly protocolVersion: string;
+```
+
+- *Type:* string
+
+---
+
+### CanVehicleSignalProps <a name="CanVehicleSignalProps" id="cdk-aws-iotfleetwise.CanVehicleSignalProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.Initializer"></a>
+
+```typescript
+import { CanVehicleSignalProps } from 'cdk-aws-iotfleetwise'
+
+const canVehicleSignalProps: CanVehicleSignalProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.factor">factor</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isBigEndian">isBigEndian</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isSigned">isSigned</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.length">length</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.messageId">messageId</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.offset">offset</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.startBit">startBit</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.name">name</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.factor"></a>
+
+```typescript
+public readonly factor: number;
+```
+
+- *Type:* number
+
+---
+
+##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.fullyQualifiedName"></a>
+
+```typescript
+public readonly fullyQualifiedName: string;
+```
+
+- *Type:* string
+
+---
+
+##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.interfaceId"></a>
+
+```typescript
+public readonly interfaceId: string;
+```
+
+- *Type:* string
+
+---
+
+##### `isBigEndian`<sup>Required</sup> <a name="isBigEndian" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isBigEndian"></a>
+
+```typescript
+public readonly isBigEndian: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `isSigned`<sup>Required</sup> <a name="isSigned" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isSigned"></a>
+
+```typescript
+public readonly isSigned: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `length`<sup>Required</sup> <a name="length" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.length"></a>
+
+```typescript
+public readonly length: number;
+```
+
+- *Type:* number
+
+---
+
+##### `messageId`<sup>Required</sup> <a name="messageId" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.messageId"></a>
+
+```typescript
+public readonly messageId: number;
+```
+
+- *Type:* number
+
+---
+
+##### `offset`<sup>Required</sup> <a name="offset" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.offset"></a>
+
+```typescript
+public readonly offset: number;
+```
+
+- *Type:* number
+
+---
+
+##### `startBit`<sup>Required</sup> <a name="startBit" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.startBit"></a>
+
+```typescript
+public readonly startBit: number;
+```
+
+- *Type:* number
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.name"></a>
+
+```typescript
+public readonly name: string;
+```
+
+- *Type:* string
+
+---
+
 ### FleetProps <a name="FleetProps" id="cdk-aws-iotfleetwise.FleetProps"></a>
 
 Interface.
@@ -1495,6 +1683,7 @@ const vehicleProps: VehicleProps = { ... }
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.createIotThing">createIotThing</a></code> | <code>boolean</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel">vehicleModel</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleName">vehicleName</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.attributes">attributes</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
 
 ---
 
@@ -1525,6 +1714,16 @@ public readonly vehicleName: string;
 ```
 
 - *Type:* string
+
+---
+
+##### `attributes`<sup>Optional</sup> <a name="attributes" id="cdk-aws-iotfleetwise.VehicleProps.property.attributes"></a>
+
+```typescript
+public readonly attributes: {[ key: string ]: string};
+```
+
+- *Type:* {[ key: string ]: string}
 
 ---
 
@@ -1643,25 +1842,18 @@ public toObject(): object
 ```typescript
 import { CanVehicleInterface } from 'cdk-aws-iotfleetwise'
 
-new CanVehicleInterface(interfaceId: string, name: string)
+new CanVehicleInterface(props: CanVehicleInterfaceProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name">name</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps">CanVehicleInterfaceProps</a></code> | *No description.* |
 
 ---
 
-##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.interfaceId"></a>
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.props"></a>
 
-- *Type:* string
-
----
-
-##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name"></a>
-
-- *Type:* string
+- *Type:* <a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps">CanVehicleInterfaceProps</a>
 
 ---
 
@@ -1689,74 +1881,18 @@ public toObject(): object
 ```typescript
 import { CanVehicleSignal } from 'cdk-aws-iotfleetwise'
 
-new CanVehicleSignal(fullyQualifiedName: string, interfaceId: string, messageId: number, factor: number, isBigEndian: boolean, isSigned: boolean, length: number, offset: number, startBit: number)
+new CanVehicleSignal(props: CanVehicleSignalProps)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName">fullyQualifiedName</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId">interfaceId</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId">messageId</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor">factor</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isBigEndian">isBigEndian</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isSigned">isSigned</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length">length</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset">offset</a></code> | <code>number</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit">startBit</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps">CanVehicleSignalProps</a></code> | *No description.* |
 
 ---
 
-##### `fullyQualifiedName`<sup>Required</sup> <a name="fullyQualifiedName" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName"></a>
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.props"></a>
 
-- *Type:* string
-
----
-
-##### `interfaceId`<sup>Required</sup> <a name="interfaceId" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId"></a>
-
-- *Type:* string
-
----
-
-##### `messageId`<sup>Required</sup> <a name="messageId" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId"></a>
-
-- *Type:* number
-
----
-
-##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor"></a>
-
-- *Type:* number
-
----
-
-##### `isBigEndian`<sup>Required</sup> <a name="isBigEndian" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isBigEndian"></a>
-
-- *Type:* boolean
-
----
-
-##### `isSigned`<sup>Required</sup> <a name="isSigned" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isSigned"></a>
-
-- *Type:* boolean
-
----
-
-##### `length`<sup>Required</sup> <a name="length" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length"></a>
-
-- *Type:* number
-
----
-
-##### `offset`<sup>Required</sup> <a name="offset" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset"></a>
-
-- *Type:* number
-
----
-
-##### `startBit`<sup>Required</sup> <a name="startBit" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit"></a>
-
-- *Type:* number
+- *Type:* <a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps">CanVehicleSignalProps</a>
 
 ---
 

@@ -11,7 +11,7 @@ L2 CDK construct to provision AWS IoT Fleetwise
 ### Typescript
 
 ```sh
-npm install cdk-aws-iotfleetwise 
+npm install cdk-aws-iotfleetwise
 ```
 
 [API Reference](doc/api-typescript.md)
@@ -19,7 +19,7 @@ npm install cdk-aws-iotfleetwise
 #### Python
 
 ```sh
-pip install cdk-aws-iotfleetwise 
+pip install cdk-aws-iotfleetwise
 ```
 
 [API Reference](doc/api-python.md)
@@ -27,23 +27,28 @@ pip install cdk-aws-iotfleetwise
 # Sample
 
 ```ts
-import { SignalCatalog, 
-         VehicleModel, 
-         Vehicle, 
-         Campaign, 
-         CanVehicleInterface, 
-         CanVehicleSignal,
-         SignalCatalogBranch,
-         TimeBasedCollectionScheme
-         } from 'cdk-aws-iotfleetwise';
+import {
+  SignalCatalog,
+  VehicleModel,
+  Vehicle,
+  Campaign,
+  CanVehicleInterface,
+  CanVehicleSignal,
+  SignalCatalogBranch,
+  TimeBasedCollectionScheme,
+} from 'cdk-aws-iotfleetwise';
 
 const signalCatalog = new SignalCatalog(stack, 'SignalCatalog', {
-  database,
-  table,
-  role,
+  database: tsDatabaseConstruct,
+  table: tsHeartBeatTableConstruct,
   nodes: [
-    new SignalCatalogBranch('Vehicle'),
-    new SignalCatalogSensor('Vehicle.EngineTorque', 'DOUBLE'),
+    new SignalCatalogBranch({
+      fullyQualifiedName: 'Vehicle',
+    }),
+    new SignalCatalogSensor({
+      fullyQualifiedName: 'Vehicle.EngineTorque',
+      dataType: 'DOUBLE',
+    }),
   ],
 });
 
@@ -53,34 +58,36 @@ const model_a = new VehicleModel(stack, 'ModelA', {
   description: 'Model A vehicle',
   networkInterfaces: [new CanVehicleInterface('1', 'vcan0')],
   signals: [
-    new CanVehicleSignal('Vehicle.EngineTorque', '1',
+    new CanVehicleSignal(
+      'Vehicle.EngineTorque',
+      '1',
       401, // messageId
       1.0, // factor
       true, // isBigEndian
       false, // isSigned
-      8, // lenght
+      8, // length
       0.0, // offset
-      9), // startBit
+      9,
+    ), // startBit
   ],
 });
 
 const vin100 = new Vehicle(stack, 'vin100', {
   vehicleName: 'vin100',
   vehicleModel: model_a,
-  createIotThing: true
+  createIotThing: true,
 });
 
 new Campaign(stack, 'Campaign', {
   name: 'TimeBasedCampaign',
   target: vin100,
   collectionScheme: new TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
-  signals: [
-    new CampaignSignal('Vehicle.EngineTorque'),
-  ],
+  signals: [new CampaignSignal('Vehicle.EngineTorque')],
 });
 ```
 
 ## Getting started
+
 To deploy a simple end-to-end example you can use the following commands
 
 ```sh
@@ -88,6 +95,7 @@ yarn install
 projen && projen compile
 npx cdk -a lib/integ.full.js deploy -c key_name=mykey
 ```
+
 Where `mykey` is an existing keypair name present in your account.
 The deploy takes about 15 mins mostly due to compilation of the IoT FleetWise agent in the
 EC2 instance that simulate the vehicle. Once deploy is finshed, data will start to show up in your Timestream table.
@@ -101,7 +109,7 @@ Warning: this construct should be considered at alpha stage and is not feature c
 
 ## Security
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more 
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more
 information.
 
 ## License

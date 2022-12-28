@@ -628,7 +628,8 @@ cdk_aws_iotfleetwise.Vehicle(
   id: str,
   create_iot_thing: bool,
   vehicle_model: VehicleModel,
-  vehicle_name: str
+  vehicle_name: str,
+  attributes: typing.Mapping[str] = None
 )
 ```
 
@@ -639,6 +640,7 @@ cdk_aws_iotfleetwise.Vehicle(
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.createIotThing">create_iot_thing</a></code> | <code>bool</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleModel">vehicle_model</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleName">vehicle_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.attributes">attributes</a></code> | <code>typing.Mapping[str]</code> | *No description.* |
 
 ---
 
@@ -669,6 +671,12 @@ cdk_aws_iotfleetwise.Vehicle(
 ##### `vehicle_name`<sup>Required</sup> <a name="vehicle_name" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.vehicleName"></a>
 
 - *Type:* str
+
+---
+
+##### `attributes`<sup>Optional</sup> <a name="attributes" id="cdk-aws-iotfleetwise.Vehicle.Initializer.parameter.attributes"></a>
+
+- *Type:* typing.Mapping[str]
 
 ---
 
@@ -1069,6 +1077,210 @@ auto_approve: bool
 ```
 
 - *Type:* bool
+
+---
+
+### CanVehicleInterfaceProps <a name="CanVehicleInterfaceProps" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.CanVehicleInterfaceProps(
+  interface_id: str,
+  name: str,
+  protocol_name: str = None,
+  protocol_version: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.interfaceId">interface_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolName">protocol_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolVersion">protocol_version</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `interface_id`<sup>Required</sup> <a name="interface_id" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.interfaceId"></a>
+
+```python
+interface_id: str
+```
+
+- *Type:* str
+
+---
+
+##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* str
+
+---
+
+##### `protocol_name`<sup>Optional</sup> <a name="protocol_name" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolName"></a>
+
+```python
+protocol_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `protocol_version`<sup>Optional</sup> <a name="protocol_version" id="cdk-aws-iotfleetwise.CanVehicleInterfaceProps.property.protocolVersion"></a>
+
+```python
+protocol_version: str
+```
+
+- *Type:* str
+
+---
+
+### CanVehicleSignalProps <a name="CanVehicleSignalProps" id="cdk-aws-iotfleetwise.CanVehicleSignalProps"></a>
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.CanVehicleSignalProps(
+  factor: typing.Union[int, float],
+  fully_qualified_name: str,
+  interface_id: str,
+  is_big_endian: bool,
+  is_signed: bool,
+  length: typing.Union[int, float],
+  message_id: typing.Union[int, float],
+  offset: typing.Union[int, float],
+  start_bit: typing.Union[int, float],
+  name: str = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.factor">factor</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.interfaceId">interface_id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isBigEndian">is_big_endian</a></code> | <code>bool</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isSigned">is_signed</a></code> | <code>bool</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.length">length</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.messageId">message_id</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.offset">offset</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.startBit">start_bit</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignalProps.property.name">name</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.factor"></a>
+
+```python
+factor: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `fully_qualified_name`<sup>Required</sup> <a name="fully_qualified_name" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.fullyQualifiedName"></a>
+
+```python
+fully_qualified_name: str
+```
+
+- *Type:* str
+
+---
+
+##### `interface_id`<sup>Required</sup> <a name="interface_id" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.interfaceId"></a>
+
+```python
+interface_id: str
+```
+
+- *Type:* str
+
+---
+
+##### `is_big_endian`<sup>Required</sup> <a name="is_big_endian" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isBigEndian"></a>
+
+```python
+is_big_endian: bool
+```
+
+- *Type:* bool
+
+---
+
+##### `is_signed`<sup>Required</sup> <a name="is_signed" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.isSigned"></a>
+
+```python
+is_signed: bool
+```
+
+- *Type:* bool
+
+---
+
+##### `length`<sup>Required</sup> <a name="length" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.length"></a>
+
+```python
+length: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `message_id`<sup>Required</sup> <a name="message_id" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.messageId"></a>
+
+```python
+message_id: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `offset`<sup>Required</sup> <a name="offset" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.offset"></a>
+
+```python
+offset: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `start_bit`<sup>Required</sup> <a name="start_bit" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.startBit"></a>
+
+```python
+start_bit: typing.Union[int, float]
+```
+
+- *Type:* typing.Union[int, float]
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleSignalProps.property.name"></a>
+
+```python
+name: str
+```
+
+- *Type:* str
 
 ---
 
@@ -1806,7 +2018,8 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.VehicleProps(
   create_iot_thing: bool,
   vehicle_model: VehicleModel,
-  vehicle_name: str
+  vehicle_name: str,
+  attributes: typing.Mapping[str] = None
 )
 ```
 
@@ -1817,6 +2030,7 @@ cdk_aws_iotfleetwise.VehicleProps(
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.createIotThing">create_iot_thing</a></code> | <code>bool</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleModel">vehicle_model</a></code> | <code><a href="#cdk-aws-iotfleetwise.VehicleModel">VehicleModel</a></code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.vehicleName">vehicle_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.VehicleProps.property.attributes">attributes</a></code> | <code>typing.Mapping[str]</code> | *No description.* |
 
 ---
 
@@ -1847,6 +2061,16 @@ vehicle_name: str
 ```
 
 - *Type:* str
+
+---
+
+##### `attributes`<sup>Optional</sup> <a name="attributes" id="cdk-aws-iotfleetwise.VehicleProps.property.attributes"></a>
+
+```python
+attributes: typing.Mapping[str]
+```
+
+- *Type:* typing.Mapping[str]
 
 ---
 
@@ -1975,7 +2199,9 @@ import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.CanVehicleInterface(
   interface_id: str,
-  name: str
+  name: str,
+  protocol_name: str = None,
+  protocol_version: str = None
 )
 ```
 
@@ -1983,6 +2209,8 @@ cdk_aws_iotfleetwise.CanVehicleInterface(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.interfaceId">interface_id</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.protocolName">protocol_name</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.protocolVersion">protocol_version</a></code> | <code>str</code> | *No description.* |
 
 ---
 
@@ -1993,6 +2221,18 @@ cdk_aws_iotfleetwise.CanVehicleInterface(
 ---
 
 ##### `name`<sup>Required</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.name"></a>
+
+- *Type:* str
+
+---
+
+##### `protocol_name`<sup>Optional</sup> <a name="protocol_name" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.protocolName"></a>
+
+- *Type:* str
+
+---
+
+##### `protocol_version`<sup>Optional</sup> <a name="protocol_version" id="cdk-aws-iotfleetwise.CanVehicleInterface.Initializer.parameter.protocolVersion"></a>
 
 - *Type:* str
 
@@ -2023,29 +2263,37 @@ def to_object() -> any
 import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.CanVehicleSignal(
+  factor: typing.Union[int, float],
   fully_qualified_name: str,
   interface_id: str,
-  message_id: typing.Union[int, float],
-  factor: typing.Union[int, float],
   is_big_endian: bool,
   is_signed: bool,
   length: typing.Union[int, float],
+  message_id: typing.Union[int, float],
   offset: typing.Union[int, float],
-  start_bit: typing.Union[int, float]
+  start_bit: typing.Union[int, float],
+  name: str = None
 )
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor">factor</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.fullyQualifiedName">fully_qualified_name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId">interface_id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId">message_id</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor">factor</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isBigEndian">is_big_endian</a></code> | <code>bool</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.isSigned">is_signed</a></code> | <code>bool</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.length">length</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId">message_id</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset">offset</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit">start_bit</a></code> | <code>typing.Union[int, float]</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor"></a>
+
+- *Type:* typing.Union[int, float]
 
 ---
 
@@ -2058,18 +2306,6 @@ cdk_aws_iotfleetwise.CanVehicleSignal(
 ##### `interface_id`<sup>Required</sup> <a name="interface_id" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.interfaceId"></a>
 
 - *Type:* str
-
----
-
-##### `message_id`<sup>Required</sup> <a name="message_id" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId"></a>
-
-- *Type:* typing.Union[int, float]
-
----
-
-##### `factor`<sup>Required</sup> <a name="factor" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.factor"></a>
-
-- *Type:* typing.Union[int, float]
 
 ---
 
@@ -2091,6 +2327,12 @@ cdk_aws_iotfleetwise.CanVehicleSignal(
 
 ---
 
+##### `message_id`<sup>Required</sup> <a name="message_id" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.messageId"></a>
+
+- *Type:* typing.Union[int, float]
+
+---
+
 ##### `offset`<sup>Required</sup> <a name="offset" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.offset"></a>
 
 - *Type:* typing.Union[int, float]
@@ -2100,6 +2342,12 @@ cdk_aws_iotfleetwise.CanVehicleSignal(
 ##### `start_bit`<sup>Required</sup> <a name="start_bit" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.startBit"></a>
 
 - *Type:* typing.Union[int, float]
+
+---
+
+##### `name`<sup>Optional</sup> <a name="name" id="cdk-aws-iotfleetwise.CanVehicleSignal.Initializer.parameter.name"></a>
+
+- *Type:* str
 
 ---
 

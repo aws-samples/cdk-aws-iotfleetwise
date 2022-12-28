@@ -1,4 +1,6 @@
+const { off } = require('process');
 const { awscdk } = require('projen');
+
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Francesco Salamida',
   authorAddress: 'salamida@amazon.com',
@@ -31,6 +33,10 @@ const common_exclude = [
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
 project.npmignore.include('/src/handlers/');
+
+// eslint playing nicely with prettier
+project.eslint.addExtends('prettier');
+project.addDevDeps('eslint-config-prettier');
 
 // Generating documentation for Typescript and python
 const task = project.tasks.tryFind('docgen');

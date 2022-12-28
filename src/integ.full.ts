@@ -66,19 +66,21 @@ export class IntegTesting {
       signalCatalog,
       name: 'modelA',
       description: 'Model A vehicle',
-      networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
+      networkInterfaces: [
+        new ifw.CanVehicleInterface({ interfaceId: '1', name: 'vcan0' }),
+      ],
       signals: [
-        new ifw.CanVehicleSignal(
-          'Vehicle.EngineTorque',
-          '1',
-          401, // messageId
-          1.0, // factor
-          true, // isBigEndian
-          false, // isSigned
-          8, // length
-          0.0, // offset
-          9,
-        ), // startBit
+        new ifw.CanVehicleSignal({
+          fullyQualifiedName: 'Vehicle.EngineTorque',
+          interfaceId: '1',
+          messageId: 401,
+          factor: 1.0,
+          isBigEndian: true,
+          isSigned: false,
+          length: 8,
+          offset: 0.0,
+          startBit: 9,
+        }),
       ],
     });
 

@@ -77,7 +77,9 @@ export class IntegTesting {
       signalCatalog,
       name: 'modelA',
       description: 'Model A vehicle',
-      networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
+      networkInterfaces: [
+        new ifw.CanVehicleInterface({ interfaceId: '1', name: 'vcan0' }),
+      ],
       networkFileDefinitions: [
         new ifw.CanDefinition('1', signalsMap, [canDbc]),
       ],
