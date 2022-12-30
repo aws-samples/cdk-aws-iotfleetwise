@@ -1,8 +1,11 @@
+import logging as logger
 import boto3
+
+logger.getLogger().setLevel(logger.INFO)
 
 
 def on_event(event, context):
-    print(event)
+    logger.info(event)
     request_type = event["RequestType"]
     if request_type == "Create":
         return on_create(event)
@@ -15,22 +18,26 @@ def on_event(event, context):
 
 def on_create(event):
     props = event["ResourceProperties"]
-    print(f"create new resource with props {props}")
+    logger.info(f"create new resource with props {props}")
     client = boto3.client("iotfleetwise")
-    response = client.register_account(
-        timestreamResources={
-            "timestreamDatabaseName": props["database_name"],
-            "timestreamTableName": props["table_name"],
-        }
-    )
-    print(response)
+    try:
+        response = client.register_account(
+            timestreamResources={
+                "timestreamDatabaseName": props["database_name"],
+                "timestreamTableName": props["table_name"],
+            }
+        )
+        logger.info(f"on_create response {response}")
+    except Exception:
+        logger.exception("Error during creation, register_account response: {response}")
+        raise
     return {}
 
 
 def on_update(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
-    print(f"update resource {physical_id} with props {props}")
+    logger.info(f"update resource {physical_id} with props {props}")
     client = boto3.client("iotfleetwise")
     response = client.register_account(
         timestreamResources={
@@ -38,20 +45,20 @@ def on_update(event):
             "timestreamTableName": props["table_name"],
         }
     )
-    print(response)
+    logger.info(f"on_update response {response}")
     return {"PhysicalResourceId": physical_id}
 
 
 def on_delete(event):
     physical_id = event["PhysicalResourceId"]
-    print("delete resource {physical_id}")
+    logger.info("delete resource {physical_id}")
     return {"PhysicalResourceId": physical_id}
 
 
 def is_complete(event, context):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
-    print(f"is_complete for resource {physical_id} with props {props}")
+    logger.info(f"is_complete for resource {physical_id} with props {props}")
     client = boto3.client("iotfleetwise")
     response = client.get_register_account_status()
     if (
@@ -69,6 +76,7 @@ def is_complete(event, context):
         or response["timestreamRegistrationResponse"]["registrationStatus"]
         == "REGISTRATION_FAILURE"
     ):
-        raise Exception(f"IoT FleetWise registration has failed {response}")
+        logger.error(f"AWS IoT FleetWise registration failed {response}")
+        raise
 
     return {"IsComplete": True}

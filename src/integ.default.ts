@@ -148,6 +148,21 @@ export class IntegTesting {
       /Either a VSS file or signal catalog nodes must be provided./,
     );
     this.stack = [stack];
+
+    // test logging
+    new ifw.Logging(stack, 'LoggingDefault', {
+      logGroupName: 'AWSIotFleetWiseLogsV1',
+      enableLogging: 'OFF',
+    });
+    new ifw.Logging(stack, 'LoggingDisable', {
+      logGroupName: 'AWSIotFleetWiseLogsV1',
+      enableLogging: 'ERROR',
+    });
+    new ifw.Logging(stack, 'LoggingDeleteGroup', {
+      logGroupName: 'AWSIotFleetWiseLogsV1',
+      enableLogging: 'ERROR',
+      keepLogGroup: false,
+    });
   }
 }
 

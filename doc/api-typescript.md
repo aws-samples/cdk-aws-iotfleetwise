@@ -279,6 +279,110 @@ public readonly vehicles: Vehicle[];
 ---
 
 
+### Logging <a name="Logging" id="cdk-aws-iotfleetwise.Logging"></a>
+
+Configures FleetWise logging to CloudWatch logs.
+
+If enabled, this will ensure the log group is accessible,
+or create a new one if it is not.
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Logging.Initializer"></a>
+
+```typescript
+import { Logging } from 'cdk-aws-iotfleetwise'
+
+new Logging(scope: Construct, id: string, props: LoggingProps)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.props">props</a></code> | <code><a href="#cdk-aws-iotfleetwise.LoggingProps">LoggingProps</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `props`<sup>Required</sup> <a name="props" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.props"></a>
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.LoggingProps">LoggingProps</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdk-aws-iotfleetwise.Logging.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### ~~`isConstruct`~~ <a name="isConstruct" id="cdk-aws-iotfleetwise.Logging.isConstruct"></a>
+
+```typescript
+import { Logging } from 'cdk-aws-iotfleetwise'
+
+Logging.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.Logging.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.Logging.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ### SignalCatalog <a name="SignalCatalog" id="cdk-aws-iotfleetwise.SignalCatalog"></a>
 
 A signal catalog is a collection of signals that can be reused to create vehicle models.
@@ -1084,6 +1188,64 @@ public readonly vehicles: Vehicle[];
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>[]
+
+---
+
+### LoggingProps <a name="LoggingProps" id="cdk-aws-iotfleetwise.LoggingProps"></a>
+
+FleetWise Logging Properties.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.LoggingProps.Initializer"></a>
+
+```typescript
+import { LoggingProps } from 'cdk-aws-iotfleetwise'
+
+const loggingProps: LoggingProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.enableLogging">enableLogging</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.logGroupName">logGroupName</a></code> | <code>string</code> | Name of log group to configure. |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.keepLogGroup">keepLogGroup</a></code> | <code>boolean</code> | *No description.* |
+
+---
+
+##### `enableLogging`<sup>Required</sup> <a name="enableLogging" id="cdk-aws-iotfleetwise.LoggingProps.property.enableLogging"></a>
+
+```typescript
+public readonly enableLogging: string;
+```
+
+- *Type:* string
+
+---
+
+##### `logGroupName`<sup>Required</sup> <a name="logGroupName" id="cdk-aws-iotfleetwise.LoggingProps.property.logGroupName"></a>
+
+```typescript
+public readonly logGroupName: string;
+```
+
+- *Type:* string
+
+Name of log group to configure.
+
+This can be either single name
+such as `AWSIoTFleetWiseLogs` or a fully pathed entry such as:
+`/iot/FleetWiseLogs`
+
+---
+
+##### `keepLogGroup`<sup>Optional</sup> <a name="keepLogGroup" id="cdk-aws-iotfleetwise.LoggingProps.property.keepLogGroup"></a>
+
+```typescript
+public readonly keepLogGroup: boolean;
+```
+
+- *Type:* boolean
 
 ---
 

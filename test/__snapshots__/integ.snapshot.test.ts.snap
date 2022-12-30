@@ -238,6 +238,54 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "LoggingDefault94108C82": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "OFF",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LoggingDeleteGroupA10165E1": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "ERROR",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LoggingDisable9ADDB9BD": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "ERROR",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ModelA133A72B5": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
@@ -404,7 +452,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "campaignhandler.on_event",
         "Layers": Array [
@@ -456,7 +504,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "fleethandler.on_event",
         "Layers": Array [
@@ -498,6 +546,58 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
+    "SingletonLambdalogginghandleroneventF62DFA24": Object {
+      "DependsOn": Array [
+        "handlerroleRoleDefaultPolicy3C992314",
+        "handlerroleRoleEEEB95D2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
+          },
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+        },
+        "Handler": "logginghandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "handlerroleRoleEEEB95D2",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SingletonLambdalogginghandleroneventLogRetention2CBEE66D": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SingletonLambdalogginghandleroneventF62DFA24",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
     "SingletonLambdaservicehandleriscomplete2B1E3BBE": Object {
       "DependsOn": Array [
         "handlerroleRoleDefaultPolicy3C992314",
@@ -508,7 +608,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -560,7 +660,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -612,7 +712,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -664,7 +764,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [
@@ -716,7 +816,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "83b0641aa1212d6095b49f3c2acc206eb20b32ddbe6d3414167ded58463db226.zip",
+          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -1036,6 +1136,7 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
+                "iam:PutRolePolicy",
                 "iotfleetwise:*",
                 "iot:DescribeThing",
                 "iot:CreateThing",
@@ -1050,6 +1151,15 @@ Object {
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
+                "logs:DescribeLogGroups",
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DeleteLogGroup",
               ],
               "Effect": "Allow",
               "Resource": "*",
@@ -1093,18 +1203,6 @@ Object {
               ],
             ],
           },
-          Object {
-            "Fn::Join": Array [
-              "",
-              Array [
-                "arn:",
-                Object {
-                  "Ref": "AWS::Partition",
-                },
-                ":iam::aws:policy/AdministratorAccess",
-              ],
-            ],
-          },
         ],
       },
       "Type": "AWS::IAM::Role",
@@ -1118,11 +1216,142 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "70f96227ddbb8dbfac3f1733fdeaed33b6c92e507e27290f011ebba21aacf939.zip",
+          "S3Key": "0a4c7f0c5966e89b90a98da7e199821b152326321fd664ef05cc88388c07cd2c.zip",
         },
         "Description": "Boto3 Library with Iot Fleetwise Support",
       },
       "Type": "AWS::Lambda::LayerVersion",
+    },
+    "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE": Object {
+      "DependsOn": Array [
+        "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E",
+        "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
+          },
+          "S3Key": "6ff23d2800aac27308e31c227529dc13854507c3b2598d2433fcf82604fa054d.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/logginghandler.on_event-provider/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SingletonLambdalogginghandleroneventF62DFA24",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventLogRetention4410F0BD": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SingletonLambdalogginghandleroneventF62DFA24",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SingletonLambdalogginghandleroneventF62DFA24",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E",
+        "Roles": Array [
+          Object {
+            "Ref": "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF": Object {
       "DependsOn": Array [

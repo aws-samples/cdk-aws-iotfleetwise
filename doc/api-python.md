@@ -347,6 +347,138 @@ vehicles: typing.List[Vehicle]
 ---
 
 
+### Logging <a name="Logging" id="cdk-aws-iotfleetwise.Logging"></a>
+
+Configures FleetWise logging to CloudWatch logs.
+
+If enabled, this will ensure the log group is accessible,
+or create a new one if it is not.
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Logging.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.Logging(
+  scope: Construct,
+  id: str,
+  enable_logging: str,
+  log_group_name: str,
+  keep_log_group: bool = None
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.enableLogging">enable_logging</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.logGroupName">log_group_name</a></code> | <code>str</code> | Name of log group to configure. |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.Initializer.parameter.keepLogGroup">keep_log_group</a></code> | <code>bool</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.id"></a>
+
+- *Type:* str
+
+---
+
+##### `enable_logging`<sup>Required</sup> <a name="enable_logging" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.enableLogging"></a>
+
+- *Type:* str
+
+---
+
+##### `log_group_name`<sup>Required</sup> <a name="log_group_name" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.logGroupName"></a>
+
+- *Type:* str
+
+Name of log group to configure.
+
+This can be either single name
+such as `AWSIoTFleetWiseLogs` or a fully pathed entry such as:
+`/iot/FleetWiseLogs`
+
+---
+
+##### `keep_log_group`<sup>Optional</sup> <a name="keep_log_group" id="cdk-aws-iotfleetwise.Logging.Initializer.parameter.keepLogGroup"></a>
+
+- *Type:* bool
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.toString">to_string</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `to_string` <a name="to_string" id="cdk-aws-iotfleetwise.Logging.toString"></a>
+
+```python
+def to_string() -> str
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.isConstruct">is_construct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### ~~`is_construct`~~ <a name="is_construct" id="cdk-aws-iotfleetwise.Logging.isConstruct"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.Logging.is_construct(
+  x: typing.Any
+)
+```
+
+Checks if `x` is a construct.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdk-aws-iotfleetwise.Logging.isConstruct.parameter.x"></a>
+
+- *Type:* typing.Any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.Logging.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdk-aws-iotfleetwise.Logging.property.node"></a>
+
+```python
+node: Node
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ### SignalCatalog <a name="SignalCatalog" id="cdk-aws-iotfleetwise.SignalCatalog"></a>
 
 A signal catalog is a collection of signals that can be reused to create vehicle models.
@@ -1381,6 +1513,68 @@ vehicles: typing.List[Vehicle]
 ```
 
 - *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a>]
+
+---
+
+### LoggingProps <a name="LoggingProps" id="cdk-aws-iotfleetwise.LoggingProps"></a>
+
+FleetWise Logging Properties.
+
+#### Initializer <a name="Initializer" id="cdk-aws-iotfleetwise.LoggingProps.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.LoggingProps(
+  enable_logging: str,
+  log_group_name: str,
+  keep_log_group: bool = None
+)
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.enableLogging">enable_logging</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.logGroupName">log_group_name</a></code> | <code>str</code> | Name of log group to configure. |
+| <code><a href="#cdk-aws-iotfleetwise.LoggingProps.property.keepLogGroup">keep_log_group</a></code> | <code>bool</code> | *No description.* |
+
+---
+
+##### `enable_logging`<sup>Required</sup> <a name="enable_logging" id="cdk-aws-iotfleetwise.LoggingProps.property.enableLogging"></a>
+
+```python
+enable_logging: str
+```
+
+- *Type:* str
+
+---
+
+##### `log_group_name`<sup>Required</sup> <a name="log_group_name" id="cdk-aws-iotfleetwise.LoggingProps.property.logGroupName"></a>
+
+```python
+log_group_name: str
+```
+
+- *Type:* str
+
+Name of log group to configure.
+
+This can be either single name
+such as `AWSIoTFleetWiseLogs` or a fully pathed entry such as:
+`/iot/FleetWiseLogs`
+
+---
+
+##### `keep_log_group`<sup>Optional</sup> <a name="keep_log_group" id="cdk-aws-iotfleetwise.LoggingProps.property.keepLogGroup"></a>
+
+```python
+keep_log_group: bool
+```
+
+- *Type:* bool
 
 ---
 

@@ -15,6 +15,10 @@ export class HandlerRole extends Construct {
     super(scope, id);
     this.role = new iam.Role(this, 'Role', {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+      // assumedBy: new iam.CompositePrincipal(
+      //   new iam.ServicePrincipal('lambda.amazonaws.com'),
+      //   new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
+      // ),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName(
           'service-role/AWSLambdaBasicExecutionRole',
@@ -27,7 +31,8 @@ export class HandlerRole extends Construct {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: [
-          'iot:fleetwise:*',
+          'iam:PutRolePolicy',
+          'iotfleetwise:*',
           'iot:DescribeThing',
           'iot:CreateThing',
           'iot:CreateKeysAndCertificate',
