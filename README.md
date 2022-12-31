@@ -56,19 +56,24 @@ const model_a = new VehicleModel(stack, 'ModelA', {
   signalCatalog,
   name: 'modelA',
   description: 'Model A vehicle',
-  networkInterfaces: [new CanVehicleInterface('1', 'vcan0')],
+  networkInterfaces: [
+    new CanVehicleInterface({
+      interfaceId: '1',
+      name: 'vcan0',
+    }),
+  ],
   signals: [
-    new CanVehicleSignal(
-      'Vehicle.EngineTorque',
-      '1',
-      401, // messageId
-      1.0, // factor
-      true, // isBigEndian
-      false, // isSigned
-      8, // length
-      0.0, // offset
-      9,
-    ), // startBit
+    new CanVehicleSignal({
+      fullyQualifiedName: 'Vehicle.EngineTorque',
+      interfaceId: '1',
+      messageId: 401,
+      factor: 1.0,
+      isBigEndian: true,
+      isSigned: false,
+      length: 8,
+      offset: 0.0,
+      startBit: 0,
+    }),
   ],
 });
 
