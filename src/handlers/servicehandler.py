@@ -61,22 +61,26 @@ def is_complete(event, context):
     logger.info(f"is_complete for resource {physical_id} with props {props}")
     client = boto3.client("iotfleetwise")
     response = client.get_register_account_status()
+    logger.info(f"get_register_account_status response: {response}")
     if (
-        response["accountStatus"] == "REGISTRATION_PENDING"
-        or response["iamRegistrationResponse"]["registrationStatus"]
-        == "REGISTRATION_PENDING"
-        or response["timestreamRegistrationResponse"]["registrationStatus"]
-        == "REGISTRATION_PENDING"
-    ):
-        return {"IsComplete": False}
-    elif (
+        # check for _any_ failures, and if found, raise exception
         response["accountStatus"] == "REGISTRATION_FAILURE"
         or response["iamRegistrationResponse"]["registrationStatus"]
         == "REGISTRATION_FAILURE"
         or response["timestreamRegistrationResponse"]["registrationStatus"]
         == "REGISTRATION_FAILURE"
     ):
-        logger.error(f"AWS IoT FleetWise registration failed {response}")
+        logger.error(f"registration failure account status response: {response}")
         raise
-
+    elif (
+        # If any registrations pending, return that operation not completed yet
+        response["accountStatus"] == "REGISTRATION_PENDING"
+        or response["iamRegistrationResponse"]["registrationStatus"]
+        == "REGISTRATION_PENDING"
+        or response["timestreamRegistrationResponse"]["registrationStatus"]
+        == "REGISTRATION_PENDING"
+    ):
+        logger.error(f"registration pending account status response: {response}")
+        return {"IsComplete": False}
+    # No errors and nothing pending
     return {"IsComplete": True}

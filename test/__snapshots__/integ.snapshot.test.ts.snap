@@ -452,7 +452,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "campaignhandler.on_event",
         "Layers": Array [
@@ -504,7 +504,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "fleethandler.on_event",
         "Layers": Array [
@@ -556,7 +556,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "logginghandler.on_event",
         "Layers": Array [
@@ -608,7 +608,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -660,7 +660,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -712,7 +712,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -764,7 +764,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [
@@ -816,7 +816,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "d16f5e8cfe387569b702bc8ac399f0a3ff46ad6cd37f0377ae1d32715d743b2d.zip",
+          "S3Key": "76e7faeb9dc4bb99dda49135a1eaa37da84fea7e8df44df077d2db9770df03dd.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [
@@ -1136,7 +1136,6 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
-                "iam:PutRolePolicy",
                 "iotfleetwise:*",
                 "iot:DescribeThing",
                 "iot:CreateThing",
@@ -1862,7 +1861,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":360,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":60,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",

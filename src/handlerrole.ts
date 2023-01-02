@@ -31,7 +31,7 @@ export class HandlerRole extends Construct {
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         actions: [
-          'iam:PutRolePolicy',
+          // 'iam:PutRolePolicy',
           'iotfleetwise:*',
           'iot:DescribeThing',
           'iot:CreateThing',

@@ -252,7 +252,12 @@ export class SignalCatalog extends Construct {
       handler: 'servicehandler.is_complete',
     });
 
-    const provider = Provider.getOrCreate(this, handler, isCompleteHandler);
+    const provider = Provider.getOrCreate(
+      this,
+      handler,
+      isCompleteHandler,
+      cdk.Duration.minutes(5),
+    );
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
       serviceToken: provider.provider.serviceToken,
