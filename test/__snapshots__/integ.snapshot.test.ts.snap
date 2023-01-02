@@ -1136,6 +1136,7 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
+                "iam:PutRolePolicy",
                 "iotfleetwise:*",
                 "iot:DescribeThing",
                 "iot:CreateThing",

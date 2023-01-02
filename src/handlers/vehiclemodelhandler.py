@@ -1,9 +1,12 @@
-import boto3
 import json
+import logging as logger
+import boto3
+
+logger.getLogger().setLevel(logger.INFO)
 
 
 def on_event(event, context):
-    print(f"on_event {event} {context}")
+    logger.info(f"on_event {event} {context}")
     request_type = event["RequestType"]
     if request_type == "Create":
         return on_create(event)
@@ -16,7 +19,7 @@ def on_event(event, context):
 
 def on_create(event):
     props = event["ResourceProperties"]
-    print(f"create new resource with props {props}")
+    logger.info(f"create new resource with props {props}")
     client = boto3.client("iotfleetwise")
 
     nodes = []
@@ -30,17 +33,17 @@ def on_create(event):
     else:
         raise Exception("either signals or networkFileDefinitions is required")
 
-    print(f"nodes for model manifest {nodes}")
+    logger.info(f"nodes for model manifest {nodes}")
     response = client.create_model_manifest(
         name=props["name"],
         description=props["description"],
         signalCatalogArn=props["signal_catalog_arn"],
         nodes=nodes,
     )
-    print(f"create_model_manifest response {response}")
+    logger.info(f"create_model_manifest response {response}")
 
     response = client.update_model_manifest(name=props["name"], status="ACTIVE")
-    print(f"update_model_manifest response {response}")
+    logger.info(f"update_model_manifest response {response}")
 
     if props["signals"] != "{}":
         response = client.create_decoder_manifest(
@@ -55,7 +58,7 @@ def on_create(event):
                 if (i["type"] == "CAN_SIGNAL" or i["type"] == "OBD_SIGNAL")
             ],
         )
-        print(f"create_decoder_manifest response {response}")
+        logger.info(f"create_decoder_manifest response {response}")
 
     if props["network_file_definitions"] != "{}":
         response = client.create_decoder_manifest(
@@ -64,17 +67,17 @@ def on_create(event):
             modelManifestArn=props["model_manifest_arn"],
             networkInterfaces=json.loads(props["network_interfaces"]),
         )
-        print(f"create_decoder_manifest response {response}")
+        logger.info(f"create_decoder_manifest response {response}")
 
         network_file_definitions = json.loads(props["network_file_definitions"])
-        print(f"network_file_definitions {network_file_definitions}")
+        logger.info(f"network_file_definitions {network_file_definitions}")
         response = client.import_decoder_manifest(
             name=props["name"], networkFileDefinitions=network_file_definitions
         )
-        print(f"import_decoder_manifest response {response}")
+        logger.info(f"import_decoder_manifest response {response}")
 
     response = client.update_decoder_manifest(name=props["name"], status="ACTIVE")
-    print(f"update_decoder_manifest response {response}")
+    logger.info(f"update_decoder_manifest response {response}")
 
     return {"PhysicalResourceId": props["name"]}
 
@@ -82,7 +85,7 @@ def on_create(event):
 def on_update(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
-    print(f"update resource {physical_id} with props {props}")
+    logger.info(f"update resource {physical_id} with props {props}")
     raise Exception("update not implemented yet")
     # return { 'PhysicalResourceId': physical_id }
 
@@ -90,13 +93,13 @@ def on_update(event):
 def on_delete(event):
     physical_id = event["PhysicalResourceId"]
     props = event["ResourceProperties"]
-    print(f"delete resource {props['name']} {physical_id}")
+    logger.info(f"delete resource {props['name']} {physical_id}")
     client = boto3.client("iotfleetwise")
 
     response = client.delete_decoder_manifest(name=props["name"])
-    print(f"delete_decoder_manifest response {response}")
+    logger.info(f"delete_decoder_manifest response {response}")
 
     response = client.delete_model_manifest(name=props["name"])
-    print(f"delete_model_manifest response {response}")
+    logger.info(f"delete_model_manifest response {response}")
 
     return {"PhysicalResourceId": physical_id}

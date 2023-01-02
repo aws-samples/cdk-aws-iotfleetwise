@@ -6,7 +6,7 @@ logger.getLogger().setLevel(logger.INFO)
 
 
 def on_event(event, context):
-    print(f"on_event {event} {context}")
+    logger.info(f"on_event {event} {context}")
     request_type = event["RequestType"]
     if request_type == "Create":
         return on_create(event, context)
