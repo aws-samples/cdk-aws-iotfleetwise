@@ -102,7 +102,14 @@ export class IntegTesting {
       collectionScheme: new ifw.TimeBasedCollectionScheme(
         cdk.Duration.seconds(10),
       ),
-      signals: [new ifw.CampaignSignal('Vehicle.EngineTorque')],
+      signals: [
+        new ifw.CampaignSignal('Vehicle.EngineTorque'),
+        new ifw.CampaignSignal(
+          'Vehicle.ThrottlePosition',
+          20,
+          cdk.Duration.seconds(10),
+        ),
+      ],
       autoApprove: true,
     });
 
