@@ -78,6 +78,6 @@ def on_delete(event):
                 logGroupName=props["cloudwatch_log_group_name"]
             )
             logger.info(f"delete_log_group response {response}")
-        except botocore.exceptions.ResourceNotFoundException as e:
+        except logs_client.exceptions.ResourceNotFoundException as e:
             logger.warning(f"FleetWise log group not found: {e}, continuing...")
     return {"PhysicalResourceId": physical_id}
