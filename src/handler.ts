@@ -5,7 +5,6 @@ import {
   aws_logs as logs,
 } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Boto3LayerVersion } from './boto3layerversion';
 import { HandlerRole } from './handlerrole';
 
 
@@ -21,8 +20,7 @@ export class Handler extends lambda.SingletonFunction {
       code: lambda.AssetCode.fromAsset(path.join(__dirname, '/../src/handlers')),
       handler: props.handler,
       timeout: cdk.Duration.seconds(300),
-      runtime: lambda.Runtime.PYTHON_3_9,
-      layers: [Boto3LayerVersion.getOrCreate(scope).lambdaLayer],
+      runtime: lambda.Runtime.PYTHON_3_11,
       role: HandlerRole.getOrCreate(scope).role,
       logRetention: logs.RetentionDays.ONE_DAY,
     });

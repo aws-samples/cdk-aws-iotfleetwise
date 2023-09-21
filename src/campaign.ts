@@ -50,12 +50,63 @@ export class CampaignSignal {
   }
 }
 
+
+export class DataDestinationConfig {
+
+  protected destinationConfig: object;
+
+  constructor() {
+    this.destinationConfig = {};
+  }
+
+  toObject(): object {
+    return (this.destinationConfig);
+  }
+}
+
+export class S3ConfigProperty extends DataDestinationConfig {
+
+  constructor(
+    bucketArn: string,
+    dataFormat?: string,
+    prefix?: string,
+    storageCompressionFormat?: string,
+  ) {
+    super();
+
+    this.destinationConfig = {
+      s3Config: {
+        bucketArn: bucketArn,
+        dataFormat: dataFormat,
+        prefix: prefix,
+        storageCompressionFormat: storageCompressionFormat,
+      },
+    };
+  }
+}
+
+export class TimestreamConfigProperty extends DataDestinationConfig {
+
+  constructor(
+    executionRoleArn: string,
+    timestreamTableArn: string) {
+    super();
+    this.destinationConfig = {
+      timestreamConfig: {
+        executionRoleArn: executionRoleArn,
+        timestreamTableArn: timestreamTableArn,
+      },
+    };
+  };
+}
+
 export interface CampaignProps {
   readonly name: string;
   readonly target: Vehicle;
   readonly collectionScheme: CollectionScheme;
   readonly signals: CampaignSignal[];
   readonly autoApprove?: boolean;
+  readonly dataDestinationConfigs: DataDestinationConfig[];
 }
 
 export class Campaign extends Construct {
@@ -79,6 +130,7 @@ export class Campaign extends Construct {
       properties: {
         name: this.name,
         signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
+        data_destination_configs: JSON.stringify(props.dataDestinationConfigs.map(s => s.toObject())),
         target_arn: this.target.arn,
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
         signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),

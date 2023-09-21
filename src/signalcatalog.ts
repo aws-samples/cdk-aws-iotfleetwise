@@ -1,7 +1,4 @@
 import * as cdk from 'aws-cdk-lib';
-import {
-  aws_timestream as ts,
-} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Handler } from './handler';
 import { Provider } from './provider';
@@ -63,8 +60,6 @@ export class SignalCatalogSensor extends SignalCatalogNode {
 export interface SignalCatalogProps {
   readonly name?: string;
   readonly description?: string;
-  readonly database: ts.CfnDatabase;
-  readonly table: ts.CfnTable;
   readonly nodes: SignalCatalogNode[];
 }
 
@@ -103,10 +98,6 @@ export class SignalCatalog extends Construct {
 
     const serviceResource = new cdk.CustomResource(this, 'ServiceResource', {
       serviceToken: provider.provider.serviceToken,
-      properties: {
-        database_name: props.database.databaseName,
-        table_name: props.table.tableName,
-      },
     });
 
     const serviceCatalogHandler = new Handler(this, 'ServiceCatalogHandler', {

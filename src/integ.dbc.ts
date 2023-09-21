@@ -41,8 +41,6 @@ export class IntegTesting {
     });
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
-      database,
-      table,
       description: 'my signal catalog',
       nodes,
     });

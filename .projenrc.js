@@ -6,7 +6,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   license: 'MIT-0',
   copyrightOwner: 'Amazon.com, Inc. or its affiliates. All Rights Reserved.',
   copyrightPeriod: '',
-  cdkVersion: '2.50.0',
+  cdkVersion: '2.96.2',
   defaultReleaseBranch: 'main',
   name: 'cdk-aws-iotfleetwise',
   repositoryUrl: 'https://github.com/aws-samples/cdk-aws-iotfleetwise.git',

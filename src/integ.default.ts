@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import {
   aws_timestream as ts,
+  aws_iam as iam,
 } from 'aws-cdk-lib';
 import * as ifw from '.';
 
@@ -31,9 +32,25 @@ export class IntegTesting {
 
     table.node.addDependency(database);
 
+    const permissionsPolicy = new iam.PolicyDocument({
+      statements: [
+        new iam.PolicyStatement({
+          actions: ['timestream:WriteRecords', 'timestream:Select'],
+          resources: [table.attrArn],
+        }),
+        new iam.PolicyStatement({
+          actions: ['timestream:DescribeEndpoints'],
+          resources: ['*'],
+        }),
+      ],
+    });
+
+    const timestreamRole = new iam.Role(stack, 'TimestreamExecutionRole', {
+      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
+      inlinePolicies: { permissionsPolicy },
+    });
+
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
-      database,
-      table,
       description: 'my signal catalog',
       nodes: [
         new ifw.SignalCatalogBranch('Vehicle'),
@@ -78,6 +95,7 @@ export class IntegTesting {
       signals: [
         new ifw.CampaignSignal('Vehicle.EngineTorque'),
       ],
+      dataDestinationConfigs: [new ifw.TimestreamConfigProperty(timestreamRole.roleArn, table.attrArn)],
       autoApprove: true,
     });
 
