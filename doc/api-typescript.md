@@ -744,6 +744,7 @@ const campaignProps: CampaignProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collectionScheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs">dataDestinationConfigs</a></code> | <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>[]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
@@ -758,6 +759,16 @@ public readonly collectionScheme: CollectionScheme;
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `dataDestinationConfigs`<sup>Required</sup> <a name="dataDestinationConfigs" id="cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs"></a>
+
+```typescript
+public readonly dataDestinationConfigs: DataDestinationConfig[];
+```
+
+- *Type:* <a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>[]
 
 ---
 
@@ -878,21 +889,9 @@ const signalCatalogProps: SignalCatalogProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws-cdk-lib.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws-cdk-lib.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>string</code> | *No description.* |
-
----
-
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.database"></a>
-
-```typescript
-public readonly database: CfnDatabase;
-```
-
-- *Type:* aws-cdk-lib.aws_timestream.CfnDatabase
 
 ---
 
@@ -903,16 +902,6 @@ public readonly nodes: SignalCatalogNode[];
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>[]
-
----
-
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.table"></a>
-
-```typescript
-public readonly table: CfnTable;
-```
-
-- *Type:* aws-cdk-lib.aws_timestream.CfnTable
 
 ---
 
@@ -1352,6 +1341,38 @@ public toObject(): object
 
 
 
+### DataDestinationConfig <a name="DataDestinationConfig" id="cdk-aws-iotfleetwise.DataDestinationConfig"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.DataDestinationConfig.Initializer"></a>
+
+```typescript
+import { DataDestinationConfig } from 'cdk-aws-iotfleetwise'
+
+new DataDestinationConfig()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.DataDestinationConfig.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
 ### NetworkFileDefinition <a name="NetworkFileDefinition" id="cdk-aws-iotfleetwise.NetworkFileDefinition"></a>
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.NetworkFileDefinition.Initializer"></a>
@@ -1376,6 +1397,66 @@ new NetworkFileDefinition()
 ---
 
 ##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.NetworkFileDefinition.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
+### S3ConfigProperty <a name="S3ConfigProperty" id="cdk-aws-iotfleetwise.S3ConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer"></a>
+
+```typescript
+import { S3ConfigProperty } from 'cdk-aws-iotfleetwise'
+
+new S3ConfigProperty(bucketArn: string, dataFormat?: string, prefix?: string, storageCompressionFormat?: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn">bucketArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat">dataFormat</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix">prefix</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat">storageCompressionFormat</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `bucketArn`<sup>Required</sup> <a name="bucketArn" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn"></a>
+
+- *Type:* string
+
+---
+
+##### `dataFormat`<sup>Optional</sup> <a name="dataFormat" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat"></a>
+
+- *Type:* string
+
+---
+
+##### `prefix`<sup>Optional</sup> <a name="prefix" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix"></a>
+
+- *Type:* string
+
+---
+
+##### `storageCompressionFormat`<sup>Optional</sup> <a name="storageCompressionFormat" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat"></a>
+
+- *Type:* string
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.S3ConfigProperty.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -1567,6 +1648,52 @@ new TimeBasedCollectionScheme(period: Duration)
 ---
 
 ##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
+### TimestreamConfigProperty <a name="TimestreamConfigProperty" id="cdk-aws-iotfleetwise.TimestreamConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer"></a>
+
+```typescript
+import { TimestreamConfigProperty } from 'cdk-aws-iotfleetwise'
+
+new TimestreamConfigProperty(executionRoleArn: string, timestreamTableArn: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn">executionRoleArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn">timestreamTableArn</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `executionRoleArn`<sup>Required</sup> <a name="executionRoleArn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn"></a>
+
+- *Type:* string
+
+---
+
+##### `timestreamTableArn`<sup>Required</sup> <a name="timestreamTableArn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn"></a>
+
+- *Type:* string
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject"></a>
 
 ```typescript
 public toObject(): object

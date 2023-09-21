@@ -13,6 +13,7 @@ cdk_aws_iotfleetwise.Campaign(
   scope: Construct,
   id: str,
   collection_scheme: CollectionScheme,
+  data_destination_configs: typing.List[DataDestinationConfig],
   name: str,
   signals: typing.List[CampaignSignal],
   target: Vehicle,
@@ -25,6 +26,7 @@ cdk_aws_iotfleetwise.Campaign(
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.dataDestinationConfigs">data_destination_configs</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
@@ -47,6 +49,12 @@ cdk_aws_iotfleetwise.Campaign(
 ##### `collection_scheme`<sup>Required</sup> <a name="collection_scheme" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme"></a>
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `data_destination_configs`<sup>Required</sup> <a name="data_destination_configs" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.dataDestinationConfigs"></a>
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]
 
 ---
 
@@ -361,9 +369,7 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.SignalCatalog(
   scope: Construct,
   id: str,
-  database: CfnDatabase,
   nodes: typing.List[SignalCatalogNode],
-  table: CfnTable,
   description: str = None,
   name: str = None
 )
@@ -373,9 +379,7 @@ cdk_aws_iotfleetwise.SignalCatalog(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.description">description</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
 
@@ -393,21 +397,9 @@ cdk_aws_iotfleetwise.SignalCatalog(
 
 ---
 
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.database"></a>
-
-- *Type:* aws_cdk.aws_timestream.CfnDatabase
-
----
-
 ##### `nodes`<sup>Required</sup> <a name="nodes" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.nodes"></a>
 
 - *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
-
----
-
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalog.Initializer.parameter.table"></a>
-
-- *Type:* aws_cdk.aws_timestream.CfnTable
 
 ---
 
@@ -912,6 +904,7 @@ import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.CampaignProps(
   collection_scheme: CollectionScheme,
+  data_destination_configs: typing.List[DataDestinationConfig],
   name: str,
   signals: typing.List[CampaignSignal],
   target: Vehicle,
@@ -924,6 +917,7 @@ cdk_aws_iotfleetwise.CampaignProps(
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs">data_destination_configs</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
@@ -938,6 +932,16 @@ collection_scheme: CollectionScheme
 ```
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
+
+---
+
+##### `data_destination_configs`<sup>Required</sup> <a name="data_destination_configs" id="cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs"></a>
+
+```python
+data_destination_configs: typing.List[DataDestinationConfig]
+```
+
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]
 
 ---
 
@@ -1057,9 +1061,7 @@ vehicles: typing.List[Vehicle]
 import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.SignalCatalogProps(
-  database: CfnDatabase,
   nodes: typing.List[SignalCatalogNode],
-  table: CfnTable,
   description: str = None,
   name: str = None
 )
@@ -1069,21 +1071,9 @@ cdk_aws_iotfleetwise.SignalCatalogProps(
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.database">database</a></code> | <code>aws_cdk.aws_timestream.CfnDatabase</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.nodes">nodes</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.table">table</a></code> | <code>aws_cdk.aws_timestream.CfnTable</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.description">description</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.SignalCatalogProps.property.name">name</a></code> | <code>str</code> | *No description.* |
-
----
-
-##### `database`<sup>Required</sup> <a name="database" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.database"></a>
-
-```python
-database: CfnDatabase
-```
-
-- *Type:* aws_cdk.aws_timestream.CfnDatabase
 
 ---
 
@@ -1094,16 +1084,6 @@ nodes: typing.List[SignalCatalogNode]
 ```
 
 - *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.SignalCatalogNode">SignalCatalogNode</a>]
-
----
-
-##### `table`<sup>Required</sup> <a name="table" id="cdk-aws-iotfleetwise.SignalCatalogProps.property.table"></a>
-
-```python
-table: CfnTable
-```
-
-- *Type:* aws_cdk.aws_timestream.CfnTable
 
 ---
 
@@ -1575,6 +1555,38 @@ def to_object() -> any
 
 
 
+### DataDestinationConfig <a name="DataDestinationConfig" id="cdk-aws-iotfleetwise.DataDestinationConfig"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.DataDestinationConfig.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.DataDestinationConfig()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.DataDestinationConfig.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
 ### NetworkFileDefinition <a name="NetworkFileDefinition" id="cdk-aws-iotfleetwise.NetworkFileDefinition"></a>
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.NetworkFileDefinition.Initializer"></a>
@@ -1599,6 +1611,71 @@ cdk_aws_iotfleetwise.NetworkFileDefinition()
 ---
 
 ##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.NetworkFileDefinition.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
+### S3ConfigProperty <a name="S3ConfigProperty" id="cdk-aws-iotfleetwise.S3ConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.S3ConfigProperty(
+  bucket_arn: str,
+  data_format: str = None,
+  prefix: str = None,
+  storage_compression_format: str = None
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn">bucket_arn</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat">data_format</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix">prefix</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat">storage_compression_format</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `bucket_arn`<sup>Required</sup> <a name="bucket_arn" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn"></a>
+
+- *Type:* str
+
+---
+
+##### `data_format`<sup>Optional</sup> <a name="data_format" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat"></a>
+
+- *Type:* str
+
+---
+
+##### `prefix`<sup>Optional</sup> <a name="prefix" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix"></a>
+
+- *Type:* str
+
+---
+
+##### `storage_compression_format`<sup>Optional</sup> <a name="storage_compression_format" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.S3ConfigProperty.toObject"></a>
 
 ```python
 def to_object() -> any
@@ -1802,6 +1879,55 @@ cdk_aws_iotfleetwise.TimeBasedCollectionScheme(
 ---
 
 ##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
+### TimestreamConfigProperty <a name="TimestreamConfigProperty" id="cdk-aws-iotfleetwise.TimestreamConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.TimestreamConfigProperty(
+  execution_role_arn: str,
+  timestream_table_arn: str
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn">execution_role_arn</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn">timestream_table_arn</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `execution_role_arn`<sup>Required</sup> <a name="execution_role_arn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn"></a>
+
+- *Type:* str
+
+---
+
+##### `timestream_table_arn`<sup>Required</sup> <a name="timestream_table_arn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject"></a>
 
 ```python
 def to_object() -> any

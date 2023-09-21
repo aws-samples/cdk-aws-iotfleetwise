@@ -34,8 +34,6 @@ export class IntegTesting {
     table.node.addDependency(database);
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
-      database,
-      table,
       description: 'my signal catalog',
       nodes: [
         new ifw.SignalCatalogBranch('Vehicle'),
@@ -216,6 +214,24 @@ export class IntegTesting {
     instance.addUserData(userData);
     new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
+    const permissionsPolicy = new iam.PolicyDocument({
+      statements: [
+        new iam.PolicyStatement({
+          actions: ['timestream:WriteRecords', 'timestream:Select'],
+          resources: [table.attrArn],
+        }),
+        new iam.PolicyStatement({
+          actions: ['timestream:DescribeEndpoints'],
+          resources: ['*'],
+        }),
+      ],
+    });
+
+    const timestreamRole = new iam.Role(stack, 'TimestreamExecutionRole', {
+      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
+      inlinePolicies: { permissionsPolicy },
+    });
+
     new ifw.Campaign(stack, 'Campaign', {
       name: 'FwTimeBasedCampaign',
       target: vin100,
@@ -223,6 +239,7 @@ export class IntegTesting {
       signals: [
         new ifw.CampaignSignal('Vehicle.EngineTorque'),
       ],
+      dataDestinationConfigs: [new ifw.TimestreamConfigProperty(timestreamRole.roleArn, table.attrArn)],
       autoApprove: true,
     });
 
