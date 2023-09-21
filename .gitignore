@@ -57,5 +57,3 @@ yarn-error.log
 __pycache__
 .DS_Store
 /tmp/
-.idea/
-*.iml
