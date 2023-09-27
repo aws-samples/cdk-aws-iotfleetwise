@@ -18,13 +18,15 @@ export class HandlerRole extends Construct {
       assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
       managedPolicies: [
         iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole'),
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'),
       ],
     });
 
     this.role.addToPolicy(new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       actions: [
+        's3:*',
+        'iam:PutRolePolicy',
+        'iam:PassRole',
         'iotfleetwise:*',
         'iot:DescribeThing',
         'iot:CreateThing',
@@ -39,6 +41,16 @@ export class HandlerRole extends Construct {
         'logs:CreateLogGroup',
         'logs:CreateLogStream',
         'logs:PutLogEvents',
+        'logs:DescribeLogGroups',
+        'logs:CreateLogDelivery',
+        'logs:GetLogDelivery',
+        'logs:UpdateLogDelivery',
+        'logs:DeleteLogDelivery',
+        'logs:ListLogDeliveries',
+        'logs:PutResourcePolicy',
+        'logs:DescribeResourcePolicies',
+        'logs:DescribeLogGroups',
+        'logs:DeleteLogGroup',
       ],
       resources: ['*'],
     }));

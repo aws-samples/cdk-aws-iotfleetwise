@@ -3,6 +3,7 @@ import {
   aws_timestream as ts,
   aws_iam as iam,
   aws_ec2 as ec2,
+  aws_s3 as s3,
 } from 'aws-cdk-lib';
 import * as ifw from '.';
 
@@ -33,11 +34,63 @@ export class IntegTesting {
 
     table.node.addDependency(database);
 
+    const use_s3 = stack.node.tryGetContext('use_s3');
+
+    // Fleetwise timestream role
+    const fw_timestream_role = new iam.Role(stack, 'iotfleetwiseRole', {
+      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
+      managedPolicies: [
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonTimestreamFullAccess'),
+      ],
+    });
+
+    // add campaign s3 bucket
+    const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      removalPolicy: cdk.RemovalPolicy.RETAIN,
+    });
+
+    // add s3 bucket policy
+    
+    s3bucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+        actions: ['s3:Get*', 's3:Put*' ],
+        resources: [`${s3bucket.bucketArn}/*`],
+      }))
+    
+    s3bucket.policy?.document.addStatements(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+        actions: ['s3:List*'],
+        resources: [s3bucket.bucketArn],
+      }))
+    
+   
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       description: 'my signal catalog',
       nodes: [
-        new ifw.SignalCatalogBranch('Vehicle'),
-        new ifw.SignalCatalogSensor('Vehicle.EngineTorque', 'DOUBLE'),
+        new ifw.SignalCatalogBranch({ fullyQualifiedName: 'Vehicle' }),
+        new ifw.SignalCatalogSensor({
+          fullyQualifiedName: 'Vehicle.EngineTorque',
+          dataType: 'DOUBLE',
+        }),
+        new ifw.SignalCatalogActuator({
+          fullyQualifiedName: 'Vehicle.FanSpeed',
+          allowedValues: ['OFF', 'LOW', 'MEDIUM', 'HIGH'],
+          assignedValue: 'OFF',
+          dataType: 'STRING_ARRAY',
+          description: 'Test fan speed',
+        }),
+        new ifw.SignalCatalogAttribute({
+          fullyQualifiedName: 'Vehicle.PowerMax',
+          dataType: 'UINT16',
+          defaultValue: '0',
+          description: 'Peak power, in kilowatts, that engine can generate.',
+          unit: 'kW',
+        }),
       ],
     });
 
@@ -45,16 +98,21 @@ export class IntegTesting {
       signalCatalog,
       name: 'modelA',
       description: 'Model A vehicle',
-      networkInterfaces: [new ifw.CanVehicleInterface('1', 'vcan0')],
+      networkInterfaces: [
+        new ifw.CanVehicleInterface({ interfaceId: '1', name: 'vcan0' }),
+      ],
       signals: [
-        new ifw.CanVehicleSignal('Vehicle.EngineTorque', '1',
-          401, // messageId
-          1.0, // factor
-          true, // isBigEndian
-          false, // isSigned
-          8, // length
-          0.0, // offset
-          9), // startBit
+        new ifw.CanVehicleSignal({
+          fullyQualifiedName: 'Vehicle.EngineTorque',
+          interfaceId: '1',
+          messageId: 401,
+          factor: 1.0,
+          isBigEndian: true,
+          isSigned: false,
+          length: 8,
+          offset: 0.0,
+          startBit: 9,
+        }),
       ],
     });
 
@@ -90,9 +148,9 @@ export class IntegTesting {
       resources: ['arn:aws:s3:::*'],
     }));
 
-    // Ubuntu 18.04 for Arm64
+    // Ubuntu 20.04 for Arm64
     const machineImage = ec2.MachineImage.fromSsmParameter(
-      '/aws/service/canonical/ubuntu/server/18.04/stable/current/arm64/hvm/ebs-gp2/ami-id',
+      '/aws/service/canonical/ubuntu/server/20.04/stable/current/arm64/hvm/ebs-gp2/ami-id',
       { os: ec2.OperatingSystemType.LINUX },
     );
 
@@ -134,7 +192,7 @@ export class IntegTesting {
     # <<<
 
     # Upgrade system and reboot if required
-    apt update && apt upgrade -y
+    sudo apt update && apt upgrade -y
     if [ -f /var/run/reboot-required ]; then
       # Delete the UserData info file so that we run again after reboot
       rm -f /var/lib/cloud/instances/*/sem/config_scripts_user
@@ -182,7 +240,7 @@ export class IntegTesting {
     cd aws-iot-fleetwise-edge
     
     # Install SocketCAN modules:
-    ./tools/install-socketcan.sh --bus-count 1
+    sudo ./tools/install-socketcan.sh --bus-count 1
     
     # Install CAN Simulator
     ./tools/install-cansim.sh --bus-count 1
@@ -214,24 +272,6 @@ export class IntegTesting {
     instance.addUserData(userData);
     new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
-    const permissionsPolicy = new iam.PolicyDocument({
-      statements: [
-        new iam.PolicyStatement({
-          actions: ['timestream:WriteRecords', 'timestream:Select'],
-          resources: [table.attrArn],
-        }),
-        new iam.PolicyStatement({
-          actions: ['timestream:DescribeEndpoints'],
-          resources: ['*'],
-        }),
-      ],
-    });
-
-    const timestreamRole = new iam.Role(stack, 'TimestreamExecutionRole', {
-      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      inlinePolicies: { permissionsPolicy },
-    });
-
     new ifw.Campaign(stack, 'Campaign', {
       name: 'FwTimeBasedCampaign',
       target: vin100,
@@ -239,8 +279,11 @@ export class IntegTesting {
       signals: [
         new ifw.CampaignSignal('Vehicle.EngineTorque'),
       ],
-      dataDestinationConfigs: [new ifw.TimestreamConfigProperty(timestreamRole.roleArn, table.attrArn)],
       autoApprove: true,
+      useS3: use_s3,
+      campaignS3arn:s3bucket.bucketArn,
+      timestreamArn:table.attrArn,
+      fwTimestreamRole: fw_timestream_role.roleArn,
     });
 
     new ifw.Fleet(stack, 'Fleet', {

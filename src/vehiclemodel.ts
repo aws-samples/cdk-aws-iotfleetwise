@@ -16,19 +16,24 @@ export class VehicleInterface {
   }
 }
 
+export interface CanVehicleInterfaceProps {
+  readonly interfaceId: string;
+  readonly name: string;
+  readonly protocolName?: string;
+  readonly protocolVersion?: string;
+}
+
 export class CanVehicleInterface extends VehicleInterface {
-  constructor(
-    interfaceId: string,
-    name: string) {
+  constructor(props: CanVehicleInterfaceProps) {
     super();
 
     this.intf = {
       type: 'CAN_INTERFACE',
-      interfaceId,
+      interfaceId: props.interfaceId,
       canInterface: {
-        name: name,
-        protocolName: 'CAN',
-        protocolVersion: '2.0b',
+        name: props.name,
+        protocolName: props.protocolName || 'CAN',
+        protocolVersion: props.protocolVersion || '2.0b',
       },
     };
   }
@@ -46,32 +51,61 @@ export class VehicleSignal {
   }
 }
 
+export interface CanVehicleSignalProps {
+  readonly fullyQualifiedName: string;
+  readonly interfaceId: string;
+  readonly messageId: number;
+  readonly name?: string;
+  readonly factor: number;
+  readonly isBigEndian: boolean;
+  readonly isSigned: boolean;
+  readonly length: number;
+  readonly offset: number;
+  readonly startBit: number;
+}
+
+
 export class CanVehicleSignal extends VehicleSignal {
-  constructor(
-    fullyQualifiedName: string,
-    interfaceId: string,
-    messageId: number,
-    factor: number,
-    isBigEndian: boolean,
-    isSigned: boolean,
-    length: number,
-    offset: number,
-    startBit: number) {
+  constructor(props: CanVehicleSignalProps) {
     super();
 
     this.signal = {
       type: 'CAN_SIGNAL',
-      fullyQualifiedName,
-      interfaceId,
+      fullyQualifiedName: props.fullyQualifiedName,
+      interfaceId: props.interfaceId,
       canSignal: {
-        factor,
-        isBigEndian,
-        isSigned,
-        length,
-        messageId,
-        offset,
-        startBit,
+        factor: props.factor,
+        isBigEndian: props.isBigEndian,
+        isSigned: props.isSigned,
+        length: props.length,
+        messageId: props.messageId,
+        name: props.name || '',
+        offset: props.offset,
+        startBit: props.startBit,
       },
+    };
+    if (!props.name) {
+      // remove description property if it is not set (FleetWise expects 1 or more characters)
+      delete (this.signal as any).canSignal.name;
+    }
+  }
+}
+
+
+/**
+ * Attribute Signal - needed when creating a vehicle with attributes
+ */
+export interface AttributeVehicleSignalProps {
+  readonly fullyQualifiedName: string;
+}
+
+export class AttributeVehicleSignal extends VehicleSignal {
+  constructor(props: AttributeVehicleSignalProps) {
+    super();
+
+    this.signal = {
+      type: 'ATTRIBUTE_SIGNAL',
+      fullyQualifiedName: props.fullyQualifiedName,
     };
   }
 }
@@ -142,6 +176,7 @@ export class VehicleModel extends Construct {
         network_file_definitions: (props.networkFileDefinitions) ? JSON.stringify(props.networkFileDefinitions.map(s => s.toObject())) : '{}',
       },
     });
+
 
     resource.node.addDependency(this.signalCatalog);
   }

@@ -1,4 +1,5 @@
 const { awscdk } = require('projen');
+
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Francesco Salamida',
   authorAddress: 'salamida@amazon.com',
@@ -10,6 +11,9 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   name: 'cdk-aws-iotfleetwise',
   repositoryUrl: 'https://github.com/aws-samples/cdk-aws-iotfleetwise.git',
+  deps: ['js-yaml'],
+  devDeps: ['@types/js-yaml'],
+  bundledDeps: ['js-yaml'],
   publishToPypi: {
     distName: 'cdk-aws-iotfleetwise',
     module: 'cdk_aws_iotfleetwise',
@@ -20,6 +24,10 @@ const common_exclude = ['cdk.out', 'cdk.context.json', 'images', 'yarn-error.log
 project.npmignore.exclude(...common_exclude);
 project.gitignore.exclude(...common_exclude);
 project.npmignore.include('/src/handlers/');
+
+// eslint playing nicely with prettier
+project.eslint.addExtends('prettier');
+project.addDevDeps('eslint-config-prettier');
 
 // Generating documentation for Typescript and python
 const task = project.tasks.tryFind('docgen');
