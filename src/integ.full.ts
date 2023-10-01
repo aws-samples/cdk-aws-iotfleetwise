@@ -51,24 +51,24 @@ export class IntegTesting {
     });
 
     // add s3 bucket policy
-    
+
     s3bucket.addToResourcePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:Get*', 's3:Put*' ],
+        actions: ['s3:Get*', 's3:Put*'],
         resources: [`${s3bucket.bucketArn}/*`],
-      }))
-    
+      }));
+
     s3bucket.policy?.document.addStatements(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
         actions: ['s3:List*'],
         resources: [s3bucket.bucketArn],
-      }))
-    
-   
+      }));
+
+
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       description: 'my signal catalog',
       nodes: [
@@ -281,8 +281,8 @@ export class IntegTesting {
       ],
       autoApprove: true,
       useS3: use_s3,
-      campaignS3arn:s3bucket.bucketArn,
-      timestreamArn:table.attrArn,
+      campaignS3arn: s3bucket.bucketArn,
+      timestreamArn: table.attrArn,
       fwTimestreamRole: fw_timestream_role.roleArn,
     });
 

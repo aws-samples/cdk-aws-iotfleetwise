@@ -2,8 +2,8 @@ import * as cdk from 'aws-cdk-lib';
 
 import { Construct } from 'constructs';
 import { Handler } from './handler';
-import { Provider } from './provider';
 import { IrawVssNode, VSS } from './parse-vss-file';
+import { Provider } from './provider';
 
 
 export const vssDatatypeMapping = [

@@ -4,7 +4,6 @@ import { Handler } from './handler';
 import { Provider } from './provider';
 import { Vehicle } from './vehicle';
 
-
 export class CollectionScheme {
   protected scheme: object;
 

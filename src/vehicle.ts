@@ -18,7 +18,7 @@ export interface VehicleProps {
   readonly vehicleModel: VehicleModel;
   readonly vehicleName: string;
   readonly createIotThing: boolean;
-  readonly attributes?: {[key: string]: string;};
+  readonly attributes?: {[key: string]: string};
 }
 
 /**

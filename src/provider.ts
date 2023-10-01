@@ -18,7 +18,7 @@ export class Provider extends Construct {
     const stack = Stack.of(scope);
     const id = `${eventHandler.handler}-provider`;
     return (
-      stack.node.tryFindChild(id) as Provider || 
+      stack.node.tryFindChild(id) as Provider ||
       new Provider(stack, id, eventHandler, isCompleteHandler, totalTimeout)
     );
   }

@@ -41,22 +41,22 @@ export class IntegTesting {
     });
 
     // add s3 bucket policy
-    
+
     s3bucket.addToResourcePolicy(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:Get*', 's3:Put*' ],
+        actions: ['s3:Get*', 's3:Put*'],
         resources: [`${s3bucket.bucketArn}/*`],
-      }))
-    
+      }));
+
     s3bucket.policy?.document.addStatements(
       new iam.PolicyStatement({
         effect: iam.Effect.ALLOW,
         principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
         actions: ['s3:List*'],
         resources: [s3bucket.bucketArn],
-      }))
+      }));
 
     const canDbc = fs.readFileSync(path.join(__dirname, '/../hscan.dbc'), 'utf8');
 
