@@ -7,6 +7,9 @@ import { Handler } from './handler';
 import { Provider } from './provider';
 import { VehicleModel } from './vehiclemodel';
 
+/**
+ * Attribute string map
+ */
 
 /**
  * Interface
@@ -15,6 +18,7 @@ export interface VehicleProps {
   readonly vehicleModel: VehicleModel;
   readonly vehicleName: string;
   readonly createIotThing: boolean;
+  readonly attributes?: {[key: string]: string};
 }
 
 /**
@@ -48,6 +52,7 @@ export class Vehicle extends Construct {
         create_iot_thing: props.createIotThing,
         decoder_manifest_arn: `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:decoder-manifest/${props.vehicleModel.name}`,
         model_manifest_arn: `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:model-manifest/${props.vehicleModel.name}`,
+        attributes: props.attributes,
       },
     });
 

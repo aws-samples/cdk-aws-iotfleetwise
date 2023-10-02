@@ -26,27 +26,17 @@ Object {
           ],
         },
         "auto_approve": true,
+        "campaign_s3_arn": Object {
+          "Fn::GetAtt": Array [
+            "S3Bucket07682993",
+            "Arn",
+          ],
+        },
         "collection_scheme": "{\\"timeBasedCollectionScheme\\":{\\"periodMs\\":10000}}",
-        "data_destination_configs": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "[{\\"timestreamConfig\\":{\\"executionRoleArn\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "TimestreamExecutionRole47469287",
-                  "Arn",
-                ],
-              },
-              "\\",\\"timestreamTableArn\\":\\"",
-              Object {
-                "Fn::GetAtt": Array [
-                  "Table",
-                  "Arn",
-                ],
-              },
-              "\\"}}]",
-            ],
+        "fw_timestream_role": Object {
+          "Fn::GetAtt": Array [
+            "iotfleetwiseRoleF64DB4C5",
+            "Arn",
           ],
         },
         "name": "FwTimeBasedCampaign1",
@@ -66,7 +56,7 @@ Object {
             ],
           ],
         },
-        "signals_to_collect": "[{\\"name\\":\\"Vehicle.EngineTorque\\"}]",
+        "signals_to_collect": "[{\\"name\\":\\"Vehicle.EngineTorque\\"},{\\"name\\":\\"Vehicle.ThrottlePosition\\",\\"maxSampleCount\\":20,\\"minimumSamplingInterval\\":{\\"amount\\":10,\\"unit\\":{\\"label\\":\\"seconds\\",\\"isoLabel\\":\\"S\\",\\"inMillis\\":1000}}}]",
         "target_arn": Object {
           "Fn::Join": Array [
             "",
@@ -83,6 +73,13 @@ Object {
             ],
           ],
         },
+        "timestream_arn": Object {
+          "Fn::GetAtt": Array [
+            "Table",
+            "Arn",
+          ],
+        },
+        "useS3": false,
       },
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
@@ -261,6 +258,54 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "LoggingDefault94108C82": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "OFF",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LoggingDeleteGroupA10165E1": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "ERROR",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "LoggingDisable9ADDB9BD": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+            "Arn",
+          ],
+        },
+        "cloudwatch_log_group_name": "AWSIotFleetWiseLogsV1",
+        "keep_log_group": false,
+        "log_type": "ERROR",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
     "ModelA133A72B5": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
@@ -315,6 +360,72 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
+    "S3Bucket07682993": Object {
+      "DeletionPolicy": "Retain",
+      "Properties": Object {
+        "BucketEncryption": Object {
+          "ServerSideEncryptionConfiguration": Array [
+            Object {
+              "ServerSideEncryptionByDefault": Object {
+                "SSEAlgorithm": "AES256",
+              },
+            },
+          ],
+        },
+      },
+      "Type": "AWS::S3::Bucket",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "S3BucketPolicyF560589A": Object {
+      "Properties": Object {
+        "Bucket": Object {
+          "Ref": "S3Bucket07682993",
+        },
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "s3:Get*",
+                "s3:Put*",
+              ],
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "iotfleetwise.amazonaws.com",
+              },
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    Object {
+                      "Fn::GetAtt": Array [
+                        "S3Bucket07682993",
+                        "Arn",
+                      ],
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+            Object {
+              "Action": "s3:List*",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "iotfleetwise.amazonaws.com",
+              },
+              "Resource": Object {
+                "Fn::GetAtt": Array [
+                  "S3Bucket07682993",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+      },
+      "Type": "AWS::S3::BucketPolicy",
+    },
     "SignalCatalogCatalogResourceFC71CDF4": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
@@ -329,7 +440,71 @@ Object {
         },
         "description": "my signal catalog",
         "name": "default",
-        "nodes": "[{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.EngineTorque\\",\\"dataType\\":\\"DOUBLE\\"}}]",
+        "nodes": "[{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.EngineTorque\\",\\"dataType\\":\\"DOUBLE\\"}},{\\"actuator\\":{\\"fullyQualifiedName\\":\\"Vehicle.FanSpeed\\",\\"allowedValues\\":[\\"OFF\\",\\"LOW\\",\\"MEDIUM\\",\\"HIGH\\"],\\"assignedValue\\":\\"OFF\\",\\"dataType\\":\\"STRING_ARRAY\\",\\"description\\":\\"Test fan speed\\"}},{\\"attribute\\":{\\"fullyQualifiedName\\":\\"Vehicle.PowerMax\\",\\"dataType\\":\\"UINT16\\",\\"defaultValue\\":\\"0\\",\\"description\\":\\"Peak power, in kilowatts, that engine can generate.\\",\\"unit\\":\\"kW\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Status\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DriveCycleStatus\\",\\"description\\":\\"VSS generated branch\\"}},{\\"actuator\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.TestActuator\\",\\"dataType\\":\\"UINT8\\",\\"assignedValue\\":\\"8675309\\",\\"unit\\":\\"phoneNumber\\",\\"description\\":\\"Exercise the code for creating an actuator node\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.PidsA\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 00 - Bit array of the supported pids 01 to 20\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Status.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Status.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Status.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DTCList\\",\\"dataType\\":\\"STRING_ARRAY\\",\\"description\\":\\"List of currently active DTCs formatted according OBD II (SAE-J2012DA_201812) standard ([P|C|B|U]XXXXX )\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FreezeDTC\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 02 - DTC that triggered the freeze frame\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 03 - Fuel status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EngineLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 04 - Engine load in percent - 0 = no load, 100 = full load\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.CoolantTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 05 - Coolant temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 08 - Short Term (immediate) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 09 - Long Term (learned) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0A - Fuel pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.MAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0B - Intake manifold pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EngineSpeed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"rpm\\",\\"description\\":\\"PID 0C - Engine speed measured as rotations per minute\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Speed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km/h\\",\\"description\\":\\"PID 0D - Vehicle speed\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.TimingAdvance\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 0E - Time advance\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.IntakeTemp\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 0F - Intake temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.MAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 10 - Grams of air drawn into engine per second\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 11 - Throttle position - 0 = closed throttle, 100 = open throttle\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AirStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 12 - Secondary air status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.OxygenSensorsIn2Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 13 - Presence of oxygen sensors in 2 banks. [A0..A3] == Bank 1, Sensors 1-4. [A4..A7] == Bank 2, Sensors 1-4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor1.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor2.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor3.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor4.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor5.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor6.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor7.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2.Sensor8.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"attribute\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.OBDStandards\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1C - OBD standards this vehicle conforms to\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.OxygenSensorsIn4Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1D - Presence of oxygen sensors in 4 banks. Similar to PID 13, but [A0..A7] == [B1S1, B1S2, B2S1, B2S2, B3S1, B3S2, B4S1, B4S2]\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.IsPTOActive\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"PID 1E - Auxiliary input status (power take off)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.RunTime\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"s\\",\\"description\\":\\"PID 1F - Engine run time\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.PidsB\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 20 - Bit array of the supported pids 21 to 40\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DistanceWithMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 21 - Distance traveled with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelRailPressureVac\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 22 - Fuel rail pressure relative to vacuum\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelRailPressureDirect\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 23 - Fuel rail pressure direct inject\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor1.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor2.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor3.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor4.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor5.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor6.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor7.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor8.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor1.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor2.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor3.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor4.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor5.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor6.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor7.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor8.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor1.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor2.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor3.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor4.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor5.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor6.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor7.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.O2WR.Sensor8.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.CommandedEGR\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2C - Commanded exhaust gas recirculation (EGR)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EGRError\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2D - Exhaust gas recirculation (EGR) error\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.CommandedEVAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2E - Commanded evaporative purge (EVAP) valve\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelLevel\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2F - Fuel level in the fuel tank\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.WarmupsSinceDTCClear\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 30 - Number of warm-ups since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DistanceSinceDTCClear\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 31 - Distance traveled since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EVAPVaporPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 32 - Evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.BarometricPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 33 - Barometric pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank1.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3C - Catalyst temperature from bank 1, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank1.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3E - Catalyst temperature from bank 1, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank2.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3D - Catalyst temperature from bank 2, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.Catalyst.Bank2.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3F - Catalyst temperature from bank 2, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.PidsC\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 40 - Bit array of the supported pids 41 to 60\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DriveCycleStatus.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) - False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DriveCycleStatus.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.DriveCycleStatus.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ControlModuleVoltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 42 - Control module voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AbsoluteLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 43 - Absolute load value\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.CommandedEquivalenceRatio\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"ratio\\",\\"description\\":\\"PID 44 - Commanded equivalence ratio\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.RelativeThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 45 - Relative throttle position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AmbientAirTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 46 - Ambient air temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ThrottlePositionB\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 47 - Absolute throttle position B\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ThrottlePositionC\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 48 - Absolute throttle position C\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AcceleratorPositionD\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 49 - Accelerator pedal position D\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AcceleratorPositionE\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4A - Accelerator pedal position E\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.AcceleratorPositionF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4B - Accelerator pedal position F\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ThrottleActuator\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4C - Commanded throttle actuator\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.RunTimeMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4D - Run time with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.TimeSinceDTCCleared\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4E - Time since trouble codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.MaxMAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 50 - Maximum flow for mass air flow sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelType\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 51 - Fuel type\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EthanolPercent\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 52 - Percentage of ethanol in the fuel\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EVAPVaporPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 53 - Absolute evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.EVAPVaporPressureAlternate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 54 - Alternate evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte A) - Short term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte B) - Short term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte A) - Long term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte B) - Long term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte A) - Short term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.ShortTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte B) - Short term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte A) - Long term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.LongTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte B) - Long term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelRailPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 59 - Absolute fuel rail pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.RelativeAcceleratorPosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5A - Relative accelerator pedal position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.HybridBatteryRemaining\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5B - Remaining life of hybrid battery\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.OilTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 5C - Engine oil temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelInjectionTiming\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 5D - Fuel injection timing\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Vehicle.OBD.FuelRate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"l/h\\",\\"description\\":\\"PID 5E - Engine fuel rate\\"}}]",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SignalCatalogFromVssNoPrefixCatalogResource37804CE0": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "SignalCatalogFromVssNoPrefixServiceResource3D838263",
+      ],
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "signalcataloghandleroneventproviderProviderframeworkonEvent446D3361",
+            "Arn",
+          ],
+        },
+        "description": "my signal catalog without prefix",
+        "name": "default",
+        "nodes": "[{\\"branch\\":{\\"fullyQualifiedName\\":\\".Status\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".O2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".O2WR\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst.Bank1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst.Bank2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".DriveCycleStatus\\",\\"description\\":\\"VSS generated branch\\"}},{\\"actuator\\":{\\"fullyQualifiedName\\":\\"TestActuator\\",\\"dataType\\":\\"UINT8\\",\\"assignedValue\\":\\"8675309\\",\\"unit\\":\\"phoneNumber\\",\\"description\\":\\"Exercise the code for creating an actuator node\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsA\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 00 - Bit array of the supported pids 01 to 20\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DTCList\\",\\"dataType\\":\\"STRING_ARRAY\\",\\"description\\":\\"List of currently active DTCs formatted according OBD II (SAE-J2012DA_201812) standard ([P|C|B|U]XXXXX )\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FreezeDTC\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 02 - DTC that triggered the freeze frame\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 03 - Fuel status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EngineLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 04 - Engine load in percent - 0 = no load, 100 = full load\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CoolantTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 05 - Coolant temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 08 - Short Term (immediate) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 09 - Long Term (learned) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0A - Fuel pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0B - Intake manifold pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EngineSpeed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"rpm\\",\\"description\\":\\"PID 0C - Engine speed measured as rotations per minute\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Speed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km/h\\",\\"description\\":\\"PID 0D - Vehicle speed\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"TimingAdvance\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 0E - Time advance\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"IntakeTemp\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 0F - Intake temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 10 - Grams of air drawn into engine per second\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 11 - Throttle position - 0 = closed throttle, 100 = open throttle\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AirStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 12 - Secondary air status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OxygenSensorsIn2Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 13 - Presence of oxygen sensors in 2 banks. [A0..A3] == Bank 1, Sensors 1-4. [A4..A7] == Bank 2, Sensors 1-4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"attribute\\":{\\"fullyQualifiedName\\":\\"OBDStandards\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1C - OBD standards this vehicle conforms to\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OxygenSensorsIn4Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1D - Presence of oxygen sensors in 4 banks. Similar to PID 13, but [A0..A7] == [B1S1, B1S2, B2S1, B2S2, B3S1, B3S2, B4S1, B4S2]\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"IsPTOActive\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"PID 1E - Auxiliary input status (power take off)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RunTime\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"s\\",\\"description\\":\\"PID 1F - Engine run time\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsB\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 20 - Bit array of the supported pids 21 to 40\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DistanceWithMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 21 - Distance traveled with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureVac\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 22 - Fuel rail pressure relative to vacuum\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureDirect\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 23 - Fuel rail pressure direct inject\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEGR\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2C - Commanded exhaust gas recirculation (EGR)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EGRError\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2D - Exhaust gas recirculation (EGR) error\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEVAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2E - Commanded evaporative purge (EVAP) valve\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelLevel\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2F - Fuel level in the fuel tank\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"WarmupsSinceDTCClear\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 30 - Number of warm-ups since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DistanceSinceDTCClear\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 31 - Distance traveled since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 32 - Evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"BarometricPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 33 - Barometric pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank1.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3C - Catalyst temperature from bank 1, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank1.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3E - Catalyst temperature from bank 1, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank2.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3D - Catalyst temperature from bank 2, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank2.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3F - Catalyst temperature from bank 2, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsC\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 40 - Bit array of the supported pids 41 to 60\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) - False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ControlModuleVoltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 42 - Control module voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AbsoluteLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 43 - Absolute load value\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEquivalenceRatio\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"ratio\\",\\"description\\":\\"PID 44 - Commanded equivalence ratio\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RelativeThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 45 - Relative throttle position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AmbientAirTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 46 - Ambient air temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePositionB\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 47 - Absolute throttle position B\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePositionC\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 48 - Absolute throttle position C\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionD\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 49 - Accelerator pedal position D\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionE\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4A - Accelerator pedal position E\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4B - Accelerator pedal position F\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottleActuator\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4C - Commanded throttle actuator\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RunTimeMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4D - Run time with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"TimeSinceDTCCleared\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4E - Time since trouble codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MaxMAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 50 - Maximum flow for mass air flow sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelType\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 51 - Fuel type\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EthanolPercent\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 52 - Percentage of ethanol in the fuel\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 53 - Absolute evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressureAlternate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 54 - Alternate evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte A) - Short term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte B) - Short term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte A) - Long term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte B) - Long term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte A) - Short term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte B) - Short term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte A) - Long term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte B) - Long term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 59 - Absolute fuel rail pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RelativeAcceleratorPosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5A - Relative accelerator pedal position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"HybridBatteryRemaining\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5B - Remaining life of hybrid battery\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OilTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 5C - Engine oil temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelInjectionTiming\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 5D - Fuel injection timing\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"l/h\\",\\"description\\":\\"PID 5E - Engine fuel rate\\"}}]",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SignalCatalogFromVssNoPrefixServiceResource3D838263": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "servicehandleroneventproviderProviderframeworkonEventAD64D5B7",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SignalCatalogFromVssOnlyCatalogResourceC1A7FEE6": Object {
+      "DeletionPolicy": "Delete",
+      "DependsOn": Array [
+        "SignalCatalogFromVssOnlyServiceResource40B6CAA4",
+      ],
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "signalcataloghandleroneventproviderProviderframeworkonEvent446D3361",
+            "Arn",
+          ],
+        },
+        "description": "Catalog generated by CDK",
+        "name": "default",
+        "nodes": "[{\\"branch\\":{\\"fullyQualifiedName\\":\\".Status\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".O2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd.foo\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestEnd.bar\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".O2WR\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst.Bank1\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".Catalyst.Bank2\\",\\"description\\":\\"VSS generated branch\\"}},{\\"branch\\":{\\"fullyQualifiedName\\":\\".DriveCycleStatus\\",\\"description\\":\\"VSS generated branch\\"}},{\\"actuator\\":{\\"fullyQualifiedName\\":\\"TestActuator\\",\\"dataType\\":\\"UINT8\\",\\"assignedValue\\":\\"8675309\\",\\"unit\\":\\"phoneNumber\\",\\"description\\":\\"Exercise the code for creating an actuator node\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsA\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 00 - Bit array of the supported pids 01 to 20\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Status.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DTCList\\",\\"dataType\\":\\"STRING_ARRAY\\",\\"description\\":\\"List of currently active DTCs formatted according OBD II (SAE-J2012DA_201812) standard ([P|C|B|U]XXXXX )\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FreezeDTC\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 02 - DTC that triggered the freeze frame\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 03 - Fuel status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EngineLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 04 - Engine load in percent - 0 = no load, 100 = full load\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CoolantTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 05 - Coolant temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 06 - Short Term (immediate) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermFuelTrim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 07 - Long Term (learned) Fuel Trim - Bank 1 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 08 - Short Term (immediate) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermFuelTrim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 09 - Long Term (learned) Fuel Trim - Bank 2 - negative percent leaner, positive percent richer\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0A - Fuel pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 0B - Intake manifold pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EngineSpeed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"rpm\\",\\"description\\":\\"PID 0C - Engine speed measured as rotations per minute\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Speed\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km/h\\",\\"description\\":\\"PID 0D - Vehicle speed\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"TimingAdvance\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 0E - Time advance\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"IntakeTemp\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 0F - Intake temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 10 - Grams of air drawn into engine per second\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 11 - Throttle position - 0 = closed throttle, 100 = open throttle\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AirStatus\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 12 - Secondary air status\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OxygenSensorsIn2Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 13 - Presence of oxygen sensors in 2 banks. [A0..A3] == Bank 1, Sensors 1-4. [A4..A7] == Bank 2, Sensors 1-4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 1x (byte A) - Sensor voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor1.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor2.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor3.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor4.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor5.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor6.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor7.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.foo.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2.Sensor8.TestBegin.bar.ShortTermFuelTrim\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 1x (byte B) - Short term fuel trim\\"}},{\\"attribute\\":{\\"fullyQualifiedName\\":\\"OBDStandards\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1C - OBD standards this vehicle conforms to\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OxygenSensorsIn4Banks\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 1D - Presence of oxygen sensors in 4 banks. Similar to PID 13, but [A0..A7] == [B1S1, B1S2, B2S1, B2S2, B3S1, B3S2, B4S1, B4S2]\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"IsPTOActive\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"PID 1E - Auxiliary input status (power take off)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RunTime\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"s\\",\\"description\\":\\"PID 1F - Engine run time\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsB\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 20 - Bit array of the supported pids 21 to 40\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DistanceWithMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 21 - Distance traveled with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureVac\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 22 - Fuel rail pressure relative to vacuum\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureDirect\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 23 - Fuel rail pressure direct inject\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Lambda\\",\\"dataType\\":\\"FLOAT\\",\\"description\\":\\"PID 2x (byte AB) and PID 3x (byte AB) - Lambda for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Voltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 2x (byte CD) - Voltage for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor1.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor2.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor3.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor4.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor5.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor6.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor7.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"O2WR.Sensor8.Current\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"A\\",\\"description\\":\\"PID 3x (byte CD) - Current for wide range/band oxygen sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEGR\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2C - Commanded exhaust gas recirculation (EGR)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EGRError\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2D - Exhaust gas recirculation (EGR) error\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEVAP\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2E - Commanded evaporative purge (EVAP) valve\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelLevel\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 2F - Fuel level in the fuel tank\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"WarmupsSinceDTCClear\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"PID 30 - Number of warm-ups since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DistanceSinceDTCClear\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"km\\",\\"description\\":\\"PID 31 - Distance traveled since codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 32 - Evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"BarometricPressure\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 33 - Barometric pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank1.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3C - Catalyst temperature from bank 1, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank1.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3E - Catalyst temperature from bank 1, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank2.Temperature1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3D - Catalyst temperature from bank 2, sensor 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"Catalyst.Bank2.Temperature2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 3F - Catalyst temperature from bank 2, sensor 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"PidsC\\",\\"dataType\\":\\"UINT32\\",\\"description\\":\\"PID 40 - Bit array of the supported pids 41 to 60\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.IsMILOn\\",\\"dataType\\":\\"BOOLEAN\\",\\"description\\":\\"Malfunction Indicator Light (MIL) - False = Off, True = On\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.DTCCount\\",\\"dataType\\":\\"UINT8\\",\\"description\\":\\"Number of sensor Trouble Codes (DTC)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"DriveCycleStatus.IgnitionType\\",\\"dataType\\":\\"STRING\\",\\"allowedValues\\":[\\"SPARK\\",\\"COMPRESSION\\"],\\"description\\":\\"Type of the ignition for ICE - spark = spark plug ignition, compression = self-igniting (Diesel engines)\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ControlModuleVoltage\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"V\\",\\"description\\":\\"PID 42 - Control module voltage\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AbsoluteLoad\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 43 - Absolute load value\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"CommandedEquivalenceRatio\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"ratio\\",\\"description\\":\\"PID 44 - Commanded equivalence ratio\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RelativeThrottlePosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 45 - Relative throttle position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AmbientAirTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 46 - Ambient air temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePositionB\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 47 - Absolute throttle position B\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottlePositionC\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 48 - Absolute throttle position C\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionD\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 49 - Accelerator pedal position D\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionE\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4A - Accelerator pedal position E\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"AcceleratorPositionF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4B - Accelerator pedal position F\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ThrottleActuator\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 4C - Commanded throttle actuator\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RunTimeMIL\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4D - Run time with MIL on\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"TimeSinceDTCCleared\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"min\\",\\"description\\":\\"PID 4E - Time since trouble codes cleared\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"MaxMAF\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"g/s\\",\\"description\\":\\"PID 50 - Maximum flow for mass air flow sensor\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelType\\",\\"dataType\\":\\"STRING\\",\\"description\\":\\"PID 51 - Fuel type\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EthanolPercent\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 52 - Percentage of ethanol in the fuel\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 53 - Absolute evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"EVAPVaporPressureAlternate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"Pa\\",\\"description\\":\\"PID 54 - Alternate evaporative purge (EVAP) system pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte A) - Short term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 55 (byte B) - Short term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim1\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte A) - Long term secondary O2 trim - Bank 1\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim3\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 56 (byte B) - Long term secondary O2 trim - Bank 3\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte A) - Short term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"ShortTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 57 (byte B) - Short term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim2\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte A) - Long term secondary O2 trim - Bank 2\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"LongTermO2Trim4\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 58 (byte B) - Long term secondary O2 trim - Bank 4\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRailPressureAbsolute\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"kPa\\",\\"description\\":\\"PID 59 - Absolute fuel rail pressure\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"RelativeAcceleratorPosition\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5A - Relative accelerator pedal position\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"HybridBatteryRemaining\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"percent\\",\\"description\\":\\"PID 5B - Remaining life of hybrid battery\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"OilTemperature\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"celsius\\",\\"description\\":\\"PID 5C - Engine oil temperature\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelInjectionTiming\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"degrees\\",\\"description\\":\\"PID 5D - Fuel injection timing\\"}},{\\"sensor\\":{\\"fullyQualifiedName\\":\\"FuelRate\\",\\"dataType\\":\\"FLOAT\\",\\"unit\\":\\"l/h\\",\\"description\\":\\"PID 5E - Engine fuel rate\\"}}]",
+      },
+      "Type": "AWS::CloudFormation::CustomResource",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "SignalCatalogFromVssOnlyServiceResource40B6CAA4": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "servicehandleroneventproviderProviderframeworkonEventAD64D5B7",
+            "Arn",
+          ],
+        },
       },
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
@@ -357,16 +532,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "campaignhandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -404,16 +584,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "fleethandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -441,6 +626,58 @@ Object {
       },
       "Type": "Custom::LogRetention",
     },
+    "SingletonLambdalogginghandleroneventF62DFA24": Object {
+      "DependsOn": Array [
+        "handlerroleRoleDefaultPolicy3C992314",
+        "handlerroleRoleEEEB95D2",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
+          },
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+        },
+        "Handler": "logginghandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "handlerroleRoleEEEB95D2",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+        "Timeout": 300,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "SingletonLambdalogginghandleroneventLogRetention2CBEE66D": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "SingletonLambdalogginghandleroneventF62DFA24",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
     "SingletonLambdaservicehandleriscomplete2B1E3BBE": Object {
       "DependsOn": Array [
         "handlerroleRoleDefaultPolicy3C992314",
@@ -451,16 +688,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "servicehandler.is_complete",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -498,16 +740,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "servicehandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -545,16 +792,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "signalcataloghandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -592,16 +844,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "vehiclehandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -639,16 +896,21 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "2a959aaf5a798f08ab70fcdd87c1b928827d3c690f5a36fba79efae0dbfae2f2.zip",
+          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
+        "Layers": Array [
+          Object {
+            "Ref": "iotfleetwiselayerversionBoto3F9BD5A37",
+          },
+        ],
         "Role": Object {
           "Fn::GetAtt": Array [
             "handlerroleRoleEEEB95D2",
             "Arn",
           ],
         },
-        "Runtime": "python3.11",
+        "Runtime": "python3.9",
         "Timeout": 300,
       },
       "Type": "AWS::Lambda::Function",
@@ -685,51 +947,6 @@ Object {
         "TableName": "FleetWise",
       },
       "Type": "AWS::Timestream::Table",
-    },
-    "TimestreamExecutionRole47469287": Object {
-      "Properties": Object {
-        "AssumeRolePolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": "sts:AssumeRole",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "iotfleetwise.amazonaws.com",
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-        "Policies": Array [
-          Object {
-            "PolicyDocument": Object {
-              "Statement": Array [
-                Object {
-                  "Action": Array [
-                    "timestream:WriteRecords",
-                    "timestream:Select",
-                  ],
-                  "Effect": "Allow",
-                  "Resource": Object {
-                    "Fn::GetAtt": Array [
-                      "Table",
-                      "Arn",
-                    ],
-                  },
-                },
-                Object {
-                  "Action": "timestream:DescribeEndpoints",
-                  "Effect": "Allow",
-                  "Resource": "*",
-                },
-              ],
-              "Version": "2012-10-17",
-            },
-            "PolicyName": "permissionsPolicy",
-          },
-        ],
-      },
-      "Type": "AWS::IAM::Role",
     },
     "campaignhandleroneventproviderProviderframeworkonEventF0F8C6CC": Object {
       "DependsOn": Array [
@@ -999,6 +1216,9 @@ Object {
           "Statement": Array [
             Object {
               "Action": Array [
+                "s3:*",
+                "iam:PutRolePolicy",
+                "iam:PassRole",
                 "iotfleetwise:*",
                 "iot:DescribeThing",
                 "iot:CreateThing",
@@ -1013,6 +1233,15 @@ Object {
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents",
+                "logs:DescribeLogGroups",
+                "logs:CreateLogDelivery",
+                "logs:GetLogDelivery",
+                "logs:UpdateLogDelivery",
+                "logs:DeleteLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:PutResourcePolicy",
+                "logs:DescribeResourcePolicies",
+                "logs:DeleteLogGroup",
               ],
               "Effect": "Allow",
               "Resource": "*",
@@ -1056,6 +1285,25 @@ Object {
               ],
             ],
           },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "iotfleetwiseRoleF64DB4C5": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "iotfleetwise.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
           Object {
             "Fn::Join": Array [
               "",
@@ -1064,13 +1312,159 @@ Object {
                 Object {
                   "Ref": "AWS::Partition",
                 },
-                ":iam::aws:policy/AdministratorAccess",
+                ":iam::aws:policy/AmazonTimestreamFullAccess",
               ],
             ],
           },
         ],
       },
       "Type": "AWS::IAM::Role",
+    },
+    "iotfleetwiselayerversionBoto3F9BD5A37": Object {
+      "Properties": Object {
+        "CompatibleRuntimes": Array [
+          "python3.9",
+        ],
+        "Content": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
+          },
+          "S3Key": "23abe42e24cec60bd2ca0fb178aa82692143d2004e423bec935aead2abe99044.zip",
+        },
+        "Description": "Boto3 Library with Iot Fleetwise Support",
+      },
+      "Type": "AWS::Lambda::LayerVersion",
+    },
+    "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE": Object {
+      "DependsOn": Array [
+        "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E",
+        "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
+          },
+          "S3Key": "7382a0addb9f34974a1ea6c6c9b063882af874828f366f5c93b2b7b64db15c94.zip",
+        },
+        "Description": "AWS CDK resource provider framework - onEvent (integ-stack/logginghandler.on_event-provider/Provider)",
+        "Environment": Object {
+          "Variables": Object {
+            "USER_ON_EVENT_FUNCTION_ARN": Object {
+              "Fn::GetAtt": Array [
+                "SingletonLambdalogginghandleroneventF62DFA24",
+                "Arn",
+              ],
+            },
+          },
+        },
+        "Handler": "framework.onEvent",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs18.x",
+        "Timeout": 900,
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventLogRetention4410F0BD": Object {
+      "Properties": Object {
+        "LogGroupName": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "/aws/lambda/",
+              Object {
+                "Ref": "logginghandleroneventproviderProviderframeworkonEvent2EEA89EE",
+              },
+            ],
+          ],
+        },
+        "RetentionInDays": 1,
+        "ServiceToken": Object {
+          "Fn::GetAtt": Array [
+            "LogRetentionaae0aa3c5b4d4f87b02d85b201efdd8aFD4BFC8A",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "Custom::LogRetention",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "lambda:InvokeFunction",
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "SingletonLambdalogginghandleroneventF62DFA24",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "SingletonLambdalogginghandleroneventF62DFA24",
+                          "Arn",
+                        ],
+                      },
+                      ":*",
+                    ],
+                  ],
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "logginghandleroneventproviderProviderframeworkonEventServiceRoleDefaultPolicy50A6ED1E",
+        "Roles": Array [
+          Object {
+            "Ref": "logginghandleroneventproviderProviderframeworkonEventServiceRole916AC3EE",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
     },
     "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF": Object {
       "DependsOn": Array [
@@ -1581,7 +1975,7 @@ Object {
           "Fn::Join": Array [
             "",
             Array [
-              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":360,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
+              "{\\"StartAt\\":\\"framework-isComplete-task\\",\\"States\\":{\\"framework-isComplete-task\\":{\\"End\\":true,\\"Retry\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"IntervalSeconds\\":5,\\"MaxAttempts\\":60,\\"BackoffRate\\":1}],\\"Catch\\":[{\\"ErrorEquals\\":[\\"States.ALL\\"],\\"Next\\":\\"framework-onTimeout-task\\"}],\\"Type\\":\\"Task\\",\\"Resource\\":\\"",
               Object {
                 "Fn::GetAtt": Array [
                   "servicehandleroneventproviderProviderframeworkisCompleteD1F225BF",
