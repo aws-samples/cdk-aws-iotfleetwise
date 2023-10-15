@@ -49,7 +49,7 @@ export class CampaignSignal {
   }
 }
 
-/*
+
 export class DataDestinationConfig {
 
   protected destinationConfig: object;
@@ -100,7 +100,6 @@ export class TimestreamConfigProperty extends DataDestinationConfig {
   };
 }
 
-
 export interface CampaignProps {
   readonly name: string;
   readonly target: Vehicle;
@@ -108,20 +107,6 @@ export interface CampaignProps {
   readonly signals: CampaignSignal[];
   readonly autoApprove?: boolean;
   readonly dataDestinationConfigs: DataDestinationConfig[];
-}
-*/
-
-
-export interface CampaignProps {
-  readonly name: string;
-  readonly target: Vehicle;
-  readonly collectionScheme: CollectionScheme;
-  readonly signals: CampaignSignal[];
-  readonly autoApprove?: boolean;
-  readonly useS3?: boolean;
-  readonly campaignS3arn: string;
-  readonly timestreamArn: string;
-  readonly fwTimestreamRole: string;
 }
 
 
@@ -182,14 +167,16 @@ export class Campaign extends Construct {
       properties: {
         name: this.name,
         signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
+        data_destination_configs: JSON.stringify(props.dataDestinationConfigs.map(s => s.toObject())),
         target_arn: this.target.arn,
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
         signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
         auto_approve: props.autoApprove || false,
-        useS3: props.useS3 || false,
-        campaign_s3_arn: props.campaignS3arn,
-        timestream_arn: props.timestreamArn,
-        fw_timestream_role: props.fwTimestreamRole,
+
+      //  useS3: props.useS3 || false,
+      //  campaign_s3_arn: props.campaignS3arn,
+     //   timestream_arn: props.timestreamArn,
+     //   fw_timestream_role: props.fwTimestreamRole,
       },
     });
     resource.node.addDependency(this.target);

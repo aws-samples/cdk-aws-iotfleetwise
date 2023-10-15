@@ -20,54 +20,7 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
-    const databaseName = 'FleetWise';
-    const tableName = 'FleetWise';
-
-    const database = new ts.CfnDatabase(stack, 'Database', {
-      databaseName,
-    });
-
-    const table = new ts.CfnTable(stack, 'Table', {
-      databaseName,
-      tableName,
-    });
-
-    table.node.addDependency(database);
-
-    const use_s3 = stack.node.tryGetContext('use_s3');
-
-    // Fleetwise timestream role
-    const fw_timestream_role = new iam.Role(stack, 'iotfleetwiseRole', {
-      assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
-      managedPolicies: [
-        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonTimestreamFullAccess'),
-      ],
-    });
-
-    // add campaign s3 bucket
-    const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
-
-    // add s3 bucket policy
-
-    s3bucket.addToResourcePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:Get*', 's3:Put*'],
-        resources: [`${s3bucket.bucketArn}/*`],
-      }));
-
-    s3bucket.policy?.document.addStatements(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:List*'],
-        resources: [s3bucket.bucketArn],
-      }));
-
+    const use_s3 = stack.node.tryGetContext('use_s3');  
 
     const signalCatalog = new ifw.SignalCatalog(stack, 'SignalCatalog', {
       description: 'my signal catalog',
@@ -272,20 +225,79 @@ export class IntegTesting {
     instance.addUserData(userData);
     new cdk.CfnOutput(stack, 'Vehicle Sim ssh command', { value: `ssh -i ${keyName}.pem ubuntu@${instance.instancePublicIp}` });
 
-    new ifw.Campaign(stack, 'Campaign', {
-      name: 'FwTimeBasedCampaign',
-      target: vin100,
-      collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
-      signals: [
-        new ifw.CampaignSignal('Vehicle.EngineTorque'),
-      ],
-      autoApprove: true,
-      useS3: use_s3,
-      campaignS3arn: s3bucket.bucketArn,
-      timestreamArn: table.attrArn,
-      fwTimestreamRole: fw_timestream_role.roleArn,
-    });
+    if (use_s3 == 'true'){
+      // add campaign s3 bucket
+      const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
+        encryption: s3.BucketEncryption.S3_MANAGED,
+        removalPolicy: cdk.RemovalPolicy.RETAIN,
+      });
+      // add s3 bucket policy
+      
+      s3bucket.addToResourcePolicy(
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
+          principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+          actions: ['s3:Get*', 's3:Put*'],
+          resources: [`${s3bucket.bucketArn}/*`],
+        })
+      );
+        
+      s3bucket.policy?.document.addStatements(
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
+          principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+          actions: ['s3:List*'],
+          resources: [s3bucket.bucketArn],
+        })
+      );
 
+      new ifw.Campaign(stack, 'Campaign', {
+        name: 'FwTimeBasedCampaign',
+        target: vin100,
+        collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
+        signals: [
+          new ifw.CampaignSignal('Vehicle.EngineTorque'),
+        ],
+        dataDestinationConfigs: [new ifw.S3ConfigProperty(s3bucket.bucketArn)],
+        autoApprove: true,
+      });
+      
+    }
+    
+    else{
+      const databaseName = 'FleetWise';
+      const tableName = 'FleetWise';
+      
+      const database = new ts.CfnDatabase(stack, 'Database', {
+        databaseName,
+      });
+      
+      const table = new ts.CfnTable(stack, 'Table', {
+        databaseName,
+        tableName,
+      });
+      table.node.addDependency(database);
+
+      // Fleetwise timestream role
+      const fw_timestream_role = new iam.Role(stack, 'iotfleetwiseRole', {
+        assumedBy: new iam.ServicePrincipal('iotfleetwise.amazonaws.com'),
+        managedPolicies: [
+          iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonTimestreamFullAccess'),
+        ],
+      });
+
+      new ifw.Campaign(stack, 'Campaign', {
+        name: 'FwTimeBasedCampaign',
+        target: vin100,
+        collectionScheme: new ifw.TimeBasedCollectionScheme(cdk.Duration.seconds(10)),
+        signals: [
+          new ifw.CampaignSignal('Vehicle.EngineTorque'),
+        ],
+        dataDestinationConfigs: [new ifw.TimestreamConfigProperty(fw_timestream_role.roleArn, table.attrArn )],
+        autoApprove: true,
+      });
+    }
+    
     new ifw.Fleet(stack, 'Fleet', {
       fleetId: 'fleet',
       signalCatalog,

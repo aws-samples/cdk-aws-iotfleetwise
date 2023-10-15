@@ -20,49 +20,17 @@ def on_create(event):
     props = event["ResourceProperties"]
     logger.info(f"create new resource with props {props}")
     client=boto3.client('iotfleetwise')
-    
-    if props['useS3'] == 'true':
 
-        campaignS3arn = props['campaign_s3_arn']
 
-        response = client.create_campaign(
-            name = props['name'],
-            signalCatalogArn = props['signal_catalog_arn'],
-            targetArn = props['target_arn'],
-            collectionScheme = json.loads(props['collection_scheme']),
-            signalsToCollect = json.loads(props['signals_to_collect']),
-            dataDestinationConfigs=[
-                {
-                    's3Config': {
-                        'bucketArn': campaignS3arn,
-                        'dataFormat': 'JSON'
-                    }
-                }
-            ]
-        )
-        logger.info(f"create_campaign response {response}")
-    
-    if props['useS3'] == 'false':
-
-        timestream_arn = props['timestream_arn']
-        fw_timestream_role = props['fw_timestream_role']
-
-        response = client.create_campaign(
+    response = client.create_campaign(
         name = props['name'],
         signalCatalogArn = props['signal_catalog_arn'],
         targetArn = props['target_arn'],
         collectionScheme = json.loads(props['collection_scheme']),
         signalsToCollect = json.loads(props['signals_to_collect']),
-        dataDestinationConfigs=[
-                {
-                    'timestreamConfig': {
-                        'timestreamTableArn': timestream_arn,
-                        'executionRoleArn': fw_timestream_role,
-                    }
-                }
-            ]
-        )
-        logger.info(f"create_campaign response {response}")
+        dataDestinationConfigs=json.loads(props['data_destination_configs'])
+    )
+    logger.info(f"create_campaign response {response}")
         
     if props['auto_approve'] == 'true':
         retry_count = 10;
