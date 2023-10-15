@@ -109,9 +109,6 @@ export interface CampaignProps {
   readonly dataDestinationConfigs: DataDestinationConfig[];
 }
 
-
-/**
-
 export class Campaign extends Construct {
   readonly name: string = '';
   readonly arn: string = '';
@@ -138,45 +135,6 @@ export class Campaign extends Construct {
         collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
         signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
         auto_approve: props.autoApprove || false,
-      },
-    });
-    resource.node.addDependency(this.target);
-  }
-}
-*/
-
-
-export class Campaign extends Construct {
-  readonly name: string = '';
-  readonly arn: string = '';
-  readonly target: Vehicle = ({} as Vehicle);
-
-  constructor(scope: Construct, id: string, props: CampaignProps) {
-    super(scope, id);
-
-    (this.name as string) = props.name;
-    this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.target}`;
-    (this.target as Vehicle) = props.target;
-
-    const handler = new Handler(this, 'Handler', {
-      handler: 'campaignhandler.on_event',
-    });
-
-    const resource = new cdk.CustomResource(this, 'Resource', {
-      serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
-      properties: {
-        name: this.name,
-        signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
-        data_destination_configs: JSON.stringify(props.dataDestinationConfigs.map(s => s.toObject())),
-        target_arn: this.target.arn,
-        collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
-        signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
-        auto_approve: props.autoApprove || false,
-
-      //  useS3: props.useS3 || false,
-      //  campaign_s3_arn: props.campaignS3arn,
-     //   timestream_arn: props.timestreamArn,
-     //   fw_timestream_role: props.fwTimestreamRole,
       },
     });
     resource.node.addDependency(this.target);
