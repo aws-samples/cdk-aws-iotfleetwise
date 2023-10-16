@@ -26,17 +26,27 @@ Object {
           ],
         },
         "auto_approve": true,
-        "campaign_s3_arn": Object {
-          "Fn::GetAtt": Array [
-            "S3Bucket07682993",
-            "Arn",
-          ],
-        },
         "collection_scheme": "{\\"timeBasedCollectionScheme\\":{\\"periodMs\\":10000}}",
-        "fw_timestream_role": Object {
-          "Fn::GetAtt": Array [
-            "iotfleetwiseRoleF64DB4C5",
-            "Arn",
+        "data_destination_configs": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "[{\\"timestreamConfig\\":{\\"executionRoleArn\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "iotfleetwiseRoleF64DB4C5",
+                  "Arn",
+                ],
+              },
+              "\\",\\"timestreamTableArn\\":\\"",
+              Object {
+                "Fn::GetAtt": Array [
+                  "Table",
+                  "Arn",
+                ],
+              },
+              "\\"}}]",
+            ],
           ],
         },
         "name": "FwTimeBasedCampaign1",
@@ -73,13 +83,6 @@ Object {
             ],
           ],
         },
-        "timestream_arn": Object {
-          "Fn::GetAtt": Array [
-            "Table",
-            "Arn",
-          ],
-        },
-        "useS3": false,
       },
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
@@ -360,72 +363,6 @@ Object {
       "Type": "AWS::CloudFormation::CustomResource",
       "UpdateReplacePolicy": "Delete",
     },
-    "S3Bucket07682993": Object {
-      "DeletionPolicy": "Retain",
-      "Properties": Object {
-        "BucketEncryption": Object {
-          "ServerSideEncryptionConfiguration": Array [
-            Object {
-              "ServerSideEncryptionByDefault": Object {
-                "SSEAlgorithm": "AES256",
-              },
-            },
-          ],
-        },
-      },
-      "Type": "AWS::S3::Bucket",
-      "UpdateReplacePolicy": "Retain",
-    },
-    "S3BucketPolicyF560589A": Object {
-      "Properties": Object {
-        "Bucket": Object {
-          "Ref": "S3Bucket07682993",
-        },
-        "PolicyDocument": Object {
-          "Statement": Array [
-            Object {
-              "Action": Array [
-                "s3:Get*",
-                "s3:Put*",
-              ],
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "iotfleetwise.amazonaws.com",
-              },
-              "Resource": Object {
-                "Fn::Join": Array [
-                  "",
-                  Array [
-                    Object {
-                      "Fn::GetAtt": Array [
-                        "S3Bucket07682993",
-                        "Arn",
-                      ],
-                    },
-                    "/*",
-                  ],
-                ],
-              },
-            },
-            Object {
-              "Action": "s3:List*",
-              "Effect": "Allow",
-              "Principal": Object {
-                "Service": "iotfleetwise.amazonaws.com",
-              },
-              "Resource": Object {
-                "Fn::GetAtt": Array [
-                  "S3Bucket07682993",
-                  "Arn",
-                ],
-              },
-            },
-          ],
-          "Version": "2012-10-17",
-        },
-      },
-      "Type": "AWS::S3::BucketPolicy",
-    },
     "SignalCatalogCatalogResourceFC71CDF4": Object {
       "DeletionPolicy": "Delete",
       "DependsOn": Array [
@@ -532,7 +469,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "campaignhandler.on_event",
         "Layers": Array [
@@ -584,7 +521,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "fleethandler.on_event",
         "Layers": Array [
@@ -636,7 +573,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "logginghandler.on_event",
         "Layers": Array [
@@ -688,7 +625,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "servicehandler.is_complete",
         "Layers": Array [
@@ -740,7 +677,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "servicehandler.on_event",
         "Layers": Array [
@@ -792,7 +729,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "signalcataloghandler.on_event",
         "Layers": Array [
@@ -844,7 +781,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "vehiclehandler.on_event",
         "Layers": Array [
@@ -896,7 +833,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-us-east-1",
           },
-          "S3Key": "0e7c17a82f52ae33fe9c4eb6036b3f8df1b35d839c94f6d01df8e7d41dc0acd7.zip",
+          "S3Key": "0f08abb0a97eb6b6b54804552c0be4dee6ec72166d583e4ecea682987ad6e3f0.zip",
         },
         "Handler": "vehiclemodelhandler.on_event",
         "Layers": Array [

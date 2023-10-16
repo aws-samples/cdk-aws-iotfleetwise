@@ -20,43 +20,50 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
-    const databaseName = 'FleetWise';
-    const tableName = 'FleetWise';
+    const use_s3 = stack.node.tryGetContext('use_s3');
 
-    const database = new ts.CfnDatabase(stack, 'Database', {
-      databaseName,
-    });
+    if (use_s3 == 'true') {
+      // add campaign s3 bucket
+      const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
+        encryption: s3.BucketEncryption.S3_MANAGED,
+        removalPolicy: cdk.RemovalPolicy.RETAIN,
+      });
+      // add s3 bucket policy
 
-    const table = new ts.CfnTable(stack, 'Table', {
-      databaseName,
-      tableName,
-    });
+      s3bucket.addToResourcePolicy(
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
+          principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+          actions: ['s3:Get*', 's3:Put*'],
+          resources: [`${s3bucket.bucketArn}/*`],
+        }),
+      );
 
-    table.node.addDependency(database);
+      s3bucket.policy?.document.addStatements(
+        new iam.PolicyStatement({
+          effect: iam.Effect.ALLOW,
+          principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
+          actions: ['s3:List*'],
+          resources: [s3bucket.bucketArn],
+        }),
+      );
 
-    // add campaign s3 bucket
-    const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      removalPolicy: cdk.RemovalPolicy.RETAIN,
-    });
+    } else {
+      const databaseName = 'FleetWise';
+      const tableName = 'FleetWise';
 
-    // add s3 bucket policy
+      const database = new ts.CfnDatabase(stack, 'Database', {
+        databaseName,
+      });
 
-    s3bucket.addToResourcePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:Get*', 's3:Put*'],
-        resources: [`${s3bucket.bucketArn}/*`],
-      }));
+      const table = new ts.CfnTable(stack, 'Table', {
+        databaseName,
+        tableName,
+      });
+      table.node.addDependency(database);
 
-    s3bucket.policy?.document.addStatements(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
-        actions: ['s3:List*'],
-        resources: [s3bucket.bucketArn],
-      }));
+    }
+
 
     const canDbc = fs.readFileSync(path.join(__dirname, '/../hscan.dbc'), 'utf8');
 
