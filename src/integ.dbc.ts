@@ -20,44 +20,42 @@ export class IntegTesting {
 
     const stack = new cdk.Stack(app, 'integ-stack', { env });
 
-    const use_s3 = stack.node.tryGetContext('use_s3');  
+    const use_s3 = stack.node.tryGetContext('use_s3');
 
-    if (use_s3 == 'true'){
+    if (use_s3 == 'true') {
       // add campaign s3 bucket
       const s3bucket = new s3.Bucket(stack, 'S3Bucket', {
         encryption: s3.BucketEncryption.S3_MANAGED,
         removalPolicy: cdk.RemovalPolicy.RETAIN,
       });
       // add s3 bucket policy
-      
+
       s3bucket.addToResourcePolicy(
         new iam.PolicyStatement({
           effect: iam.Effect.ALLOW,
           principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
           actions: ['s3:Get*', 's3:Put*'],
           resources: [`${s3bucket.bucketArn}/*`],
-        })
+        }),
       );
-        
+
       s3bucket.policy?.document.addStatements(
         new iam.PolicyStatement({
           effect: iam.Effect.ALLOW,
           principals: [new iam.ServicePrincipal('iotfleetwise.amazonaws.com')],
           actions: ['s3:List*'],
           resources: [s3bucket.bucketArn],
-        })
+        }),
       );
-      
-    }
-    
-    else{
+
+    } else {
       const databaseName = 'FleetWise';
       const tableName = 'FleetWise';
-      
+
       const database = new ts.CfnDatabase(stack, 'Database', {
         databaseName,
       });
-      
+
       const table = new ts.CfnTable(stack, 'Table', {
         databaseName,
         tableName,
@@ -65,8 +63,8 @@ export class IntegTesting {
       table.node.addDependency(database);
 
     }
-    
-  
+
+
     const canDbc = fs.readFileSync(path.join(__dirname, '/../hscan.dbc'), 'utf8');
 
     const nodes: Array<ifw.SignalCatalogNode> = [

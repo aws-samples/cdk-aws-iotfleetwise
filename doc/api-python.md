@@ -121,38 +121,6 @@ This code is licensed under the MIT-0 License. See the LICENSE file.
 
 ### Campaign <a name="Campaign" id="cdk-aws-iotfleetwise.Campaign"></a>
 
-export class Campaign extends Construct { readonly name: string = '';
-
-readonly arn: string = '';
-readonly target: Vehicle = ({} as Vehicle);
-
-constructor(scope: Construct, id: string, props: CampaignProps) {
-super(scope, id);
-
-(this.name as string) = props.name;
-this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.target}`;
-(this.target as Vehicle) = props.target;
-
-const handler = new Handler(this, 'Handler', {
-handler: 'campaignhandler.on_event',
-});
-
-const resource = new cdk.CustomResource(this, 'Resource', {
-serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
-properties: {
-name: this.name,
-signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
-data_destination_configs: JSON.stringify(props.dataDestinationConfigs.map(s => s.toObject())),
-target_arn: this.target.arn,
-collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
-signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
-auto_approve: props.autoApprove || false,
-},
-});
-resource.node.addDependency(this.target);
-}
-}
-
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Campaign.Initializer"></a>
 
 ```python
@@ -161,15 +129,12 @@ import cdk_aws_iotfleetwise
 cdk_aws_iotfleetwise.Campaign(
   scope: Construct,
   id: str,
-  campaign_s3arn: str,
   collection_scheme: CollectionScheme,
-  fw_timestream_role: str,
+  data_destination_configs: typing.List[DataDestinationConfig],
   name: str,
   signals: typing.List[CampaignSignal],
   target: Vehicle,
-  timestream_arn: str,
-  auto_approve: bool = None,
-  use_s3: bool = None
+  auto_approve: bool = None
 )
 ```
 
@@ -177,15 +142,12 @@ cdk_aws_iotfleetwise.Campaign(
 | --- | --- | --- |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.id">id</a></code> | <code>str</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.campaignS3arn">campaign_s3arn</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.fwTimestreamRole">fw_timestream_role</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.dataDestinationConfigs">data_destination_configs</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.timestreamArn">timestream_arn</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.autoApprove">auto_approve</a></code> | <code>bool</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.Campaign.Initializer.parameter.useS3">use_s3</a></code> | <code>bool</code> | *No description.* |
 
 ---
 
@@ -201,21 +163,15 @@ cdk_aws_iotfleetwise.Campaign(
 
 ---
 
-##### `campaign_s3arn`<sup>Required</sup> <a name="campaign_s3arn" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.campaignS3arn"></a>
-
-- *Type:* str
-
----
-
 ##### `collection_scheme`<sup>Required</sup> <a name="collection_scheme" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.collectionScheme"></a>
 
 - *Type:* <a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a>
 
 ---
 
-##### `fw_timestream_role`<sup>Required</sup> <a name="fw_timestream_role" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.fwTimestreamRole"></a>
+##### `data_destination_configs`<sup>Required</sup> <a name="data_destination_configs" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.dataDestinationConfigs"></a>
 
-- *Type:* str
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]
 
 ---
 
@@ -237,19 +193,7 @@ cdk_aws_iotfleetwise.Campaign(
 
 ---
 
-##### `timestream_arn`<sup>Required</sup> <a name="timestream_arn" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.timestreamArn"></a>
-
-- *Type:* str
-
----
-
 ##### `auto_approve`<sup>Optional</sup> <a name="auto_approve" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.autoApprove"></a>
-
-- *Type:* bool
-
----
-
-##### `use_s3`<sup>Optional</sup> <a name="use_s3" id="cdk-aws-iotfleetwise.Campaign.Initializer.parameter.useS3"></a>
 
 - *Type:* bool
 
@@ -1323,15 +1267,12 @@ fully_qualified_name: str
 import cdk_aws_iotfleetwise
 
 cdk_aws_iotfleetwise.CampaignProps(
-  campaign_s3arn: str,
   collection_scheme: CollectionScheme,
-  fw_timestream_role: str,
+  data_destination_configs: typing.List[DataDestinationConfig],
   name: str,
   signals: typing.List[CampaignSignal],
   target: Vehicle,
-  timestream_arn: str,
-  auto_approve: bool = None,
-  use_s3: bool = None
+  auto_approve: bool = None
 )
 ```
 
@@ -1339,25 +1280,12 @@ cdk_aws_iotfleetwise.CampaignProps(
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.campaignS3arn">campaign_s3arn</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collection_scheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.fwTimestreamRole">fw_timestream_role</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs">data_destination_configs</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code>typing.List[<a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.timestreamArn">timestream_arn</a></code> | <code>str</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.autoApprove">auto_approve</a></code> | <code>bool</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.useS3">use_s3</a></code> | <code>bool</code> | *No description.* |
-
----
-
-##### `campaign_s3arn`<sup>Required</sup> <a name="campaign_s3arn" id="cdk-aws-iotfleetwise.CampaignProps.property.campaignS3arn"></a>
-
-```python
-campaign_s3arn: str
-```
-
-- *Type:* str
 
 ---
 
@@ -1371,13 +1299,13 @@ collection_scheme: CollectionScheme
 
 ---
 
-##### `fw_timestream_role`<sup>Required</sup> <a name="fw_timestream_role" id="cdk-aws-iotfleetwise.CampaignProps.property.fwTimestreamRole"></a>
+##### `data_destination_configs`<sup>Required</sup> <a name="data_destination_configs" id="cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs"></a>
 
 ```python
-fw_timestream_role: str
+data_destination_configs: typing.List[DataDestinationConfig]
 ```
 
-- *Type:* str
+- *Type:* typing.List[<a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>]
 
 ---
 
@@ -1411,30 +1339,10 @@ target: Vehicle
 
 ---
 
-##### `timestream_arn`<sup>Required</sup> <a name="timestream_arn" id="cdk-aws-iotfleetwise.CampaignProps.property.timestreamArn"></a>
-
-```python
-timestream_arn: str
-```
-
-- *Type:* str
-
----
-
 ##### `auto_approve`<sup>Optional</sup> <a name="auto_approve" id="cdk-aws-iotfleetwise.CampaignProps.property.autoApprove"></a>
 
 ```python
 auto_approve: bool
-```
-
-- *Type:* bool
-
----
-
-##### `use_s3`<sup>Optional</sup> <a name="use_s3" id="cdk-aws-iotfleetwise.CampaignProps.property.useS3"></a>
-
-```python
-use_s3: bool
 ```
 
 - *Type:* bool
@@ -2829,6 +2737,38 @@ def to_object() -> any
 
 
 
+### DataDestinationConfig <a name="DataDestinationConfig" id="cdk-aws-iotfleetwise.DataDestinationConfig"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.DataDestinationConfig.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.DataDestinationConfig()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.DataDestinationConfig.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
 ### NetworkFileDefinition <a name="NetworkFileDefinition" id="cdk-aws-iotfleetwise.NetworkFileDefinition"></a>
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.NetworkFileDefinition.Initializer"></a>
@@ -2853,6 +2793,71 @@ cdk_aws_iotfleetwise.NetworkFileDefinition()
 ---
 
 ##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.NetworkFileDefinition.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
+### S3ConfigProperty <a name="S3ConfigProperty" id="cdk-aws-iotfleetwise.S3ConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.S3ConfigProperty(
+  bucket_arn: str,
+  data_format: str = None,
+  prefix: str = None,
+  storage_compression_format: str = None
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn">bucket_arn</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat">data_format</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix">prefix</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat">storage_compression_format</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `bucket_arn`<sup>Required</sup> <a name="bucket_arn" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn"></a>
+
+- *Type:* str
+
+---
+
+##### `data_format`<sup>Optional</sup> <a name="data_format" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat"></a>
+
+- *Type:* str
+
+---
+
+##### `prefix`<sup>Optional</sup> <a name="prefix" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix"></a>
+
+- *Type:* str
+
+---
+
+##### `storage_compression_format`<sup>Optional</sup> <a name="storage_compression_format" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.S3ConfigProperty.toObject"></a>
 
 ```python
 def to_object() -> any
@@ -3266,6 +3271,55 @@ cdk_aws_iotfleetwise.TimeBasedCollectionScheme(
 ---
 
 ##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject"></a>
+
+```python
+def to_object() -> any
+```
+
+
+
+
+### TimestreamConfigProperty <a name="TimestreamConfigProperty" id="cdk-aws-iotfleetwise.TimestreamConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer"></a>
+
+```python
+import cdk_aws_iotfleetwise
+
+cdk_aws_iotfleetwise.TimestreamConfigProperty(
+  execution_role_arn: str,
+  timestream_table_arn: str
+)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn">execution_role_arn</a></code> | <code>str</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn">timestream_table_arn</a></code> | <code>str</code> | *No description.* |
+
+---
+
+##### `execution_role_arn`<sup>Required</sup> <a name="execution_role_arn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn"></a>
+
+- *Type:* str
+
+---
+
+##### `timestream_table_arn`<sup>Required</sup> <a name="timestream_table_arn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn"></a>
+
+- *Type:* str
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject">to_object</a></code> | *No description.* |
+
+---
+
+##### `to_object` <a name="to_object" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject"></a>
 
 ```python
 def to_object() -> any

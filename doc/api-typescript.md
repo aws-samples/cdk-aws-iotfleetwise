@@ -129,38 +129,6 @@ This code is licensed under the MIT-0 License. See the LICENSE file.
 
 ### Campaign <a name="Campaign" id="cdk-aws-iotfleetwise.Campaign"></a>
 
-export class Campaign extends Construct { readonly name: string = '';
-
-readonly arn: string = '';
-readonly target: Vehicle = ({} as Vehicle);
-
-constructor(scope: Construct, id: string, props: CampaignProps) {
-super(scope, id);
-
-(this.name as string) = props.name;
-this.arn = `arn:aws:iotfleetwise:${cdk.Aws.REGION}:${cdk.Aws.ACCOUNT_ID}:vehicle/${props.target}`;
-(this.target as Vehicle) = props.target;
-
-const handler = new Handler(this, 'Handler', {
-handler: 'campaignhandler.on_event',
-});
-
-const resource = new cdk.CustomResource(this, 'Resource', {
-serviceToken: Provider.getOrCreate(this, handler).provider.serviceToken,
-properties: {
-  name: this.name,
-  signal_catalog_arn: this.target.vehicleModel.signalCatalog.arn,
-  data_destination_configs: JSON.stringify(props.dataDestinationConfigs.map(s => s.toObject())),
-  target_arn: this.target.arn,
-  collection_scheme: JSON.stringify(props.collectionScheme.toObject()),
-  signals_to_collect: JSON.stringify(props.signals.map(s => s.toObject())),
-  auto_approve: props.autoApprove || false,
-},
-});
-resource.node.addDependency(this.target);
-}
-}
-
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.Campaign.Initializer"></a>
 
 ```typescript
@@ -1034,25 +1002,12 @@ const campaignProps: CampaignProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.campaignS3arn">campaignS3arn</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.collectionScheme">collectionScheme</a></code> | <code><a href="#cdk-aws-iotfleetwise.CollectionScheme">CollectionScheme</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.fwTimestreamRole">fwTimestreamRole</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs">dataDestinationConfigs</a></code> | <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>[]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.name">name</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.signals">signals</a></code> | <code><a href="#cdk-aws-iotfleetwise.CampaignSignal">CampaignSignal</a>[]</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.target">target</a></code> | <code><a href="#cdk-aws-iotfleetwise.Vehicle">Vehicle</a></code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.timestreamArn">timestreamArn</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.autoApprove">autoApprove</a></code> | <code>boolean</code> | *No description.* |
-| <code><a href="#cdk-aws-iotfleetwise.CampaignProps.property.useS3">useS3</a></code> | <code>boolean</code> | *No description.* |
-
----
-
-##### `campaignS3arn`<sup>Required</sup> <a name="campaignS3arn" id="cdk-aws-iotfleetwise.CampaignProps.property.campaignS3arn"></a>
-
-```typescript
-public readonly campaignS3arn: string;
-```
-
-- *Type:* string
 
 ---
 
@@ -1066,13 +1021,13 @@ public readonly collectionScheme: CollectionScheme;
 
 ---
 
-##### `fwTimestreamRole`<sup>Required</sup> <a name="fwTimestreamRole" id="cdk-aws-iotfleetwise.CampaignProps.property.fwTimestreamRole"></a>
+##### `dataDestinationConfigs`<sup>Required</sup> <a name="dataDestinationConfigs" id="cdk-aws-iotfleetwise.CampaignProps.property.dataDestinationConfigs"></a>
 
 ```typescript
-public readonly fwTimestreamRole: string;
+public readonly dataDestinationConfigs: DataDestinationConfig[];
 ```
 
-- *Type:* string
+- *Type:* <a href="#cdk-aws-iotfleetwise.DataDestinationConfig">DataDestinationConfig</a>[]
 
 ---
 
@@ -1106,30 +1061,10 @@ public readonly target: Vehicle;
 
 ---
 
-##### `timestreamArn`<sup>Required</sup> <a name="timestreamArn" id="cdk-aws-iotfleetwise.CampaignProps.property.timestreamArn"></a>
-
-```typescript
-public readonly timestreamArn: string;
-```
-
-- *Type:* string
-
----
-
 ##### `autoApprove`<sup>Optional</sup> <a name="autoApprove" id="cdk-aws-iotfleetwise.CampaignProps.property.autoApprove"></a>
 
 ```typescript
 public readonly autoApprove: boolean;
-```
-
-- *Type:* boolean
-
----
-
-##### `useS3`<sup>Optional</sup> <a name="useS3" id="cdk-aws-iotfleetwise.CampaignProps.property.useS3"></a>
-
-```typescript
-public readonly useS3: boolean;
 ```
 
 - *Type:* boolean
@@ -2339,6 +2274,38 @@ public toObject(): object
 
 
 
+### DataDestinationConfig <a name="DataDestinationConfig" id="cdk-aws-iotfleetwise.DataDestinationConfig"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.DataDestinationConfig.Initializer"></a>
+
+```typescript
+import { DataDestinationConfig } from 'cdk-aws-iotfleetwise'
+
+new DataDestinationConfig()
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.DataDestinationConfig.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.DataDestinationConfig.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
 ### NetworkFileDefinition <a name="NetworkFileDefinition" id="cdk-aws-iotfleetwise.NetworkFileDefinition"></a>
 
 #### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.NetworkFileDefinition.Initializer"></a>
@@ -2363,6 +2330,66 @@ new NetworkFileDefinition()
 ---
 
 ##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.NetworkFileDefinition.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
+### S3ConfigProperty <a name="S3ConfigProperty" id="cdk-aws-iotfleetwise.S3ConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer"></a>
+
+```typescript
+import { S3ConfigProperty } from 'cdk-aws-iotfleetwise'
+
+new S3ConfigProperty(bucketArn: string, dataFormat?: string, prefix?: string, storageCompressionFormat?: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn">bucketArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat">dataFormat</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix">prefix</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat">storageCompressionFormat</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `bucketArn`<sup>Required</sup> <a name="bucketArn" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.bucketArn"></a>
+
+- *Type:* string
+
+---
+
+##### `dataFormat`<sup>Optional</sup> <a name="dataFormat" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.dataFormat"></a>
+
+- *Type:* string
+
+---
+
+##### `prefix`<sup>Optional</sup> <a name="prefix" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.prefix"></a>
+
+- *Type:* string
+
+---
+
+##### `storageCompressionFormat`<sup>Optional</sup> <a name="storageCompressionFormat" id="cdk-aws-iotfleetwise.S3ConfigProperty.Initializer.parameter.storageCompressionFormat"></a>
+
+- *Type:* string
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.S3ConfigProperty.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.S3ConfigProperty.toObject"></a>
 
 ```typescript
 public toObject(): object
@@ -2590,6 +2617,52 @@ new TimeBasedCollectionScheme(period: Duration)
 ---
 
 ##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.TimeBasedCollectionScheme.toObject"></a>
+
+```typescript
+public toObject(): object
+```
+
+
+
+
+### TimestreamConfigProperty <a name="TimestreamConfigProperty" id="cdk-aws-iotfleetwise.TimestreamConfigProperty"></a>
+
+#### Initializers <a name="Initializers" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer"></a>
+
+```typescript
+import { TimestreamConfigProperty } from 'cdk-aws-iotfleetwise'
+
+new TimestreamConfigProperty(executionRoleArn: string, timestreamTableArn: string)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn">executionRoleArn</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn">timestreamTableArn</a></code> | <code>string</code> | *No description.* |
+
+---
+
+##### `executionRoleArn`<sup>Required</sup> <a name="executionRoleArn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.executionRoleArn"></a>
+
+- *Type:* string
+
+---
+
+##### `timestreamTableArn`<sup>Required</sup> <a name="timestreamTableArn" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.Initializer.parameter.timestreamTableArn"></a>
+
+- *Type:* string
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject">toObject</a></code> | *No description.* |
+
+---
+
+##### `toObject` <a name="toObject" id="cdk-aws-iotfleetwise.TimestreamConfigProperty.toObject"></a>
 
 ```typescript
 public toObject(): object
