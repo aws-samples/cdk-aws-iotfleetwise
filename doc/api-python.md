@@ -69,7 +69,6 @@ model_a = VehicleModel(stack, "ModelA",
     ]
 )
 
-
 vin100 = Vehicle(stack, "vin100",
     vehicle_name="vin100",
     vehicle_model=model_a,
