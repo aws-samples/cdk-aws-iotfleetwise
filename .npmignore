@@ -30,3 +30,4 @@ __pycache__
 .DS_Store
 /tmp/
 !/src/handlers/
+/.gitattributes
