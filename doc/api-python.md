@@ -89,7 +89,7 @@ To deploy a simple end-to-end example you can use the following commands
 
 ```sh
 yarn install
-projen && projen compile
+npx projen && npx projen compile
 # Define Amazon Timestream as fleetwise storage destination
 npx cdk -a lib/integ.full.js deploy -c key_name=mykey
 # Define Amazon S3 as fleetwise storage destination
